@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "708737726793",
+    "project_id": "foodie-recipe-app",
+    "storage_bucket": "foodie-recipe-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:708737726793:android:0bb9e209de2093259fc298",
+        "android_client_info": {
+          "package_name": "com.example.foodie"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "708737726793-9jfmuoe8s1dubsskt02r83cbn1suss98.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCumm_1kNLPnfmI53MIzzzG0N9zRq4X4i0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "708737726793-9jfmuoe8s1dubsskt02r83cbn1suss98.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

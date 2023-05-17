@@ -32,6 +32,10 @@ migrate_working_dir/
 .pub/
 /build/
 
+# Env files
+.env
+env.g.dart
+
 # Symbolication related
 app.*.symbols
 
