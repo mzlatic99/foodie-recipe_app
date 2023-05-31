@@ -26,11 +26,11 @@ mixin _$Recipe {
   String get name => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
   List<Map> get instructions => throw _privateConstructorUsedError;
-  List<Map<String, dynamic>> get sections => throw _privateConstructorUsedError;
+  List<Section> get sections => throw _privateConstructorUsedError;
   @JsonKey(name: 'total_time_minutes')
-  int get time => throw _privateConstructorUsedError;
+  int? get time => throw _privateConstructorUsedError;
   @JsonKey(name: 'num_servings')
-  int get servings => throw _privateConstructorUsedError;
+  int? get servings => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -48,9 +48,9 @@ abstract class $RecipeCopyWith<$Res> {
       String name,
       String description,
       List<Map> instructions,
-      List<Map<String, dynamic>> sections,
-      @JsonKey(name: 'total_time_minutes') int time,
-      @JsonKey(name: 'num_servings') int servings});
+      List<Section> sections,
+      @JsonKey(name: 'total_time_minutes') int? time,
+      @JsonKey(name: 'num_servings') int? servings});
 }
 
 /// @nodoc
@@ -72,8 +72,8 @@ class _$RecipeCopyWithImpl<$Res, $Val extends Recipe>
     Object? description = null,
     Object? instructions = null,
     Object? sections = null,
-    Object? time = null,
-    Object? servings = null,
+    Object? time = freezed,
+    Object? servings = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -99,15 +99,15 @@ class _$RecipeCopyWithImpl<$Res, $Val extends Recipe>
       sections: null == sections
           ? _value.sections
           : sections // ignore: cast_nullable_to_non_nullable
-              as List<Map<String, dynamic>>,
-      time: null == time
+              as List<Section>,
+      time: freezed == time
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
-              as int,
-      servings: null == servings
+              as int?,
+      servings: freezed == servings
           ? _value.servings
           : servings // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
     ) as $Val);
   }
 }
@@ -124,9 +124,9 @@ abstract class _$$_RecipeCopyWith<$Res> implements $RecipeCopyWith<$Res> {
       String name,
       String description,
       List<Map> instructions,
-      List<Map<String, dynamic>> sections,
-      @JsonKey(name: 'total_time_minutes') int time,
-      @JsonKey(name: 'num_servings') int servings});
+      List<Section> sections,
+      @JsonKey(name: 'total_time_minutes') int? time,
+      @JsonKey(name: 'num_servings') int? servings});
 }
 
 /// @nodoc
@@ -145,8 +145,8 @@ class __$$_RecipeCopyWithImpl<$Res>
     Object? description = null,
     Object? instructions = null,
     Object? sections = null,
-    Object? time = null,
-    Object? servings = null,
+    Object? time = freezed,
+    Object? servings = freezed,
   }) {
     return _then(_$_Recipe(
       id: null == id
@@ -172,15 +172,15 @@ class __$$_RecipeCopyWithImpl<$Res>
       sections: null == sections
           ? _value._sections
           : sections // ignore: cast_nullable_to_non_nullable
-              as List<Map<String, dynamic>>,
-      time: null == time
+              as List<Section>,
+      time: freezed == time
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
-              as int,
-      servings: null == servings
+              as int?,
+      servings: freezed == servings
           ? _value.servings
           : servings // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
     ));
   }
 }
@@ -194,9 +194,9 @@ class _$_Recipe implements _Recipe {
       required this.name,
       required this.description,
       required final List<Map> instructions,
-      required final List<Map<String, dynamic>> sections,
-      @JsonKey(name: 'total_time_minutes') required this.time,
-      @JsonKey(name: 'num_servings') required this.servings})
+      required final List<Section> sections,
+      @JsonKey(name: 'total_time_minutes') this.time,
+      @JsonKey(name: 'num_servings') this.servings})
       : _instructions = instructions,
         _sections = sections;
 
@@ -220,9 +220,9 @@ class _$_Recipe implements _Recipe {
     return EqualUnmodifiableListView(_instructions);
   }
 
-  final List<Map<String, dynamic>> _sections;
+  final List<Section> _sections;
   @override
-  List<Map<String, dynamic>> get sections {
+  List<Section> get sections {
     if (_sections is EqualUnmodifiableListView) return _sections;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_sections);
@@ -230,10 +230,10 @@ class _$_Recipe implements _Recipe {
 
   @override
   @JsonKey(name: 'total_time_minutes')
-  final int time;
+  final int? time;
   @override
   @JsonKey(name: 'num_servings')
-  final int servings;
+  final int? servings;
 
   @override
   String toString() {
@@ -293,9 +293,9 @@ abstract class _Recipe implements Recipe {
       required final String name,
       required final String description,
       required final List<Map> instructions,
-      required final List<Map<String, dynamic>> sections,
-      @JsonKey(name: 'total_time_minutes') required final int time,
-      @JsonKey(name: 'num_servings') required final int servings}) = _$_Recipe;
+      required final List<Section> sections,
+      @JsonKey(name: 'total_time_minutes') final int? time,
+      @JsonKey(name: 'num_servings') final int? servings}) = _$_Recipe;
 
   factory _Recipe.fromJson(Map<String, dynamic> json) = _$_Recipe.fromJson;
 
@@ -311,13 +311,13 @@ abstract class _Recipe implements Recipe {
   @override
   List<Map> get instructions;
   @override
-  List<Map<String, dynamic>> get sections;
+  List<Section> get sections;
   @override
   @JsonKey(name: 'total_time_minutes')
-  int get time;
+  int? get time;
   @override
   @JsonKey(name: 'num_servings')
-  int get servings;
+  int? get servings;
   @override
   @JsonKey(ignore: true)
   _$$_RecipeCopyWith<_$_Recipe> get copyWith =>

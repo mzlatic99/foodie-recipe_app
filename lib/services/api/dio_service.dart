@@ -3,19 +3,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../env/env.dart';
 
 import 'api_error.dart';
-import '../logger/logger_interceptor.dart';
 
 class DioService {
   DioService(this.ref) {
     dio = Dio()
-    ..options.baseUrl = 'https://tasty.p.rapidapi.com/'
-    ..options.sendTimeout = const Duration(microseconds: 30000)
-    ..options.connectTimeout = const Duration(microseconds: 30000)
-    ..options.receiveTimeout = const Duration(microseconds: 30000)
-    ..options.headers['X-RapidAPI-Key'] = Env.tastyApiKey
-    ..options.headers['X-RapidAPI-Host'] = 'tasty.p.rapidapi.com'
-    ..interceptors.add(LoggerInterceptor());
+      ..options.baseUrl = 'https://tasty.p.rapidapi.com/'
+      ..options.headers['X-RapidAPI-Key'] = Env.tastyApiKey
+      ..options.headers['X-RapidAPI-Host'] = 'tasty.p.rapidapi.com'
+      ..interceptors.add(
+        LogInterceptor(
+          requestBody: true,
+          responseBody: true,
+        ),
+      );
   }
+
   final ProviderRef ref;
   late final Dio dio;
 
@@ -23,16 +25,23 @@ class DioService {
     required String url,
     required T Function(dynamic data) builder,
     Map<String, dynamic>? parameters,
-    Map<String, dynamic>? passedData,
-    String? token,
-    bool jsonHeader = true,
-    FormData? formData,
-    bool setToken = false,
-    String method = 'get',
   }) async {
     try {
+      final options = Options(
+        method: 'GET',
+        headers: {
+          'X-RapidAPI-Key': Env.tastyApiKey,
+          'X-RapidAPI-Host': 'tasty.p.rapidapi.com',
+        },
+      );
+
       final Response response;
-      response = await dio.get(url, queryParameters: parameters);
+      response = await dio.get(
+        url,
+        options: options,
+        queryParameters: parameters,
+      );
+
       return builder(response.data);
     } on DioError catch (e) {
       try {
@@ -41,6 +50,7 @@ class DioService {
         if (e.message!.contains('Network is unreachable')) {
           throw ApiError(message: 'No internet connection');
         }
+
         /// Process status code
         switch (e.response?.statusCode) {
           case 401:
@@ -50,9 +60,9 @@ class DioService {
           default:
             throw ApiError.fromJson(errorData);
         }
-        } on TypeError catch (_) {
+      } on TypeError catch (_) {
         throw ApiError(message: 'Unsuccessfully tried parsing error message.');
       }
+    }
   }
-}
 }

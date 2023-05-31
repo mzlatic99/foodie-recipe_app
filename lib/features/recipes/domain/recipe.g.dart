@@ -15,10 +15,10 @@ _$_Recipe _$$_RecipeFromJson(Map<String, dynamic> json) => _$_Recipe(
           .map((e) => e as Map<String, dynamic>)
           .toList(),
       sections: (json['sections'] as List<dynamic>)
-          .map((e) => e as Map<String, dynamic>)
+          .map((e) => Section.fromJson(e as Map<String, dynamic>))
           .toList(),
-      time: json['total_time_minutes'] as int,
-      servings: json['num_servings'] as int,
+      time: json['total_time_minutes'] as int?,
+      servings: json['num_servings'] as int?,
     );
 
 Map<String, dynamic> _$$_RecipeToJson(_$_Recipe instance) => <String, dynamic>{

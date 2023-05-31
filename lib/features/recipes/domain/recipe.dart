@@ -2,6 +2,8 @@
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import 'recipe_ingredients/section.dart';
+
 part 'recipe.freezed.dart';
 part 'recipe.g.dart';
 
@@ -13,9 +15,9 @@ class Recipe with _$Recipe {
     required String name,
     required String description,
     required List<Map> instructions,
-    required List<Map<String, dynamic>> sections,
-    @JsonKey(name: 'total_time_minutes') required int time,
-    @JsonKey(name: 'num_servings') required int servings,
+    required List<Section> sections,
+    @JsonKey(name: 'total_time_minutes') int? time,
+    @JsonKey(name: 'num_servings') int? servings,
   }) = _Recipe;
 
   factory Recipe.fromJson(Map<String, dynamic> json) => _$RecipeFromJson(json);
