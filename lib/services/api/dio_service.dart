@@ -51,7 +51,6 @@ class DioService {
           throw ApiError(message: 'No internet connection');
         }
 
-        /// Process status code
         switch (e.response?.statusCode) {
           case 401:
             throw ApiError(message: 'Invalid API Key');

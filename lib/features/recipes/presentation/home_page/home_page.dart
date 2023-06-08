@@ -1,7 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:foodie/router/router_context_extension.dart';
 import 'package:foodie/services/api/api_error.dart';
-import 'recipe_controller.dart';
+import '../../../authentification/presentation/auth_controller.dart';
+import '../recipe_controller.dart';
 import '../../../../theme/theme.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'widgets/recipes_grid_widget.dart';
@@ -12,6 +14,8 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final recipeList = ref.watch(recipeControllerProvider);
+    final authController = ref.read(authControllerProvider.notifier);
+
     return Scaffold(
       body: SafeArea(
         minimum: const EdgeInsets.fromLTRB(20, 40, 20, 0),
@@ -41,29 +45,35 @@ class HomePage extends ConsumerWidget {
                   ),
                 ),
                 Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SvgPicture.asset(
-                            Assets.avatars.male3,
-                            width: 50,
-                          ),
-                          Text(
-                            'Bodovi',
-                            style: TextStyles.subtitle,
-                          ),
-                          Text(
-                            '10 / 20',
-                            style: TextStyles.points.copyWith(
-                              fontSize: 12,
+                  child: GestureDetector(
+                    onTap: () {
+                      authController.signOut();
+                      context.goLogIn();
+                    },
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(
+                              Assets.avatars.male3,
+                              width: 50,
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                            Text(
+                              'Bodovi',
+                              style: TextStyles.subtitle,
+                            ),
+                            Text(
+                              '10 / 20',
+                              style: TextStyles.points.copyWith(
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 )
               ],

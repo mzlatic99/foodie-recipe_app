@@ -6,7 +6,7 @@ import '../../../../theme/theme.dart';
 import '../../domain/recipe_ingredients/measurement.dart';
 import '../../domain/recipe.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import '../../../../extensions/string_capitalize_extension.dart';
+import '../../../../utils/string_capitalize_extension.dart';
 import 'widgets/app_bar_button.dart';
 import 'widgets/subtitle_horizontal_line.dart';
 

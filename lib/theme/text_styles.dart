@@ -77,4 +77,15 @@ class TextStyles {
     color: ThemeColors.main,
     fontWeight: FontWeight.bold,
   );
+
+  static TextStyle onboardingTitle = nunito.copyWith(
+    fontSize: 20,
+    color: ThemeColors.greyText,
+  );
+
+  static TextStyle secondaryAuthText = nunito.copyWith(
+    fontSize: 12,
+    color: ThemeColors.main,
+    fontWeight: FontWeight.bold,
+  );
 }

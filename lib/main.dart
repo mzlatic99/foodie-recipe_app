@@ -22,7 +22,7 @@ void main() async {
   ));
 
   runApp(
-    ProviderScope(
+    const ProviderScope(
       child: Foodie(),
     ),
   );
@@ -30,21 +30,22 @@ void main() async {
 
 // ignore: must_be_immutable
 class Foodie extends StatelessWidget {
-  Foodie({super.key});
+  const Foodie({super.key});
 
-  AppRouter? router;
+  //AppRouter? router;
 
   @override
   Widget build(BuildContext context) {
     return Consumer(
       builder: (context, ref, child) {
-        router ??= AppRouter(ref);
+        //router ??= AppRouter(ref);
+        final goRouter = ref.watch(goRouterProvider);
         return MaterialApp.router(
           debugShowCheckedModeBanner: false,
           title: 'Foodie Recipe App',
           theme: AppThemes.primary(),
-          routerDelegate: router!.router.routerDelegate,
-          routeInformationParser: router!.router.routeInformationParser,
+          routerDelegate: goRouter.routerDelegate,
+          routeInformationParser: goRouter.routeInformationParser,
         );
       },
     );

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:go_router/go_router.dart';
 
 import '../theme/theme.dart';
 
@@ -28,7 +27,7 @@ class _ScaffoldWithBottomNavBarState extends State<ScaffoldWithBottomNavBar> {
       // Note: this won't remember the previous state of the route
       // More info here:
       // https://github.com/flutter/flutter/issues/99124
-      // context.goNamed(AppRouter.);
+      // context.goNamed(AppRouter.movies.name);
     } else if (index == 1) {
       // context.goNamed(AppRoute.favorites.name);
     }

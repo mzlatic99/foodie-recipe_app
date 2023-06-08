@@ -1,6 +1,7 @@
 class Assets {
   static _Avatars avatars = _Avatars();
   static _Icons icons = _Icons();
+  static _Images images = _Images();
 }
 
 class _Avatars {
@@ -27,4 +28,12 @@ class _Icons {
   String search = 'assets/icons/search.svg';
   String share = 'assets/icons/share.svg';
   String subtract = 'assets/icons/subtract.svg';
+}
+
+class _Images {
+  String logo = 'assets/onboarding/logo.svg';
+  String onboarding0 = 'assets/onboarding/onboarding0.svg';
+  String onboarding1 = 'assets/onboarding/onboarding1.svg';
+  String onboarding2 = 'assets/onboarding/onboarding2.svg';
+  String onboarding3 = 'assets/onboarding/onboarding3.svg';
 }
