@@ -20,7 +20,6 @@ final goRouterProvider = Provider<GoRouter>((ref) {
       redirect: (context, state) {
         final user = firebaseAuth.currentUser;
         final isLoggedIn = user != null;
-        print(user);
         if (isLoggedIn) {
           if (state.location == '/') return '/home';
         }

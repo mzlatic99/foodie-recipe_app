@@ -32,13 +32,10 @@ void main() async {
 class Foodie extends StatelessWidget {
   const Foodie({super.key});
 
-  //AppRouter? router;
-
   @override
   Widget build(BuildContext context) {
     return Consumer(
       builder: (context, ref, child) {
-        //router ??= AppRouter(ref);
         final goRouter = ref.watch(goRouterProvider);
         return MaterialApp.router(
           debugShowCheckedModeBanner: false,
