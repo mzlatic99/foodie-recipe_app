@@ -20,8 +20,11 @@ Unit _$UnitFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Unit {
+  @HiveField(0)
   String get system => throw _privateConstructorUsedError;
+  @HiveField(1)
   String get name => throw _privateConstructorUsedError;
+  @HiveField(2)
   String get abbreviation => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -34,7 +37,10 @@ abstract class $UnitCopyWith<$Res> {
   factory $UnitCopyWith(Unit value, $Res Function(Unit) then) =
       _$UnitCopyWithImpl<$Res, Unit>;
   @useResult
-  $Res call({String system, String name, String abbreviation});
+  $Res call(
+      {@HiveField(0) String system,
+      @HiveField(1) String name,
+      @HiveField(2) String abbreviation});
 }
 
 /// @nodoc
@@ -77,7 +83,10 @@ abstract class _$$_UnitCopyWith<$Res> implements $UnitCopyWith<$Res> {
       __$$_UnitCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String system, String name, String abbreviation});
+  $Res call(
+      {@HiveField(0) String system,
+      @HiveField(1) String name,
+      @HiveField(2) String abbreviation});
 }
 
 /// @nodoc
@@ -112,17 +121,24 @@ class __$$_UnitCopyWithImpl<$Res> extends _$UnitCopyWithImpl<$Res, _$_Unit>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Unit implements _Unit {
+@HiveType(typeId: 7, adapterName: 'UnitAdapter')
+class _$_Unit extends _Unit {
   _$_Unit(
-      {required this.system, required this.name, required this.abbreviation});
+      {@HiveField(0) required this.system,
+      @HiveField(1) required this.name,
+      @HiveField(2) required this.abbreviation})
+      : super._();
 
   factory _$_Unit.fromJson(Map<String, dynamic> json) => _$$_UnitFromJson(json);
 
   @override
+  @HiveField(0)
   final String system;
   @override
+  @HiveField(1)
   final String name;
   @override
+  @HiveField(2)
   final String abbreviation;
 
   @override
@@ -159,19 +175,23 @@ class _$_Unit implements _Unit {
   }
 }
 
-abstract class _Unit implements Unit {
+abstract class _Unit extends Unit {
   factory _Unit(
-      {required final String system,
-      required final String name,
-      required final String abbreviation}) = _$_Unit;
+      {@HiveField(0) required final String system,
+      @HiveField(1) required final String name,
+      @HiveField(2) required final String abbreviation}) = _$_Unit;
+  _Unit._() : super._();
 
   factory _Unit.fromJson(Map<String, dynamic> json) = _$_Unit.fromJson;
 
   @override
+  @HiveField(0)
   String get system;
   @override
+  @HiveField(1)
   String get name;
   @override
+  @HiveField(2)
   String get abbreviation;
   @override
   @JsonKey(ignore: true)

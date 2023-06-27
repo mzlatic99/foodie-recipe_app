@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodie/router/router_context_extension.dart';
 import '../../../../common/main_button_widget.dart';
 import '../../../../theme/theme.dart';
 import '../../domain/recipe.dart';
@@ -19,7 +20,7 @@ class RecipeDetailsPage extends StatelessWidget {
       floatingActionButton: MainButtonWidget(
         label: 'Kuhaj!',
         style: TextStyles.mainButton,
-        onPressed: () {},
+        onPressed: () => context.pushStepsPage(recipe: recipe),
       ),
       body: CustomScrollView(
         slivers: [

@@ -5,7 +5,7 @@ import 'package:foodie/features/authentification/presentation/auth_controller.da
 import 'package:foodie/localization/string_hardcoded_extension.dart';
 import 'package:foodie/router/app_router.dart';
 
-import '../../../../common/log_in_register_button.dart';
+import '../../../../common/log_in_sign_up_button.dart';
 import '../../../../router/app_route.dart';
 import '../../../../theme/theme.dart';
 import '../widgets/secondary_auth_text_button.dart';
@@ -40,7 +40,6 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen>
     setState(() => _submitted = true);
     if (_formKey.currentState!.validate()) {
       final controller = ref.read(authControllerProvider.notifier);
-
       controller.createUser(email, password);
     }
   }
@@ -139,7 +138,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen>
                         ),
                       ),
                     ),
-                    LogInRegisterButton(
+                    LogInSignUpButton(
                       color: ThemeColors.primary,
                       label: 'Pridruži me'.hardcoded,
                       onPressed: () {

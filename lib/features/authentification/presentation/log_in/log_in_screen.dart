@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:foodie/localization/string_hardcoded_extension.dart';
 import 'package:foodie/router/app_router.dart';
 
-import '../../../../common/log_in_register_button.dart';
+import '../../../../common/log_in_sign_up_button.dart';
 import '../../../../router/app_route.dart';
 import '../../../../theme/theme.dart';
 import '../auth_controller.dart';
@@ -138,7 +138,7 @@ class _LogInScreenState extends ConsumerState<LogInScreen> with AuthValidators {
                         ),
                       ),
                     ),
-                    LogInRegisterButton(
+                    LogInSignUpButton(
                       color: ThemeColors.primary,
                       label: 'Ulogiraj me'.hardcoded,
                       onPressed: () {

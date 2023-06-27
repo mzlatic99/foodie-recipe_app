@@ -20,6 +20,7 @@ Section _$SectionFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Section {
+  @HiveField(0)
   List<Component> get components => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -32,7 +33,7 @@ abstract class $SectionCopyWith<$Res> {
   factory $SectionCopyWith(Section value, $Res Function(Section) then) =
       _$SectionCopyWithImpl<$Res, Section>;
   @useResult
-  $Res call({List<Component> components});
+  $Res call({@HiveField(0) List<Component> components});
 }
 
 /// @nodoc
@@ -66,7 +67,7 @@ abstract class _$$_SectionCopyWith<$Res> implements $SectionCopyWith<$Res> {
       __$$_SectionCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<Component> components});
+  $Res call({@HiveField(0) List<Component> components});
 }
 
 /// @nodoc
@@ -92,15 +93,18 @@ class __$$_SectionCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Section implements _Section {
-  _$_Section({required final List<Component> components})
-      : _components = components;
+@HiveType(typeId: 3, adapterName: 'SectionAdapter')
+class _$_Section extends _Section {
+  _$_Section({@HiveField(0) required final List<Component> components})
+      : _components = components,
+        super._();
 
   factory _$_Section.fromJson(Map<String, dynamic> json) =>
       _$$_SectionFromJson(json);
 
   final List<Component> _components;
   @override
+  @HiveField(0)
   List<Component> get components {
     if (_components is EqualUnmodifiableListView) return _components;
     // ignore: implicit_dynamic_type
@@ -140,12 +144,15 @@ class _$_Section implements _Section {
   }
 }
 
-abstract class _Section implements Section {
-  factory _Section({required final List<Component> components}) = _$_Section;
+abstract class _Section extends Section {
+  factory _Section({@HiveField(0) required final List<Component> components}) =
+      _$_Section;
+  _Section._() : super._();
 
   factory _Section.fromJson(Map<String, dynamic> json) = _$_Section.fromJson;
 
   @override
+  @HiveField(0)
   List<Component> get components;
   @override
   @JsonKey(ignore: true)

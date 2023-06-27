@@ -4,4 +4,9 @@ enum AppRoute {
   login,
   home,
   detail,
+  steps,
+  saved,
+  challanges,
+  friends,
+  profile,
 }

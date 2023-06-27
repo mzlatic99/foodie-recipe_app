@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../domain/recipe_list.dart';
-import '../../../providers/providers.dart';
 import '../data/http_recipe_repository.dart';
 
 final currentScrollValue = Provider<int>((ref) => 1);

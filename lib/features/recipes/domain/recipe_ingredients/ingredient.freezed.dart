@@ -20,7 +20,9 @@ Ingredient _$IngredientFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Ingredient {
+  @HiveField(0)
   int get id => throw _privateConstructorUsedError;
+  @HiveField(1)
   String get name => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -35,7 +37,7 @@ abstract class $IngredientCopyWith<$Res> {
           Ingredient value, $Res Function(Ingredient) then) =
       _$IngredientCopyWithImpl<$Res, Ingredient>;
   @useResult
-  $Res call({int id, String name});
+  $Res call({@HiveField(0) int id, @HiveField(1) String name});
 }
 
 /// @nodoc
@@ -75,7 +77,7 @@ abstract class _$$_IngredientCopyWith<$Res>
       __$$_IngredientCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String name});
+  $Res call({@HiveField(0) int id, @HiveField(1) String name});
 }
 
 /// @nodoc
@@ -107,15 +109,20 @@ class __$$_IngredientCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Ingredient implements _Ingredient {
-  _$_Ingredient({required this.id, required this.name});
+@HiveType(typeId: 5, adapterName: 'IngredientAdapter')
+class _$_Ingredient extends _Ingredient {
+  _$_Ingredient(
+      {@HiveField(0) required this.id, @HiveField(1) required this.name})
+      : super._();
 
   factory _$_Ingredient.fromJson(Map<String, dynamic> json) =>
       _$$_IngredientFromJson(json);
 
   @override
+  @HiveField(0)
   final int id;
   @override
+  @HiveField(1)
   final String name;
 
   @override
@@ -150,16 +157,20 @@ class _$_Ingredient implements _Ingredient {
   }
 }
 
-abstract class _Ingredient implements Ingredient {
-  factory _Ingredient({required final int id, required final String name}) =
-      _$_Ingredient;
+abstract class _Ingredient extends Ingredient {
+  factory _Ingredient(
+      {@HiveField(0) required final int id,
+      @HiveField(1) required final String name}) = _$_Ingredient;
+  _Ingredient._() : super._();
 
   factory _Ingredient.fromJson(Map<String, dynamic> json) =
       _$_Ingredient.fromJson;
 
   @override
+  @HiveField(0)
   int get id;
   @override
+  @HiveField(1)
   String get name;
   @override
   @JsonKey(ignore: true)

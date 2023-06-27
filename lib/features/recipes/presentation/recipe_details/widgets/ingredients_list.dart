@@ -17,8 +17,8 @@ class IngredientsList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final multiplier = ref.watch(ingredientMultiplierProvider);
-    final personCount = ref.read(ingredientMultiplierProvider.notifier);
+    final multiplierRead = ref.read(ingredientMultiplierProvider.notifier);
+    final multiplierWatch = ref.watch(ingredientMultiplierProvider);
     return Column(
       children: [
         Padding(
@@ -40,18 +40,18 @@ class IngredientsList extends ConsumerWidget {
                   children: [
                     GestureDetector(
                       onTap: () =>
-                          personCount.state > 1 ? personCount.state-- : null,
+                          multiplierWatch > 1 ? multiplierRead.state-- : null,
                       child: SvgPicture.asset(
                         Assets.icons.subtract,
                         width: 25,
                       ),
                     ),
                     Text(
-                      multiplier.toString(),
+                      multiplierWatch.toString(),
                       style: TextStyles.text,
                     ),
                     GestureDetector(
-                      onTap: () => personCount.state++,
+                      onTap: () => multiplierRead.state++,
                       child: SvgPicture.asset(
                         Assets.icons.add,
                         width: 25,
@@ -80,7 +80,8 @@ class IngredientsList extends ConsumerWidget {
                 recipe.sections[0].components[index].measurements!;
             final measureQuantity = measure[0].quantity;
             final measureUnit = measure[0].unit.name;
-            final ingredientController = ref.read(ingredientControllerProvider);
+            final ingredientController =
+                ref.watch(ingredientControllerProvider);
             final measureQuantityValue =
                 ingredientController.getCalculation(measureQuantity);
             final measureQuantityResult = switch (measureQuantityValue) {

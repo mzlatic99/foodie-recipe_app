@@ -28,7 +28,7 @@ class IngredientController {
   final Ref ref;
 
   Result<Rational, Exception> getCalculation(String quantity) {
-    final multiplier = ref.watch(ingredientMultiplierProvider);
+    final multiplier = ref.read(ingredientMultiplierProvider);
     try {
       final type = Rational.tryParse(quantity).runtimeType;
       final Rational result;

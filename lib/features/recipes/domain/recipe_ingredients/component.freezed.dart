@@ -20,8 +20,11 @@ Component _$ComponentFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Component {
+  @HiveField(0)
   int get position => throw _privateConstructorUsedError;
+  @HiveField(1)
   Ingredient get ingredient => throw _privateConstructorUsedError;
+  @HiveField(2)
   List<Measurement>? get measurements => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -36,7 +39,9 @@ abstract class $ComponentCopyWith<$Res> {
       _$ComponentCopyWithImpl<$Res, Component>;
   @useResult
   $Res call(
-      {int position, Ingredient ingredient, List<Measurement>? measurements});
+      {@HiveField(0) int position,
+      @HiveField(1) Ingredient ingredient,
+      @HiveField(2) List<Measurement>? measurements});
 
   $IngredientCopyWith<$Res> get ingredient;
 }
@@ -91,7 +96,9 @@ abstract class _$$_ComponentCopyWith<$Res> implements $ComponentCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int position, Ingredient ingredient, List<Measurement>? measurements});
+      {@HiveField(0) int position,
+      @HiveField(1) Ingredient ingredient,
+      @HiveField(2) List<Measurement>? measurements});
 
   @override
   $IngredientCopyWith<$Res> get ingredient;
@@ -131,22 +138,27 @@ class __$$_ComponentCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Component implements _Component {
+@HiveType(typeId: 4, adapterName: 'ComponentAdapter')
+class _$_Component extends _Component {
   _$_Component(
-      {required this.position,
-      required this.ingredient,
-      final List<Measurement>? measurements})
-      : _measurements = measurements;
+      {@HiveField(0) required this.position,
+      @HiveField(1) required this.ingredient,
+      @HiveField(2) final List<Measurement>? measurements})
+      : _measurements = measurements,
+        super._();
 
   factory _$_Component.fromJson(Map<String, dynamic> json) =>
       _$$_ComponentFromJson(json);
 
   @override
+  @HiveField(0)
   final int position;
   @override
+  @HiveField(1)
   final Ingredient ingredient;
   final List<Measurement>? _measurements;
   @override
+  @HiveField(2)
   List<Measurement>? get measurements {
     final value = _measurements;
     if (value == null) return null;
@@ -192,20 +204,24 @@ class _$_Component implements _Component {
   }
 }
 
-abstract class _Component implements Component {
+abstract class _Component extends Component {
   factory _Component(
-      {required final int position,
-      required final Ingredient ingredient,
-      final List<Measurement>? measurements}) = _$_Component;
+      {@HiveField(0) required final int position,
+      @HiveField(1) required final Ingredient ingredient,
+      @HiveField(2) final List<Measurement>? measurements}) = _$_Component;
+  _Component._() : super._();
 
   factory _Component.fromJson(Map<String, dynamic> json) =
       _$_Component.fromJson;
 
   @override
+  @HiveField(0)
   int get position;
   @override
+  @HiveField(1)
   Ingredient get ingredient;
   @override
+  @HiveField(2)
   List<Measurement>? get measurements;
   @override
   @JsonKey(ignore: true)

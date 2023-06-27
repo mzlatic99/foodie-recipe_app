@@ -50,7 +50,7 @@ class TextStyles {
     color: ThemeColors.primary,
   );
 
-  static TextStyle commentText = nunito.copyWith(
+  static TextStyle mainText = nunito.copyWith(
     fontSize: 12,
     color: ThemeColors.main,
   );

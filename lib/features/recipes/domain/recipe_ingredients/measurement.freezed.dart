@@ -20,7 +20,9 @@ Measurement _$MeasurementFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Measurement {
+  @HiveField(0)
   String get quantity => throw _privateConstructorUsedError;
+  @HiveField(1)
   Unit get unit => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -35,7 +37,7 @@ abstract class $MeasurementCopyWith<$Res> {
           Measurement value, $Res Function(Measurement) then) =
       _$MeasurementCopyWithImpl<$Res, Measurement>;
   @useResult
-  $Res call({String quantity, Unit unit});
+  $Res call({@HiveField(0) String quantity, @HiveField(1) Unit unit});
 
   $UnitCopyWith<$Res> get unit;
 }
@@ -85,7 +87,7 @@ abstract class _$$_MeasurementCopyWith<$Res>
       __$$_MeasurementCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String quantity, Unit unit});
+  $Res call({@HiveField(0) String quantity, @HiveField(1) Unit unit});
 
   @override
   $UnitCopyWith<$Res> get unit;
@@ -120,15 +122,20 @@ class __$$_MeasurementCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Measurement implements _Measurement {
-  _$_Measurement({required this.quantity, required this.unit});
+@HiveType(typeId: 6, adapterName: 'MeasurementAdapter')
+class _$_Measurement extends _Measurement {
+  _$_Measurement(
+      {@HiveField(0) required this.quantity, @HiveField(1) required this.unit})
+      : super._();
 
   factory _$_Measurement.fromJson(Map<String, dynamic> json) =>
       _$$_MeasurementFromJson(json);
 
   @override
+  @HiveField(0)
   final String quantity;
   @override
+  @HiveField(1)
   final Unit unit;
 
   @override
@@ -164,17 +171,20 @@ class _$_Measurement implements _Measurement {
   }
 }
 
-abstract class _Measurement implements Measurement {
+abstract class _Measurement extends Measurement {
   factory _Measurement(
-      {required final String quantity,
-      required final Unit unit}) = _$_Measurement;
+      {@HiveField(0) required final String quantity,
+      @HiveField(1) required final Unit unit}) = _$_Measurement;
+  _Measurement._() : super._();
 
   factory _Measurement.fromJson(Map<String, dynamic> json) =
       _$_Measurement.fromJson;
 
   @override
+  @HiveField(0)
   String get quantity;
   @override
+  @HiveField(1)
   Unit get unit;
   @override
   @JsonKey(ignore: true)

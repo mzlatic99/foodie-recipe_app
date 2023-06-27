@@ -15,18 +15,17 @@ class RecipesGridWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Expanded(
       child: GridView.builder(
-        itemCount: data.results.length,
-        shrinkWrap: true,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          mainAxisSpacing: 15,
-          crossAxisSpacing: 10,
-          mainAxisExtent: 200,
-        ),
-        itemBuilder: (context, index) => RecipeWidget(
-          recipe: data.results[index],
-        ),
-      ),
+          itemCount: data.results.length,
+          shrinkWrap: true,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            mainAxisSpacing: 15,
+            crossAxisSpacing: 10,
+            mainAxisExtent: 200,
+          ),
+          itemBuilder: (context, index) => RecipeWidget(
+                recipe: data.results[index],
+              )),
     );
   }
 }

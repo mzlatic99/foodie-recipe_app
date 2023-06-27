@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:foodie/router/router_context_extension.dart';
-import '../../../common/log_in_register_button.dart';
+import '../../../common/log_in_sign_up_button.dart';
 import '../../../theme/theme.dart';
 import '../data/onboarding_repository.dart';
 import 'widgets/dot_indicator.dart';
@@ -58,14 +58,14 @@ class _OnboardingState extends ConsumerState<Onboarding> {
                     index == 4
                         ? Column(
                             children: [
-                              LogInRegisterButton(
+                              LogInSignUpButton(
                                 color: ThemeColors.main,
                                 label: 'Postojeći član',
                                 onPressed: () {
                                   context.goLogIn();
                                 },
                               ),
-                              LogInRegisterButton(
+                              LogInSignUpButton(
                                 color: ThemeColors.primary,
                                 label: 'Novi Član',
                                 onPressed: () {

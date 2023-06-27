@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../theme/theme.dart';
 
-class LogInRegisterButton extends StatelessWidget {
-  const LogInRegisterButton({
+class LogInSignUpButton extends StatelessWidget {
+  const LogInSignUpButton({
     super.key,
     required this.color,
     required this.label,

@@ -10,14 +10,13 @@ extension RouterContextExtension on BuildContext {
     GoRouter.of(this).pop();
   }
 
-  void goHome(
-      //Map<String, String> queryParameters = const <String, String>{},
-      //Object? extra,
-      ) {
-    GoRouter.of(this).pushNamed(
+  String currentLocation() {
+    return GoRouter.of(this).location;
+  }
+
+  void goHome() {
+    GoRouter.of(this).goNamed(
       AppRoute.home.name,
-      //queryParameters: queryParameters,
-      //extra: extra,
     );
   }
 
@@ -33,16 +32,14 @@ extension RouterContextExtension on BuildContext {
     );
   }
 
-  void replaceHome({
-    Map<String, String> queryParameters = const <String, String>{},
-    Object? extra,
-  }) {
-    GoRouter.of(this).replaceNamed(
-      AppRoute.home.name,
-      queryParameters: queryParameters,
-      extra: extra,
-    );
-  }
+  void pushStepsPage({
+    required Recipe recipe,
+  }) =>
+      GoRouter.of(this).pushNamed(
+        AppRoute.steps.name,
+        extra: recipe,
+        pathParameters: {'id': '${recipe.id}'},
+      );
 
   void pushDetailPage({
     required Recipe recipe,
@@ -52,4 +49,10 @@ extension RouterContextExtension on BuildContext {
         extra: recipe,
         pathParameters: {'id': '${recipe.id}'},
       );
+
+  void goSavedRecipes() {
+    GoRouter.of(this).goNamed(
+      AppRoute.saved.name,
+    );
+  }
 }

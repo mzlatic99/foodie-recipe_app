@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:foodie/router/router_context_extension.dart';
+import '../../../../../common/is_saved_material_button.dart';
 import '../../../domain/recipe.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../../theme/theme.dart';
 
-class RecipeWidget extends StatelessWidget {
+class RecipeWidget extends ConsumerWidget {
   const RecipeWidget({
     super.key,
     required this.recipe,
@@ -15,7 +16,7 @@ class RecipeWidget extends StatelessWidget {
   final Recipe recipe;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
       onTap: () => context.pushDetailPage(recipe: recipe),
       child: Stack(
@@ -57,28 +58,8 @@ class RecipeWidget extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: GestureDetector(
-                          //TODO: implement onTap
-                          onTap: () {},
-                          child: Align(
-                            alignment: Alignment.topRight,
-                            child: Material(
-                              elevation: 0,
-                              color: ThemeColors.white,
-                              borderRadius: BorderRadius.circular(8),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 6, vertical: 5),
-                                child: SvgPicture.asset(
-                                  Assets.icons.save,
-                                  width: 18,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+                          padding: const EdgeInsets.all(10),
+                          child: IsSavedMaterialButton(recipe: recipe)),
                     ],
                   ),
                 ),
@@ -96,7 +77,7 @@ class RecipeWidget extends StatelessWidget {
                         style: TextStyles.points,
                       ),
                       Text(
-                        '${recipe.time ?? ''} ${recipe.time != null ? 'mins' : ''}',
+                        '${recipe.time != null ? (recipe.time != 0 ? recipe.time : '') : ''} ${recipe.time != null ? (recipe.time != 0 ? 'mins' : '') : ''}',
                         style: TextStyles.time,
                       ),
                     ],
@@ -104,7 +85,7 @@ class RecipeWidget extends StatelessWidget {
                 ),
               ],
             ),
-          ),
+          )
         ],
       ),
     );

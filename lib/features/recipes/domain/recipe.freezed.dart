@@ -20,16 +20,25 @@ Recipe _$RecipeFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Recipe {
+  @HiveField(0)
   int get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'thumbnail_url')
+  @HiveField(1)
   String get imageUrl => throw _privateConstructorUsedError;
+  @HiveField(2)
   String get name => throw _privateConstructorUsedError;
+  @HiveField(3)
   String get description => throw _privateConstructorUsedError;
-  List<Map> get instructions => throw _privateConstructorUsedError;
+  @HiveField(4)
+  List<RecipeInstruction> get instructions =>
+      throw _privateConstructorUsedError;
+  @HiveField(5)
   List<Section> get sections => throw _privateConstructorUsedError;
   @JsonKey(name: 'total_time_minutes')
+  @HiveField(6)
   int? get time => throw _privateConstructorUsedError;
   @JsonKey(name: 'num_servings')
+  @HiveField(7)
   int? get servings => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -43,14 +52,14 @@ abstract class $RecipeCopyWith<$Res> {
       _$RecipeCopyWithImpl<$Res, Recipe>;
   @useResult
   $Res call(
-      {int id,
-      @JsonKey(name: 'thumbnail_url') String imageUrl,
-      String name,
-      String description,
-      List<Map> instructions,
-      List<Section> sections,
-      @JsonKey(name: 'total_time_minutes') int? time,
-      @JsonKey(name: 'num_servings') int? servings});
+      {@HiveField(0) int id,
+      @JsonKey(name: 'thumbnail_url') @HiveField(1) String imageUrl,
+      @HiveField(2) String name,
+      @HiveField(3) String description,
+      @HiveField(4) List<RecipeInstruction> instructions,
+      @HiveField(5) List<Section> sections,
+      @JsonKey(name: 'total_time_minutes') @HiveField(6) int? time,
+      @JsonKey(name: 'num_servings') @HiveField(7) int? servings});
 }
 
 /// @nodoc
@@ -95,7 +104,7 @@ class _$RecipeCopyWithImpl<$Res, $Val extends Recipe>
       instructions: null == instructions
           ? _value.instructions
           : instructions // ignore: cast_nullable_to_non_nullable
-              as List<Map>,
+              as List<RecipeInstruction>,
       sections: null == sections
           ? _value.sections
           : sections // ignore: cast_nullable_to_non_nullable
@@ -119,14 +128,14 @@ abstract class _$$_RecipeCopyWith<$Res> implements $RecipeCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int id,
-      @JsonKey(name: 'thumbnail_url') String imageUrl,
-      String name,
-      String description,
-      List<Map> instructions,
-      List<Section> sections,
-      @JsonKey(name: 'total_time_minutes') int? time,
-      @JsonKey(name: 'num_servings') int? servings});
+      {@HiveField(0) int id,
+      @JsonKey(name: 'thumbnail_url') @HiveField(1) String imageUrl,
+      @HiveField(2) String name,
+      @HiveField(3) String description,
+      @HiveField(4) List<RecipeInstruction> instructions,
+      @HiveField(5) List<Section> sections,
+      @JsonKey(name: 'total_time_minutes') @HiveField(6) int? time,
+      @JsonKey(name: 'num_servings') @HiveField(7) int? servings});
 }
 
 /// @nodoc
@@ -168,7 +177,7 @@ class __$$_RecipeCopyWithImpl<$Res>
       instructions: null == instructions
           ? _value._instructions
           : instructions // ignore: cast_nullable_to_non_nullable
-              as List<Map>,
+              as List<RecipeInstruction>,
       sections: null == sections
           ? _value._sections
           : sections // ignore: cast_nullable_to_non_nullable
@@ -187,34 +196,41 @@ class __$$_RecipeCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Recipe implements _Recipe {
+@HiveType(typeId: 1, adapterName: 'RecipeAdapter')
+class _$_Recipe extends _Recipe {
   _$_Recipe(
-      {required this.id,
-      @JsonKey(name: 'thumbnail_url') required this.imageUrl,
-      required this.name,
-      required this.description,
-      required final List<Map> instructions,
-      required final List<Section> sections,
-      @JsonKey(name: 'total_time_minutes') this.time,
-      @JsonKey(name: 'num_servings') this.servings})
+      {@HiveField(0) required this.id,
+      @JsonKey(name: 'thumbnail_url') @HiveField(1) required this.imageUrl,
+      @HiveField(2) required this.name,
+      @HiveField(3) required this.description,
+      @HiveField(4) required final List<RecipeInstruction> instructions,
+      @HiveField(5) required final List<Section> sections,
+      @JsonKey(name: 'total_time_minutes') @HiveField(6) this.time,
+      @JsonKey(name: 'num_servings') @HiveField(7) this.servings})
       : _instructions = instructions,
-        _sections = sections;
+        _sections = sections,
+        super._();
 
   factory _$_Recipe.fromJson(Map<String, dynamic> json) =>
       _$$_RecipeFromJson(json);
 
   @override
+  @HiveField(0)
   final int id;
   @override
   @JsonKey(name: 'thumbnail_url')
+  @HiveField(1)
   final String imageUrl;
   @override
+  @HiveField(2)
   final String name;
   @override
+  @HiveField(3)
   final String description;
-  final List<Map> _instructions;
+  final List<RecipeInstruction> _instructions;
   @override
-  List<Map> get instructions {
+  @HiveField(4)
+  List<RecipeInstruction> get instructions {
     if (_instructions is EqualUnmodifiableListView) return _instructions;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_instructions);
@@ -222,6 +238,7 @@ class _$_Recipe implements _Recipe {
 
   final List<Section> _sections;
   @override
+  @HiveField(5)
   List<Section> get sections {
     if (_sections is EqualUnmodifiableListView) return _sections;
     // ignore: implicit_dynamic_type
@@ -230,9 +247,11 @@ class _$_Recipe implements _Recipe {
 
   @override
   @JsonKey(name: 'total_time_minutes')
+  @HiveField(6)
   final int? time;
   @override
   @JsonKey(name: 'num_servings')
+  @HiveField(7)
   final int? servings;
 
   @override
@@ -286,37 +305,57 @@ class _$_Recipe implements _Recipe {
   }
 }
 
-abstract class _Recipe implements Recipe {
+abstract class _Recipe extends Recipe {
   factory _Recipe(
-      {required final int id,
-      @JsonKey(name: 'thumbnail_url') required final String imageUrl,
-      required final String name,
-      required final String description,
-      required final List<Map> instructions,
-      required final List<Section> sections,
-      @JsonKey(name: 'total_time_minutes') final int? time,
-      @JsonKey(name: 'num_servings') final int? servings}) = _$_Recipe;
+      {@HiveField(0)
+          required final int id,
+      @JsonKey(name: 'thumbnail_url')
+      @HiveField(1)
+          required final String imageUrl,
+      @HiveField(2)
+          required final String name,
+      @HiveField(3)
+          required final String description,
+      @HiveField(4)
+          required final List<RecipeInstruction> instructions,
+      @HiveField(5)
+          required final List<Section> sections,
+      @JsonKey(name: 'total_time_minutes')
+      @HiveField(6)
+          final int? time,
+      @JsonKey(name: 'num_servings')
+      @HiveField(7)
+          final int? servings}) = _$_Recipe;
+  _Recipe._() : super._();
 
   factory _Recipe.fromJson(Map<String, dynamic> json) = _$_Recipe.fromJson;
 
   @override
+  @HiveField(0)
   int get id;
   @override
   @JsonKey(name: 'thumbnail_url')
+  @HiveField(1)
   String get imageUrl;
   @override
+  @HiveField(2)
   String get name;
   @override
+  @HiveField(3)
   String get description;
   @override
-  List<Map> get instructions;
+  @HiveField(4)
+  List<RecipeInstruction> get instructions;
   @override
+  @HiveField(5)
   List<Section> get sections;
   @override
   @JsonKey(name: 'total_time_minutes')
+  @HiveField(6)
   int? get time;
   @override
   @JsonKey(name: 'num_servings')
+  @HiveField(7)
   int? get servings;
   @override
   @JsonKey(ignore: true)

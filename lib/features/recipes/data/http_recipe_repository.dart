@@ -1,8 +1,19 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../../providers/providers.dart';
 import 'recipe_repository.dart';
 import '../domain/recipe.dart';
 import '../domain/recipe_list.dart';
 import '../../../services/api/dio_service.dart';
 //import '../../../env/env.dart';
+
+final recipeRepositoryProvider = Provider<HttpRecipeRepository>(
+  (ref) => HttpRecipeRepository(
+    api: ref.read(
+      dioServiceProvider,
+    ),
+  ),
+);
 
 class HttpRecipeRepository implements RecipeRepository {
   HttpRecipeRepository({required this.api});
