@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:foodie/constants/app_constants.dart';
 
 import '../features/recipes/domain/recipe.dart';
 import '../providers/providers.dart';
@@ -17,17 +18,19 @@ class IsSavedMaterialButton extends ConsumerStatefulWidget {
 class _IsSavedMaterialButtonState extends ConsumerState<IsSavedMaterialButton> {
   @override
   Widget build(BuildContext context) {
-    final isSaved =
-        ref.watch(storageServiceProvider).hasValue(widget.recipe.id.toString());
+    final isSaved = ref
+        .watch(storageServiceProvider)
+        .hasValue(widget.recipe.id.toString(), StorageBox.favoritesBox);
     return GestureDetector(
       onTap: () {
         setState(() {
           isSaved
-              ? ref
-                  .read(storageServiceProvider)
-                  .deleteValue(widget.recipe.id.toString())
+              ? ref.read(storageServiceProvider).deleteValue(
+                  widget.recipe.id.toString(), StorageBox.favoritesBox)
               : ref.read(storageServiceProvider).setValue(
-                  key: widget.recipe.id.toString(), recipe: widget.recipe);
+                  key: widget.recipe.id.toString(),
+                  data: widget.recipe,
+                  boxName: StorageBox.favoritesBox);
         });
       },
       child: Align(

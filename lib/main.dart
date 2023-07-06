@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:foodie/services/storage/hive_storage_service.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'constants/app_constants.dart';
+import 'features/challenges/domain/challenge.dart';
 import 'features/recipes/domain/recipe.dart';
 import 'features/recipes/domain/recipe_ingredients/component.dart';
 import 'features/recipes/domain/recipe_ingredients/ingredient.dart';
@@ -16,7 +20,6 @@ import 'providers/providers.dart';
 import 'router/app_router.dart';
 import 'theme/theme.dart';
 
-const favoritesBox = 'favorite_recipes';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -40,8 +43,16 @@ void main() async {
   Hive.registerAdapter(IngredientAdapter());
   Hive.registerAdapter(MeasurementAdapter());
   Hive.registerAdapter(UnitAdapter());
+  Hive.registerAdapter(ChallengeAdapter());
   final hiveStorageService = HiveStorageService();
-  await hiveStorageService.openBox(favoritesBox);
+  await hiveStorageService.openBox(StorageBox.favoritesBox);
+  await hiveStorageService.openBox(StorageBox.challangesBox);
+
+  ProcessSignal.sigterm.watch().listen((_) async {
+    await hiveStorageService.closeBox(StorageBox.favoritesBox);
+    await hiveStorageService.closeBox(StorageBox.challangesBox);
+    exit(0);
+  });
 
   runApp(
     ProviderScope(

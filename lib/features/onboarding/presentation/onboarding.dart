@@ -41,7 +41,7 @@ class _OnboardingState extends ConsumerState<Onboarding> {
           Expanded(
             child: PageView.builder(
               physics: const ScrollPhysics(parent: PageScrollPhysics()),
-              itemCount: OnboardingRepository().data.length,
+              itemCount: onBoardingRepository.data.length,
               controller: _pageController,
               onPageChanged: (value) =>
                   ref.read(onBoardingPageProvider.notifier).state = value,
@@ -84,7 +84,7 @@ class _OnboardingState extends ConsumerState<Onboarding> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ...List.generate(
-                OnboardingRepository().data.length,
+                onBoardingRepository.data.length,
                 (index) => Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5),
                   child: DotIndicator(

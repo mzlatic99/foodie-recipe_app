@@ -1,5 +1,8 @@
+// ignore_for_file: library_private_types_in_public_api
+
 class Assets {
   static _Avatars avatars = _Avatars();
+  static _Challanges challanges = _Challanges();
   static _Icons icons = _Icons();
   static _Images images = _Images();
 }
@@ -15,6 +18,13 @@ class _Avatars {
   String male4 = 'assets/avatars/male4.svg';
 }
 
+class _Challanges {
+  String challage1 = 'assets/challanges/component1.svg';
+  String challage2 = 'assets/challanges/component2.svg';
+  String challage3 = 'assets/challanges/component3.svg';
+  String challage4 = 'assets/challanges/component4.svg';
+}
+
 class _Icons {
   String add = 'assets/icons/add.svg';
   String back = 'assets/icons/back.svg';
@@ -23,6 +33,7 @@ class _Icons {
   String home = 'assets/icons/home.svg';
   String image = 'assets/icons/image.svg';
   String profile = 'assets/icons/profile.svg';
+  String replace = 'assets/icons/replace.svg';
   String save = 'assets/icons/save.svg';
   String saved = 'assets/icons/saved.svg';
   String search = 'assets/icons/search.svg';

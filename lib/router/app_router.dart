@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../features/authentification/presentation/log_in/log_in_screen.dart';
 import '../features/authentification/presentation/sign_up/sign_up_screen.dart';
-import '../features/challanges/challanges_page.dart';
+import '../features/challenges/presentation/challenges_page.dart';
 import '../features/friends/friends_page.dart';
 import '../features/onboarding/presentation/onboarding.dart';
 import '../features/profile/profile_page.dart';

@@ -1,13 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:foodie/constants/app_constants.dart';
 import 'package:foodie/localization/string_hardcoded_extension.dart';
 import 'package:foodie/providers/providers.dart';
 import 'package:foodie/router/router_context_extension.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../../../theme/theme.dart';
-import '../../domain/recipe.dart';
 
 class SavedRecipesPage extends ConsumerWidget {
   SavedRecipesPage({super.key});
@@ -33,9 +33,10 @@ class SavedRecipesPage extends ConsumerWidget {
               Expanded(
                 child: ListView.builder(
                     shrinkWrap: true,
-                    itemCount: savedRecipes.getLength(),
+                    itemCount: savedRecipes.getLength(StorageBox.favoritesBox),
                     itemBuilder: (context, index) {
-                      final recipe = savedRecipes.getAll()[index];
+                      final recipe =
+                          savedRecipes.getAll(StorageBox.favoritesBox)[index];
                       return Padding(
                         padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
                         child: GestureDetector(

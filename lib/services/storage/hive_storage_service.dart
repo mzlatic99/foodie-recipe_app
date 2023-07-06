@@ -1,44 +1,88 @@
 import 'package:hive_flutter/hive_flutter.dart';
-
-import '../../features/recipes/domain/recipe.dart';
 import './storage_service.dart';
 
 /// Implementation of [StorageService] with [Hive]
 class HiveStorageService implements StorageService {
-  late Box hiveBox;
+  HiveStorageService();
 
   Future<void> openBox(String boxName) async {
-    hiveBox = await Hive.openBox(boxName);
+    await Hive.openBox(boxName);
   }
 
-  Future<void> closeBox() async {
-    await hiveBox.close();
-  }
-
-  @override
-  Future<void> deleteValue(String key) async {
-    await hiveBox.delete(key);
+  Future<void> closeBox(String boxName) async {
+    final box = Hive.box(boxName);
+    await box.close();
   }
 
   @override
-  int getLength() => hiveBox.length;
-
-  @override
-  dynamic getValue(String key) => hiveBox.get(key);
-
-  @override
-  dynamic getAll() => hiveBox.values.toList();
-
-  @override
-  bool hasValue(String key) => hiveBox.containsKey(key);
-
-  @override
-  Future<void> deleteAll() async {
-    await hiveBox.clear();
+  Future<void> deleteValue(String key, String boxName) async {
+    final box = Hive.box(boxName);
+    await box.delete(key);
   }
 
   @override
-  Future<void> setValue({String? key, Recipe? recipe}) async {
-    await hiveBox.put(key, recipe);
+  int getLength(String boxName) {
+    final box = Hive.box(boxName);
+    return box.length;
+  }
+
+  @override
+  Future<void> insertValue({int? index, data, String? boxName}) {
+    final box = Hive.box(boxName!);
+    return box.putAt(index!, data);
+  }
+
+  @override
+  dynamic getValue(String key, String boxName) {
+    final box = Hive.box(boxName);
+    return box.get(key);
+  }
+
+  @override
+  dynamic getAll(String boxName) {
+    final box = Hive.box(boxName);
+    return box.values.toList();
+  }
+
+  @override
+  bool hasValue(String key, String boxName) {
+    final box = Hive.box(boxName);
+    return box.containsKey(key);
+  }
+
+  @override
+  Future<void> deleteAll(String boxName) async {
+    final box = Hive.box(boxName);
+    await box.clear();
+  }
+
+  @override
+  Future<void> setValue({String? key, data, String? boxName}) async {
+    final box = Hive.box(boxName!);
+    await box.put(key, data);
+  }
+
+  @override
+  Future<void> deleteLastValue(String boxName) async {
+    final box = Hive.box(boxName);
+    final lastItemKey = box.keys.last;
+    await box.delete(lastItemKey);
+  }
+
+  @override
+  dynamic getLastValue(String boxName) {
+    final box = Hive.box(boxName);
+    final lastItemKey = box.keys.last;
+    return box.get(lastItemKey);
+  }
+
+  @override
+  Future<void> removeWhere(
+      String key, String boxName, bool Function(dynamic) condition) async {
+    final box = Hive.box(boxName);
+    final item = box.get(key);
+    if (item != null && condition(item)) {
+      await box.delete(key);
+    }
   }
 }

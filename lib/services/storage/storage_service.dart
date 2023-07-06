@@ -1,44 +1,30 @@
-import '../../features/recipes/domain/recipe.dart';
-
-/// Static class for defining keys for storing values
-class StorageKeys {
-  static const String currentLocale = 'current_locale';
-}
-
-/// Abstract class defining [StorageService] structure
-/* abstract class StorageService {
-  /// Delete value by key
-  void deleteValue(String recipeId);
-
-  /// Get all keys and values
-  dynamic getAll();
-
-  // Get lenght
-  int getLength();
-
-  bool hasValue(String id);
-
-  /// Store new value
-  Future<void> setValue({Recipe recipe});
-} */
 abstract class StorageService {
   /// Delete value by key
-  Future<void> deleteValue(String key);
+  Future<void> deleteValue(String key, String boxName);
+
+  Future<void> deleteLastValue(String boxName);
 
   /// Get value by key
-  dynamic getValue(String key);
+  dynamic getValue(String key, String boxName);
+
+  dynamic getLastValue(String boxName);
 
   /// Get all keys and values
-  dynamic getAll();
+  dynamic getAll(String boxName);
 
   /// Check if key has value
-  bool hasValue(String key);
+  bool hasValue(String key, String boxName);
 
   // Get lenght
-  int getLength();
+  int getLength(String boxName);
 
-  Future<void> deleteAll();
+  Future<void> deleteAll(String boxName);
+
+  Future<void> insertValue({int index, data, String boxName});
 
   /// Store new value
-  Future<void> setValue({String key, Recipe recipe});
+  Future<void> setValue({String key, data, String boxName});
+
+  Future<void> removeWhere(
+      String key, String boxName, bool Function(dynamic) condition);
 }
