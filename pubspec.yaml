@@ -49,7 +49,7 @@ flutter:
 
   assets:
     - assets/avatars/
-    - assets/challanges/
+    - assets/challenges/
     - assets/icons/
     - assets/onboarding/
 

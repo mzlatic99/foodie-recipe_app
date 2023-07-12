@@ -1,151 +1,150 @@
-import 'package:foodie/common/scaffold_with_bottom_nav.dart';
-import 'package:foodie/features/authentification/data/auth_repository.dart';
-import 'package:go_router/go_router.dart';
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
+import '../features/authentification/data/auth_repository.dart';
 import '../features/authentification/presentation/log_in/log_in_screen.dart';
 import '../features/authentification/presentation/sign_up/sign_up_screen.dart';
 import '../features/challenges/presentation/challenges_page.dart';
 import '../features/friends/friends_page.dart';
 import '../features/onboarding/presentation/onboarding.dart';
-import '../features/profile/profile_page.dart';
+import '../features/profile/presentation/profile_page.dart';
 import '../features/recipes/domain/recipe.dart';
 import '../features/recipes/presentation/home_page/home_page.dart';
 import '../features/recipes/presentation/recipe_details/recipe_details_page.dart';
 import '../features/recipes/presentation/recipe_steps/recipe_steps_page.dart';
 import '../features/recipes/presentation/saved_recipes/saved_recipes_page.dart';
 import 'app_route.dart';
-
-final _rootNavigatorKey = GlobalKey<NavigatorState>();
-final _shellNavigatorHomeKey =
-    GlobalKey<NavigatorState>(debugLabel: 'shellHome');
-final _shellNavigatorChallangesKey =
-    GlobalKey<NavigatorState>(debugLabel: 'shellChallanges');
-final _shellNavigatorSavedKey =
-    GlobalKey<NavigatorState>(debugLabel: 'shellSaved');
-final _shellNavigatorFriendsKey =
-    GlobalKey<NavigatorState>(debugLabel: 'shellFriends');
-final _shellNavigatorProfileKey =
-    GlobalKey<NavigatorState>(debugLabel: 'shellProfile');
+import 'not_found_page.dart';
+import 'scaffold_with_bottom_nav.dart';
 
 final goRouterProvider = Provider<GoRouter>((ref) {
+  final _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
+  final _shellNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'shell');
   final auth = ref.watch(authRepositoryProvider);
-
   return GoRouter(
       initialLocation: '/',
       debugLogDiagnostics: true,
+      errorBuilder: (context, state) => const NotFoundPage(),
       navigatorKey: _rootNavigatorKey,
       redirect: (context, state) {
         final user = auth.currentUser;
         final isLoggedIn = user != null;
-        if (isLoggedIn) {
-          if (state.location == '/') return '/home';
+        if (!isLoggedIn) {
+          if (state.location == '/') return '/onboarding';
         }
         return null;
       },
-      routes: [
-        GoRoute(
-            path: '/',
-            name: AppRoute.onboarding.name,
-            pageBuilder: (context, state) => const MaterialPage(
-                  child: Onboarding(),
-                ),
-            routes: [
+      routes: <RouteBase>[
+        ShellRoute(
+            navigatorKey: _shellNavigatorKey,
+            pageBuilder: (context, state, child) {
+              return NoTransitionPage(
+                  key: state.pageKey,
+                  child: ScaffoldWithBottomNavBar(
+                      key: state.pageKey, child: child));
+            },
+            routes: <RouteBase>[
               GoRoute(
-                path: 'signup',
-                name: AppRoute.signup.name,
-                pageBuilder: (context, state) => const MaterialPage(
-                  child: SignUpScreen(),
-                ),
-              ),
-              GoRoute(
-                path: 'login',
-                name: AppRoute.login.name,
-                pageBuilder: (context, state) => const MaterialPage(
-                  child: LogInScreen(),
-                ),
-              ),
-              StatefulShellRoute.indexedStack(
-                  builder: (context, state, navigationShell) =>
-                      ScaffoldWithBottomNavBar(child: navigationShell),
-                  branches: [
-                    StatefulShellBranch(
-                        navigatorKey: _shellNavigatorHomeKey,
-                        routes: [
+                  path: '/',
+                  name: AppRoute.home.name,
+                  pageBuilder: (context, state) {
+                    return NoTransitionPage(
+                      key: state.pageKey,
+                      child: HomePage(
+                        key: state.pageKey,
+                      ),
+                    );
+                  },
+                  routes: <RouteBase>[
+                    GoRoute(
+                        path: 'detail/:id',
+                        name: AppRoute.detail.name,
+                        pageBuilder: (context, state) {
+                          final recipe = state.extra as Recipe;
+                          return NoTransitionPage(
+                            key: state.pageKey,
+                            child: RecipeDetailsPage(
+                                key: state.pageKey, recipe: recipe),
+                          );
+                        },
+                        routes: <RouteBase>[
                           GoRoute(
-                            path: 'home',
-                            parentNavigatorKey: _shellNavigatorHomeKey,
-                            name: AppRoute.home.name,
-                            builder: (context, state) {
-                              return const HomePage();
+                            path: 'steps',
+                            name: AppRoute.steps.name,
+                            pageBuilder: (context, state) {
+                              final recipe = state.extra as Recipe;
+                              return NoTransitionPage(
+                                key: state.pageKey,
+                                child: RecipeStepsPage(
+                                    key: state.pageKey, recipe: recipe),
+                              );
                             },
-                          ),
+                          )
                         ]),
-                    StatefulShellBranch(
-                        navigatorKey: _shellNavigatorChallangesKey,
-                        routes: [
-                          GoRoute(
-                            path: 'challanges',
-                            name: AppRoute.challanges.name,
-                            builder: (context, state) {
-                              return const ChallangesPage();
-                            },
-                          ),
-                        ]),
-                    StatefulShellBranch(
-                        navigatorKey: _shellNavigatorSavedKey,
-                        routes: [
-                          GoRoute(
-                            path: 'saved',
-                            name: AppRoute.saved.name,
-                            builder: (context, state) {
-                              return SavedRecipesPage();
-                            },
-                          ),
-                        ]),
-                    StatefulShellBranch(
-                        navigatorKey: _shellNavigatorFriendsKey,
-                        routes: [
-                          GoRoute(
-                            path: 'friends',
-                            name: AppRoute.friends.name,
-                            builder: (context, state) {
-                              return const FriendsPage();
-                            },
-                          ),
-                        ]),
-                    StatefulShellBranch(
-                        navigatorKey: _shellNavigatorProfileKey,
-                        routes: [
-                          GoRoute(
-                            path: 'profile',
-                            name: AppRoute.profile.name,
-                            builder: (context, state) {
-                              return const ProfilePage();
-                            },
-                          ),
-                        ])
                   ]),
               GoRoute(
-                  path: 'detail/:id',
-                  name: AppRoute.detail.name,
-                  parentNavigatorKey: _rootNavigatorKey,
-                  builder: (context, state) {
-                    final recipe = state.extra as Recipe;
-                    return RecipeDetailsPage(recipe: recipe);
-                  },
-                  routes: [
-                    GoRoute(
-                      path: 'steps',
-                      name: AppRoute.steps.name,
-                      parentNavigatorKey: _rootNavigatorKey,
-                      builder: (context, state) {
-                        final recipe = state.extra as Recipe;
-                        return RecipeStepsPage(recipe: recipe);
-                      },
-                    )
-                  ])
+                path: '/challanges',
+                name: AppRoute.challenges.name,
+                pageBuilder: (context, state) {
+                  return NoTransitionPage(
+                    key: state.pageKey,
+                    child: ChallengesPage(key: state.pageKey),
+                  );
+                },
+              ),
+              GoRoute(
+                path: '/saved',
+                name: AppRoute.saved.name,
+                pageBuilder: (context, state) {
+                  return NoTransitionPage(
+                    key: state.pageKey,
+                    child: SavedRecipesPage(
+                      key: state.pageKey,
+                    ),
+                  );
+                },
+              ),
+              GoRoute(
+                path: '/friends',
+                name: AppRoute.friends.name,
+                pageBuilder: (context, state) {
+                  return NoTransitionPage(
+                    key: state.pageKey,
+                    child: FriendsPage(key: state.pageKey),
+                  );
+                },
+              ),
+              GoRoute(
+                path: '/profile',
+                name: AppRoute.profile.name,
+                pageBuilder: (context, state) {
+                  return NoTransitionPage(
+                    key: state.pageKey,
+                    child: ProfilePage(key: state.pageKey),
+                  );
+                },
+              ),
             ]),
+        GoRoute(
+          path: '/onboarding',
+          name: AppRoute.onboarding.name,
+          parentNavigatorKey: _rootNavigatorKey,
+          builder: (context, state) => const Onboarding(),
+        ),
+        GoRoute(
+          path: '/signup',
+          name: AppRoute.signup.name,
+          parentNavigatorKey: _rootNavigatorKey,
+          builder: (context, state) => const SignUpScreen(),
+        ),
+        GoRoute(
+          path: '/login',
+          name: AppRoute.login.name,
+          parentNavigatorKey: _rootNavigatorKey,
+          builder: (context, state) => const LogInScreen(),
+        ),
       ]);
 });

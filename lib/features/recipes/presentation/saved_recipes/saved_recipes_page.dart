@@ -5,17 +5,15 @@ import 'package:foodie/constants/app_constants.dart';
 import 'package:foodie/localization/string_hardcoded_extension.dart';
 import 'package:foodie/providers/providers.dart';
 import 'package:foodie/router/router_context_extension.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../../../theme/theme.dart';
 
 class SavedRecipesPage extends ConsumerWidget {
-  SavedRecipesPage({super.key});
-  final box = Hive.box('favorite_recipes');
+  const SavedRecipesPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final savedRecipes = ref.watch(storageServiceProvider);
+    final storageService = ref.watch(storageServiceProvider);
     final imageSize = MediaQuery.of(context).size.width * 0.35;
     return WillPopScope(
       onWillPop: () async => false,
@@ -33,10 +31,11 @@ class SavedRecipesPage extends ConsumerWidget {
               Expanded(
                 child: ListView.builder(
                     shrinkWrap: true,
-                    itemCount: savedRecipes.getLength(StorageBox.favoritesBox),
+                    itemCount:
+                        storageService.getLength(StorageBox.favoritesBox),
                     itemBuilder: (context, index) {
                       final recipe =
-                          savedRecipes.getAll(StorageBox.favoritesBox)[index];
+                          storageService.getAll(StorageBox.favoritesBox)[index];
                       return Padding(
                         padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
                         child: GestureDetector(

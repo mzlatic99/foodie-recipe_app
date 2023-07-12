@@ -1,39 +1,77 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:foodie/features/authentification/data/auth_repository.dart';
-import 'package:foodie/router/app_router.dart';
-import '../../../router/app_route.dart';
+import 'package:foodie/services/storage/hive_storage_service.dart';
+import '../../../constants/app_constants.dart';
 
 class AuthController extends StateNotifier<AsyncValue<void>> {
   AuthController({required this.ref}) : super(const AsyncLoading());
   final Ref ref;
 
-  void signIn(String email, String password) async {
+  int selectedAvatarIndex = 0;
+
+  void setSelectedAvatarIndex(int index) {
+    selectedAvatarIndex = index;
+  }
+
+  Future<bool> signIn(String email, String password) async {
     state = const AsyncValue.loading();
-    state = await AsyncValue.guard(
-        () => ref.read(authRepositoryProvider).signInWithEmailAndPassword(
-              email,
-              password,
-            ));
-    if (state.hasError == false) {
-      ref.read(goRouterProvider).replaceNamed(AppRoute.home.name);
+    try {
+      final user = await ref
+          .read(authRepositoryProvider)
+          .signInWithEmailAndPassword(email, password);
+
+      if (user != null) {
+        final hiveStorageService = HiveStorageService();
+        hiveStorageService.user = user.uid;
+        if (hiveStorageService.user != '') {
+          hiveStorageService.openBox(StorageBox.favoritesBox);
+          hiveStorageService.openBox(StorageBox.challengesBox);
+          hiveStorageService.openBox(StorageBox.pointsBox);
+          hiveStorageService.openBox(StorageBox.rewardsBox);
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    } catch (e, stack) {
+      state = AsyncValue.error(e.toString(), stack);
+      return false;
     }
   }
 
-  void createUser(String email, String password) async {
+  Future<bool> createUser(
+      String name, String email, String password, String avatar) async {
     state = const AsyncValue.loading();
-    state = await AsyncValue.guard(
-        () => ref.read(authRepositoryProvider).createUserWithEmailAndPassword(
-              email,
-              password,
-            ));
-    if (state.hasError == false) {
-      ref.read(goRouterProvider).replaceNamed(AppRoute.home.name);
-    }
-  }
-
-  Future<void> signOut() {
     final authRepository = ref.read(authRepositoryProvider);
-    return authRepository.signOut();
+    try {
+      final user = await authRepository.createUserWithEmailAndPassword(
+        name,
+        email,
+        password,
+        avatar,
+      );
+
+      if (user != null) {
+        final hiveStorageService = HiveStorageService();
+        hiveStorageService.user = user.uid;
+        if (hiveStorageService.user != '') {
+          hiveStorageService.openBox(StorageBox.favoritesBox);
+          hiveStorageService.openBox(StorageBox.challengesBox);
+          hiveStorageService.openBox(StorageBox.pointsBox);
+          hiveStorageService.openBox(StorageBox.rewardsBox);
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    } catch (e, stack) {
+      state = AsyncValue.error(e.toString(), stack);
+      return false;
+    }
   }
 }
 

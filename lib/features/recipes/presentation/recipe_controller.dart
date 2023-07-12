@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../domain/recipe_list.dart';
 import '../data/http_recipe_repository.dart';
@@ -17,6 +18,10 @@ class RecipeController extends StateNotifier<AsyncValue<RecipeList>> {
   }
   final HttpRecipeRepository recipeListRepository;
   final Ref ref;
+
+  FutureOr<void> build() {
+    // nothing to do
+  }
 
   Future<void> getRecipes() async {
     state = const AsyncLoading();

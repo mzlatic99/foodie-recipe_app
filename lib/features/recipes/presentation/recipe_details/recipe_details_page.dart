@@ -21,6 +21,7 @@ class RecipeDetailsPage extends StatelessWidget {
         label: 'Kuhaj!',
         style: TextStyles.mainButton,
         onPressed: () => context.pushStepsPage(recipe: recipe),
+        backgorundColor: ThemeColors.primary,
       ),
       body: CustomScrollView(
         slivers: [

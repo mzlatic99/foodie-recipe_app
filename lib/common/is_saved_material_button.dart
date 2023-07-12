@@ -18,9 +18,10 @@ class IsSavedMaterialButton extends ConsumerStatefulWidget {
 class _IsSavedMaterialButtonState extends ConsumerState<IsSavedMaterialButton> {
   @override
   Widget build(BuildContext context) {
-    final isSaved = ref
-        .watch(storageServiceProvider)
-        .hasValue(widget.recipe.id.toString(), StorageBox.favoritesBox);
+    final storageService = ref.read(storageServiceProvider);
+
+    final isSaved = storageService.hasValue(
+        widget.recipe.id.toString(), StorageBox.favoritesBox);
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -28,9 +29,9 @@ class _IsSavedMaterialButtonState extends ConsumerState<IsSavedMaterialButton> {
               ? ref.read(storageServiceProvider).deleteValue(
                   widget.recipe.id.toString(), StorageBox.favoritesBox)
               : ref.read(storageServiceProvider).setValue(
-                  key: widget.recipe.id.toString(),
-                  data: widget.recipe,
-                  boxName: StorageBox.favoritesBox);
+                  widget.recipe.id.toString(),
+                  widget.recipe,
+                  StorageBox.favoritesBox);
         });
       },
       child: Align(

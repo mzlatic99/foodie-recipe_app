@@ -3,6 +3,7 @@ import 'package:foodie/constants/app_constants.dart';
 import 'package:foodie/features/challenges/data/challenges_data.dart';
 
 import '../../../providers/providers.dart';
+import '../../../services/points/points.dart';
 import '../domain/challenge.dart';
 
 final challengeControllerProvider =
@@ -21,75 +22,48 @@ class ChallengesController extends StateNotifier<List<dynamic>> {
 
   int get numberOfChallengesDisplayed => 3;
 
+  int get numberOfCompletedChallenges =>
+      _challenges.where((challenge) => challenge.completed).length;
+
   List<dynamic> get challenges => _challenges;
   int get challengesLength => _challenges.length;
 
-  void replaceChallenge(Challenge challengeToBeReplaced, int index) {
-    _challenges.removeAt(index);
-
-    final storageServices = ref.watch(storageServiceProvider);
-
-    for (Challenge challenge in _challenges) {
-      storageServices.setValue(
-          key: challenge.id.toString(),
-          data: challenge,
-          boxName: StorageBox.challangesBox);
+  Future<void> replaceChallenge(
+      Challenge challengeToBeReplaced, int index) async {
+    final storageServices = ref.read(storageServiceProvider);
+    final challengesBox = storageServices.getAll(StorageBox.challengesBox);
+    if (challengesBox.length == 0) {
+      for (Challenge challenge in _challenges) {
+        await ref.watch(storageServiceProvider).setValue(
+            challenge.id.toString(), challenge, StorageBox.challengesBox);
+      }
+      await storageServices.deleteValue(
+          challengeToBeReplaced.id.toString(), StorageBox.challengesBox);
     }
 
-    state = storageServices.getAll(StorageBox.challangesBox);
+    state = storageServices.getAll(StorageBox.challengesBox);
   }
 
-  void updateProgress(
-      Challenge challenge, List<Challenge> displayedChallenges) {
+  void updateProgress(Challenge challenge) {
     challenge.progress++;
-
+    final points = ref.read(pointsProvider);
     if (challenge.progress >= challenge.quantity) {
       challenge.completed = true;
+
+      points.addPoints(Points.challengePoints);
     }
 
     if (challenge.completed) {
-      replaceChallenge(challenge, 3);
+      //Give a price to user which is a badge that is shown in profile page
     }
   }
 
-  void saveChallenges() {
-    ref.watch(storageServiceProvider).deleteAll(StorageBox.challangesBox);
-    for (Challenge challenge in _challenges) {
-      ref.watch(storageServiceProvider).setValue(
-          key: challenge.id.toString(),
-          data: challenge,
-          boxName: StorageBox.challangesBox);
-    }
+  void resetChallenges() {
+    final initialChallenges = ref.read(challengesDataProvider);
+    _challenges.clear();
+    _challenges.addAll(initialChallenges);
+    state = _challenges.toList();
   }
-
-  /* void replaceChallenge(Challenge challengeToBeReplaced, int index) {
-    final storageServices = ref.watch(storageServiceProvider);
-    if (storageServices.getLength(StorageBox.challangesBox) > 3) {
-      storageServices.deleteValue(
-          challengeToBeReplaced.id.toString(), StorageBox.challangesBox);
-
-      _challengesStorage
-          .removeWhere((element) => element.id == challengeToBeReplaced.id);
-      _challengesStorage.removeLast();
-      final replacementChallenge =
-          storageServices.getLastValue(StorageBox.challangesBox);
-      storageServices.deleteLastValue(StorageBox.challangesBox);
-
-      final newChallenge = Challenge(
-        id: replacementChallenge.id,
-        name: replacementChallenge.name,
-        icon: replacementChallenge.icon,
-        description: replacementChallenge.description,
-        quantity: replacementChallenge.quantity,
-        points: replacementChallenge.points,
-        progress: replacementChallenge.progress,
-      );
-      storageServices.insertValue(
-          index: index, data: newChallenge, boxName: StorageBox.challangesBox);
-    }
-
-    state = storageServices.getAll(StorageBox.challangesBox);
-  } */
 
   DateTime currentWeekMonday(DateTime date) =>
       DateTime(date.year, date.month, date.day - (date.weekday - 1));

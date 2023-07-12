@@ -1,9 +1,9 @@
-import 'dart:io';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:foodie/features/authentification/data/auth_repository.dart';
 import 'package:foodie/services/storage/hive_storage_service.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'constants/app_constants.dart';
@@ -15,10 +15,12 @@ import 'features/recipes/domain/recipe_ingredients/measurement.dart';
 import 'features/recipes/domain/recipe_ingredients/section.dart';
 import 'features/recipes/domain/recipe_ingredients/unit.dart';
 import 'features/recipes/domain/recipe_instruction/recipe_instruction.dart';
+import 'features/rewards/domain/reward.dart';
 import 'firebase_options.dart';
 import 'providers/providers.dart';
 import 'router/app_router.dart';
 import 'theme/theme.dart';
+/* import 'package:stack_trace/stack_trace.dart' as stack_trace; */
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -44,24 +46,46 @@ void main() async {
   Hive.registerAdapter(MeasurementAdapter());
   Hive.registerAdapter(UnitAdapter());
   Hive.registerAdapter(ChallengeAdapter());
+  Hive.registerAdapter(RewardAdapter());
   final hiveStorageService = HiveStorageService();
-  await hiveStorageService.openBox(StorageBox.favoritesBox);
-  await hiveStorageService.openBox(StorageBox.challangesBox);
 
-  ProcessSignal.sigterm.watch().listen((_) async {
-    await hiveStorageService.closeBox(StorageBox.favoritesBox);
-    await hiveStorageService.closeBox(StorageBox.challangesBox);
-    exit(0);
-  });
+  try {
+    final user = AuthRepository(FirebaseAuth.instance).currentUser;
+    if (user != null) {
+      hiveStorageService.user = user.uid;
+      if (hiveStorageService.user != '') {
+        if (!hiveStorageService.isBoxOpen(StorageBox.favoritesBox)) {
+          hiveStorageService.openBox(StorageBox.favoritesBox);
+        }
+        if (!hiveStorageService.isBoxOpen(StorageBox.challengesBox)) {
+          hiveStorageService.openBox(StorageBox.challengesBox);
+        }
+        if (!hiveStorageService.isBoxOpen(StorageBox.pointsBox)) {
+          hiveStorageService.openBox(StorageBox.pointsBox);
+        }
+        if (!hiveStorageService.isBoxOpen(StorageBox.rewardsBox)) {
+          hiveStorageService.openBox(StorageBox.rewardsBox);
+        }
+      }
+    } else {
+      throw Exception('User not logged in.');
+    }
+  } catch (e) {
+    print('Error initializing app: $e');
+  }
 
   runApp(
     ProviderScope(
-      overrides: [
-        storageServiceProvider.overrideWith((ref) => hiveStorageService)
-      ],
+      overrides: [storageServiceProvider.overrideWithValue(hiveStorageService)],
       child: const Foodie(),
     ),
   );
+
+/*   FlutterError.demangleStackTrace = (StackTrace stack) {
+    if (stack is stack_trace.Trace) return stack.vmTrace;
+    if (stack is stack_trace.Chain) return stack.toTrace().vmTrace;
+    return stack;
+  }; */
 }
 
 // ignore: must_be_immutable

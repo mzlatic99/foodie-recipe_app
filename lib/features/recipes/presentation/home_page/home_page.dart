@@ -2,7 +2,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:foodie/features/authentification/data/auth_repository.dart';
-import 'package:foodie/router/router_context_extension.dart';
 import 'package:foodie/services/api/api_error.dart';
 import '../recipe_controller.dart';
 import '../../../../theme/theme.dart';
@@ -14,9 +13,23 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final recipeList = ref.watch(recipeControllerProvider);
+    final recipeController = ref.watch(recipeControllerProvider);
     final auth = ref.read(authRepositoryProvider);
-
+    ref.listen<AsyncValue>(
+      recipeControllerProvider,
+      ((previous, state) {
+        if (state is AsyncError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                state.error.toString(),
+              ),
+              backgroundColor: ThemeColors.primary,
+            ),
+          );
+        }
+      }),
+    );
     return WillPopScope(
       onWillPop: () async {
         SystemNavigator.pop();
@@ -36,7 +49,7 @@ class HomePage extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Pozdrav, ${auth.currentUser?.email}',
+                          'Pozdrav, ${auth.currentUser?.displayName}',
                           style: TextStyles.text,
                           textAlign: TextAlign.left,
                         ),
@@ -51,37 +64,32 @@ class HomePage extends ConsumerWidget {
                     ),
                   ),
                   Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        auth.signOut();
-                        context.goLogIn();
-                      },
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SvgPicture.asset(
-                                Assets.avatars.male3,
-                                width: 50,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(
+                              auth.currentUser?.photoURL ??
+                                  Assets.avatars.avatar0,
+                              width: 50,
+                            ),
+                            Text(
+                              'Bodovi',
+                              style: TextStyles.subtitle,
+                            ),
+                            Text(
+                              '10 / 20',
+                              style: TextStyles.points.copyWith(
+                                fontSize: 12,
                               ),
-                              Text(
-                                'Bodovi',
-                                style: TextStyles.subtitle,
-                              ),
-                              Text(
-                                '10 / 20',
-                                style: TextStyles.points.copyWith(
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
-                  )
+                  ),
                 ],
               ),
               const SizedBox(
@@ -118,7 +126,7 @@ class HomePage extends ConsumerWidget {
                   ),
                 ),
               ),
-              recipeList.when(
+              recipeController.when(
                 data: (recipes) => RecipesGridWidget(data: recipes),
                 error: (e, __) => Text(
                   (e as ApiError).toString(),
@@ -126,7 +134,9 @@ class HomePage extends ConsumerWidget {
                   style: TextStyles.title,
                 ),
                 loading: () => const Center(
-                  child: CircularProgressIndicator(),
+                  child: CircularProgressIndicator(
+                    color: ThemeColors.primary,
+                  ),
                 ),
               ),
             ],

@@ -34,68 +34,76 @@ class _OnboardingState extends ConsumerState<Onboarding> {
   Widget build(BuildContext context) {
     final pageIndex = ref.watch(onBoardingPageProvider);
     OnboardingRepository onBoardingRepository = OnboardingRepository();
-    return Scaffold(
-      body: SafeArea(
-          child: Column(
-        children: [
-          Expanded(
-            child: PageView.builder(
-              physics: const ScrollPhysics(parent: PageScrollPhysics()),
-              itemCount: onBoardingRepository.data.length,
-              controller: _pageController,
-              onPageChanged: (value) =>
-                  ref.read(onBoardingPageProvider.notifier).state = value,
-              itemBuilder: (context, index) => SizedBox(
-                height: MediaQuery.of(context).size.height / 2,
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: OnboardContent(
-                        asset: onBoardingRepository.data[index].image,
-                        title: onBoardingRepository.data[index].title,
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        body: SafeArea(
+            child: Column(
+          children: [
+            Expanded(
+              child: PageView.builder(
+                physics: const ScrollPhysics(parent: PageScrollPhysics()),
+                itemCount: onBoardingRepository.data.length,
+                controller: _pageController,
+                onPageChanged: (value) =>
+                    ref.read(onBoardingPageProvider.notifier).state = value,
+                itemBuilder: (context, index) => SizedBox(
+                  height: MediaQuery.of(context).size.height / 2,
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: OnboardContent(
+                          asset: onBoardingRepository.data[index].image,
+                          title: onBoardingRepository.data[index].title,
+                        ),
                       ),
-                    ),
-                    index == 4
-                        ? Column(
-                            children: [
-                              LogInSignUpButton(
-                                color: ThemeColors.main,
-                                label: 'Postojeći član',
-                                onPressed: () {
-                                  context.goLogIn();
-                                },
+                      index == 4
+                          ? Column(children: [
+                              Padding(
+                                padding: const EdgeInsets.all(20),
+                                child: LogInSignUpButton(
+                                  color: ThemeColors.main,
+                                  label: 'Postojeći član',
+                                  onPressed: () {
+                                    context.pushLogIn();
+                                  },
+                                ),
                               ),
-                              LogInSignUpButton(
-                                color: ThemeColors.primary,
-                                label: 'Novi Član',
-                                onPressed: () {
-                                  context.goSignUp();
-                                },
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(20, 0, 20, 40),
+                                child: LogInSignUpButton(
+                                  color: ThemeColors.primary,
+                                  label: 'Novi Član',
+                                  onPressed: () {
+                                    context.pushSignUp();
+                                  },
+                                ),
                               ),
-                            ],
-                          )
-                        : const SizedBox.shrink(),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ...List.generate(
-                onBoardingRepository.data.length,
-                (index) => Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5),
-                  child: DotIndicator(
-                    isActive: index == pageIndex,
+                            ])
+                          : const SizedBox.shrink(),
+                    ],
                   ),
                 ),
               ),
-            ],
-          ),
-        ],
-      )),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ...List.generate(
+                  onBoardingRepository.data.length,
+                  (index) => Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                    child: DotIndicator(
+                      isActive: index == pageIndex,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        )),
+      ),
     );
   }
 }

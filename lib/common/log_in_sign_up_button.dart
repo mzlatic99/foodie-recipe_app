@@ -16,25 +16,21 @@ class LogInSignUpButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 50),
-      child: Container(
-        height: 50,
-        width: double.infinity,
-        margin: const EdgeInsets.symmetric(horizontal: 20),
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            elevation: 0,
-            backgroundColor: color,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
-            ),
+    return SizedBox(
+      height: 50,
+      width: double.infinity,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          elevation: 0,
+          backgroundColor: color,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
           ),
-          onPressed: onPressed,
-          child: Text(
-            label,
-            style: TextStyles.mainButton,
-          ),
+        ),
+        onPressed: onPressed,
+        child: Text(
+          label,
+          style: TextStyles.mainButton,
         ),
       ),
     );

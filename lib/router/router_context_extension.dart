@@ -4,12 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../features/recipes/domain/recipe.dart';
 import 'app_route.dart';
 
-/// Extension on [BuildContext] to simplify navigation
 extension RouterContextExtension on BuildContext {
-  void pop() {
-    GoRouter.of(this).pop();
-  }
-
   String currentLocation() {
     return GoRouter.of(this).location;
   }
@@ -20,13 +15,93 @@ extension RouterContextExtension on BuildContext {
     );
   }
 
+  void goChallenges() {
+    GoRouter.of(this).goNamed(
+      AppRoute.challenges.name,
+    );
+  }
+
+  void pushChallenges() {
+    GoRouter.of(this).pushNamed(
+      AppRoute.challenges.name,
+    );
+  }
+
+  void goSaved() {
+    GoRouter.of(this).goNamed(
+      AppRoute.saved.name,
+    );
+  }
+
+  void pushSaved() {
+    GoRouter.of(this).pushNamed(
+      AppRoute.saved.name,
+    );
+  }
+
+  void goFriends() {
+    GoRouter.of(this).goNamed(
+      AppRoute.friends.name,
+    );
+  }
+
+  void pushFriends() {
+    GoRouter.of(this).pushNamed(
+      AppRoute.friends.name,
+    );
+  }
+
+  void goProfile() {
+    GoRouter.of(this).goNamed(
+      AppRoute.profile.name,
+    );
+  }
+
+  void pushProfile() {
+    GoRouter.of(this).pushNamed(
+      AppRoute.profile.name,
+    );
+  }
+
+  void pushHome() {
+    GoRouter.of(this).pushNamed(
+      AppRoute.home.name,
+    );
+  }
+
+  void pushOnboarding() {
+    GoRouter.of(this).pushNamed(
+      AppRoute.onboarding.name,
+    );
+  }
+
+  void signOutAndPop() {
+    GoRouter.of(this).pushNamed(AppRoute.onboarding.name);
+  }
+
+  void pushOnboardingAndRemoveUntil() {
+    GoRouter.of(this).pushReplacementNamed(AppRoute.onboarding.name);
+  }
+
   void goLogIn() {
+    GoRouter.of(this).goNamed(
+      AppRoute.login.name,
+    );
+  }
+
+  void pushLogIn() {
     GoRouter.of(this).pushNamed(
       AppRoute.login.name,
     );
   }
 
   void goSignUp() {
+    GoRouter.of(this).goNamed(
+      AppRoute.signup.name,
+    );
+  }
+
+  void pushSignUp() {
     GoRouter.of(this).pushNamed(
       AppRoute.signup.name,
     );
@@ -49,10 +124,4 @@ extension RouterContextExtension on BuildContext {
         extra: recipe,
         pathParameters: {'id': '${recipe.id}'},
       );
-
-  void goSavedRecipes() {
-    GoRouter.of(this).goNamed(
-      AppRoute.saved.name,
-    );
-  }
 }

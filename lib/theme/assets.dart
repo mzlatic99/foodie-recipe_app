@@ -2,33 +2,33 @@
 
 class Assets {
   static _Avatars avatars = _Avatars();
-  static _Challanges challanges = _Challanges();
+  static _Challenges challenges = _Challenges();
   static _Icons icons = _Icons();
   static _Images images = _Images();
 }
 
 class _Avatars {
-  String female1 = 'assets/avatars/female1.svg';
-  String female2 = 'assets/avatars/female2.svg';
-  String female3 = 'assets/avatars/female3.svg';
-  String female4 = 'assets/avatars/female4.svg';
-  String male1 = 'assets/avatars/male1.svg';
-  String male2 = 'assets/avatars/male2.svg';
-  String male3 = 'assets/avatars/male3.svg';
-  String male4 = 'assets/avatars/male4.svg';
+  String avatar0 = 'assets/avatars/avatar0.svg';
+  String avatar1 = 'assets/avatars/avatar1.svg';
+  String avatar2 = 'assets/avatars/avatar2.svg';
+  String avatar3 = 'assets/avatars/avatar3.svg';
+  String avatar4 = 'assets/avatars/avatar4.svg';
+  String avatar5 = 'assets/avatars/avatar5.svg';
+  String avatar6 = 'assets/avatars/avatar6.svg';
+  String avatar7 = 'assets/avatars/avatar7.svg';
 }
 
-class _Challanges {
-  String challage1 = 'assets/challanges/component1.svg';
-  String challage2 = 'assets/challanges/component2.svg';
-  String challage3 = 'assets/challanges/component3.svg';
-  String challage4 = 'assets/challanges/component4.svg';
+class _Challenges {
+  String challenge1 = 'assets/challenges/component1.svg';
+  String challenge2 = 'assets/challenges/component2.svg';
+  String challenge3 = 'assets/challenges/component3.svg';
+  String challenge4 = 'assets/challenges/component4.svg';
 }
 
 class _Icons {
   String add = 'assets/icons/add.svg';
   String back = 'assets/icons/back.svg';
-  String challanges = 'assets/icons/challanges.svg';
+  String challenges = 'assets/icons/challenges.svg';
   String friends = 'assets/icons/friends.svg';
   String home = 'assets/icons/home.svg';
   String image = 'assets/icons/image.svg';
@@ -39,6 +39,12 @@ class _Icons {
   String search = 'assets/icons/search.svg';
   String share = 'assets/icons/share.svg';
   String subtract = 'assets/icons/subtract.svg';
+  String trophy = 'assets/icons/trophy.svg';
+  String time = 'assets/icons/time.svg';
+  String medal = 'assets/icons/medal.svg';
+  String unreceivedBadge = 'assets/icons/unreceivedBadge.svg';
+  String receivedBadge = 'assets/icons/receivedBadge.svg';
+  String signOut = 'assets/icons/signOut.svg';
 }
 
 class _Images {

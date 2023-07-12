@@ -35,9 +35,25 @@ class TextStyles {
     color: ThemeColors.main,
   );
 
+  static TextStyle titleProfile = nunito.copyWith(
+    fontSize: 14,
+    color: ThemeColors.main,
+    fontWeight: FontWeight.bold,
+  );
+
+  static TextStyle seeMoreButtonText = nunito.copyWith(
+    fontSize: 12,
+    color: ThemeColors.primary,
+  );
+
   static TextStyle text = nunito.copyWith(
     fontSize: 12,
     color: ThemeColors.greyText,
+  );
+
+  static TextStyle alertText = nunito.copyWith(
+    fontSize: 12,
+    color: ThemeColors.white,
   );
 
   static TextStyle subtitleWhite = nunito.copyWith(
@@ -63,6 +79,12 @@ class TextStyles {
 
   static TextStyle selectedBottomNavLabel = nunito.copyWith(
     fontSize: 10,
+    color: ThemeColors.primary,
+    fontWeight: FontWeight.bold,
+  );
+
+  static TextStyle secondaryAlertButtonLabel = nunito.copyWith(
+    fontSize: 12,
     color: ThemeColors.primary,
     fontWeight: FontWeight.bold,
   );

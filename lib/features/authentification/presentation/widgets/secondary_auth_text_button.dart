@@ -14,17 +14,14 @@ class SecondaryAuthTextButton extends StatelessWidget {
   final String label;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 20),
-      child: TextButton(
-        onPressed: onPressed,
-        style: TextButton.styleFrom(
-          splashFactory: InkRipple.splashFactory,
-        ),
-        child: Text(
-          label.hardcoded,
-          style: TextStyles.secondaryAuthText,
-        ),
+    return TextButton(
+      onPressed: onPressed,
+      style: TextButton.styleFrom(
+        splashFactory: InkRipple.splashFactory,
+      ),
+      child: Text(
+        label.hardcoded,
+        style: TextStyles.secondaryAuthText,
       ),
     );
   }

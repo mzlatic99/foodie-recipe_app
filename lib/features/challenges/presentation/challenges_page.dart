@@ -9,14 +9,14 @@ import '../../../constants/app_constants.dart';
 import '../../../providers/providers.dart';
 import '../../../theme/theme.dart';
 
-class ChallangesPage extends ConsumerStatefulWidget {
-  const ChallangesPage({super.key});
+class ChallengesPage extends ConsumerStatefulWidget {
+  const ChallengesPage({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _ChallangesPageState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _ChallengesPageState();
 }
 
-class _ChallangesPageState extends ConsumerState<ChallangesPage> {
+class _ChallengesPageState extends ConsumerState<ChallengesPage> {
   @override
   Widget build(BuildContext context) {
     final challengeController = ref.watch(challengeControllerProvider.notifier);
@@ -49,10 +49,10 @@ class _ChallangesPageState extends ConsumerState<ChallangesPage> {
                           challengeController.numberOfChallengesDisplayed,
                       itemBuilder: (context, index) {
                         final challenge =
-                            storageService.getLength(StorageBox.challangesBox) >
+                            storageService.getLength(StorageBox.challengesBox) >
                                     0
                                 ? storageService
-                                    .getAll(StorageBox.challangesBox)[index]
+                                    .getAll(StorageBox.challengesBox)[index]
                                 : challengeController.challenges[index];
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 30),
@@ -120,11 +120,12 @@ class _ChallangesPageState extends ConsumerState<ChallangesPage> {
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                       storageService.getLength(
-                                                  StorageBox.challangesBox) >
+                                                  StorageBox.challengesBox) ==
                                               3
-                                          ? GestureDetector(
-                                              onTap: () {
-                                                challengeController
+                                          ? const SizedBox.shrink()
+                                          : GestureDetector(
+                                              onTap: () async {
+                                                await challengeController
                                                     .replaceChallenge(
                                                         challenge, index);
                                                 setState(() {});
@@ -132,8 +133,7 @@ class _ChallangesPageState extends ConsumerState<ChallangesPage> {
                                               child: SvgPicture.asset(
                                                 Assets.icons.replace,
                                               ),
-                                            )
-                                          : const SizedBox.shrink(),
+                                            ),
                                       Text(
                                         '${challenge.points} bodova',
                                         style: TextStyles.points,

@@ -58,8 +58,11 @@ class RecipeWidget extends ConsumerWidget {
                         ),
                       ),
                       Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: IsSavedMaterialButton(recipe: recipe)),
+                        padding: const EdgeInsets.all(10),
+                        child: IsSavedMaterialButton(
+                          recipe: recipe,
+                        ),
+                      ),
                     ],
                   ),
                 ),

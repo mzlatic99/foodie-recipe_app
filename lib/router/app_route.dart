@@ -6,7 +6,7 @@ enum AppRoute {
   detail,
   steps,
   saved,
-  challanges,
+  challenges,
   friends,
   profile,
 }

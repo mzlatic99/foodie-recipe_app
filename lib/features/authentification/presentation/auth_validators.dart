@@ -2,11 +2,16 @@ import '../../../localization/string_hardcoded_extension.dart';
 import 'string_validators.dart';
 
 mixin AuthValidators {
+  final StringValidator nameSubmitValidator = NonEmptyStringValidator();
   final StringValidator emailSubmitValidator = EmailSubmitRegexValidator();
   final StringValidator passwordRegisterSubmitValidator =
       MinLengthStringValidator(6);
   final StringValidator passwordSignInSubmitValidator =
       NonEmptyStringValidator();
+
+  bool canSubmitName(String name) {
+    return nameSubmitValidator.isValid(name);
+  }
 
   bool canSubmitEmail(String email) {
     return emailSubmitValidator.isValid(email);
@@ -14,6 +19,13 @@ mixin AuthValidators {
 
   bool canSubmitPassword(String password) {
     return passwordSignInSubmitValidator.isValid(password);
+  }
+
+  String? nameErrorText(String name) {
+    final bool showErrorText = !canSubmitName(name);
+    final String errorText =
+        name.isEmpty ? 'Name can\'t be empty' : 'Invalid Name';
+    return showErrorText ? errorText : null;
   }
 
   String? emailErrorText(String email) {

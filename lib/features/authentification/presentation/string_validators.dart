@@ -1,7 +1,5 @@
 import 'package:flutter/services.dart';
 
-/// This file contains some helper functions used for string validation.
-
 abstract class StringValidator {
   bool isValid(String value);
 }
@@ -13,7 +11,6 @@ class RegexValidator implements StringValidator {
   @override
   bool isValid(String value) {
     try {
-      // https://regex101.com/
       final RegExp regex = RegExp(regexSource);
       final Iterable<Match> matches = regex.allMatches(value);
       for (final match in matches) {
@@ -23,7 +20,6 @@ class RegexValidator implements StringValidator {
       }
       return false;
     } catch (e) {
-      // Invalid regex
       assert(false, e.toString());
       return true;
     }
