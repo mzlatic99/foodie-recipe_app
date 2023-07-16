@@ -12,14 +12,14 @@ class ChallengesData {
         id: 0,
         name: 'Početnik',
         icon: Assets.challenges.challenge1,
-        description: 'Skuhaj jedno jelo',
+        description: 'Napravi jelo sa jajima',
         quantity: 1,
         points: 10),
     Challenge(
         id: 1,
         name: 'Vege ljubitelj',
         icon: Assets.challenges.challenge2,
-        description: 'Iskoristi povrće u 3 jela',
+        description: 'Iskoristi rajčicu ili salatu u 3 jela',
         quantity: 3,
         points: 15),
     Challenge(
@@ -33,7 +33,7 @@ class ChallengesData {
         id: 3,
         name: 'Sladokusac',
         icon: Assets.challenges.challenge4,
-        description: 'Napravi 1 desert',
+        description: 'Napravi desert sa čokoladom ili vanilijom',
         quantity: 1,
         points: 10),
   ];

@@ -1,7 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:foodie/providers/providers.dart';
 
 import '../../constants/app_constants.dart';
+import '../../theme/theme_colors.dart';
 
 final pointsProvider = Provider<Points>((ref) {
   return Points(ref);
@@ -11,7 +13,7 @@ class Points {
   Points(this.ref);
   final Ref ref;
   static const int recipePoints = 10;
-  static const int challengePoints = 50;
+  static const int challengePoints = 30;
   static const int pointsPerLevel = 20;
 
   int getTotalPoints() {

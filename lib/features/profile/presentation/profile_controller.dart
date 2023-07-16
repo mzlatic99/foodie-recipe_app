@@ -6,7 +6,6 @@ import '../../../providers/providers.dart';
 import '../../../services/points/points.dart';
 import '../../authentification/data/auth_repository.dart';
 import '../../challenges/domain/challenge.dart';
-import '../../challenges/presentation/challenges_controller.dart';
 import '../../rewards/controller/rewards_controller.dart';
 import '../../rewards/domain/reward.dart';
 
@@ -30,13 +29,16 @@ class ProfileController {
     return level;
   }
 
-  Challenge challengeToDisplay(int index) {
-    final challengeController = ref.watch(challengeControllerProvider.notifier);
+  Challenge completedChallengeBadgeToDisplay(int index) {
     final storageService = ref.watch(storageServiceProvider);
-    final challenge = storageService.getLength(StorageBox.challengesBox) > 0
-        ? storageService.getAll(StorageBox.challengesBox)[index] as Challenge
-        : challengeController.challenges[index] as Challenge;
-    return challenge;
+    List<Challenge> listOfChallengesToDisplay = [];
+    final challengesInBox = storageService.getAll(StorageBox.challengesBox);
+    for (Challenge challenge in challengesInBox) {
+      if (challenge.completed) {
+        listOfChallengesToDisplay.add(challenge);
+      }
+    }
+    return listOfChallengesToDisplay[index];
   }
 
   Reward rewardToDisplay(int index) {

@@ -12,6 +12,6 @@ class RewardsData {
     Reward(id: 1, name: 'Željezni kuhar', description: 'Ispuni 3 misije'),
     Reward(id: 2, name: 'Prep majstor', description: 'Spremi 2 recepta'),
     Reward(id: 3, name: 'Srebni lonac', description: 'Dosegni level 2'),
-    Reward(id: 4, name: 'Srbija', description: 'Dosegni level 3'),
+    Reward(id: 4, name: 'Zlatna pasta', description: 'Dosegni level 3'),
   ];
 }

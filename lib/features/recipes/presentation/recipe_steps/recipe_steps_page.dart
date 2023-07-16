@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:foodie/features/challenges/presentation/challenges_controller.dart';
 import 'package:foodie/features/recipes/presentation/recipe_details/widgets/recipe_detail_app_bar.dart';
 import 'package:foodie/router/app_router.dart';
 import 'package:foodie/services/points/points.dart';
@@ -41,19 +42,19 @@ class RecipeStepsPage extends ConsumerWidget {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
+          /* Text(
             'Otključao si novu hrantastičnu činjenicu',
             style: TextStyles.mainButton,
-          ),
+          ), */
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 15),
             child:
                 Text('+10 bodova', style: TextStyles.secondaryAlertButtonLabel),
           ),
-          Text(
+          /* Text(
             'Špinat sadrži manje željeza nego što se misli. Špinatov ugled kao bogat izvor željeza temelji se na pogrešci u znanstvenom istraživanju iz 19. stoljeća. Tijekom jednog istraživanja, decimalni zarez bio je pogrešno postavljen, što je rezultiralo deset puta većom vrijednošću željeza nego što špinat zapravo sadrži.',
             style: TextStyles.alertText,
-          ),
+          ), */
         ],
       ),
       actions: [
@@ -86,9 +87,12 @@ class RecipeStepsPage extends ConsumerWidget {
             counterRead.state++;
           } else {
             final pointsService = ref.read(pointsProvider);
-            pointsService.addPoints(10);
+            pointsService.addPoints(Points.recipePoints);
+            final challengesController =
+                ref.read(challengeControllerProvider.notifier);
             final rewardsController =
                 ref.read(rewardsControllerProvider.notifier);
+            challengesController.checkChallengesConditions(recipe);
             rewardsController.checkRewardConditions();
             showAlertDialog(ref);
           }

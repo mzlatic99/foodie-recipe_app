@@ -4,6 +4,8 @@ import 'package:foodie/features/challenges/data/challenges_data.dart';
 
 import '../../../providers/providers.dart';
 import '../../../services/points/points.dart';
+import '../../recipes/domain/recipe.dart';
+import '../../recipes/domain/recipe_ingredients/component.dart';
 import '../domain/challenge.dart';
 
 final challengeControllerProvider =
@@ -21,48 +23,115 @@ class ChallengesController extends StateNotifier<List<dynamic>> {
   final Ref ref;
 
   int get numberOfChallengesDisplayed => 3;
-
-  int get numberOfCompletedChallenges =>
-      _challenges.where((challenge) => challenge.completed).length;
+  double get rowHeight => 70;
 
   List<dynamic> get challenges => _challenges;
-  int get challengesLength => _challenges.length;
 
-  Future<void> replaceChallenge(
-      Challenge challengeToBeReplaced, int index) async {
-    final storageServices = ref.read(storageServiceProvider);
-    final challengesBox = storageServices.getAll(StorageBox.challengesBox);
-    if (challengesBox.length == 0) {
-      for (Challenge challenge in _challenges) {
+  Future<void> replaceChallenge(Challenge challengeToBeReplaced) async {
+    final storageService = ref.read(storageServiceProvider);
+    _challenges
+        .removeWhere((element) => element.id == challengeToBeReplaced.id);
+    final challengesBox = storageService.getAll(StorageBox.challengesBox);
+    final isChallengeInBox = storageService.hasValue(
+        challengeToBeReplaced.id.toString(), StorageBox.challengesBox);
+    if (isChallengeInBox) {
+      storageService.deleteValue(
+          challengeToBeReplaced.id.toString(), StorageBox.challengesBox);
+    }
+    for (Challenge challenge in _challenges) {
+      if (!challengesBox.contains(challenge)) {
         await ref.watch(storageServiceProvider).setValue(
             challenge.id.toString(), challenge, StorageBox.challengesBox);
       }
-      await storageServices.deleteValue(
-          challengeToBeReplaced.id.toString(), StorageBox.challengesBox);
     }
-
-    state = storageServices.getAll(StorageBox.challengesBox);
+    state = storageService.getAll(StorageBox.challengesBox);
   }
 
-  void updateProgress(Challenge challenge) {
-    challenge.progress++;
-    final points = ref.read(pointsProvider);
-    if (challenge.progress >= challenge.quantity) {
-      challenge.completed = true;
-
-      points.addPoints(Points.challengePoints);
-    }
-
-    if (challenge.completed) {
-      //Give a price to user which is a badge that is shown in profile page
+  void updateProgress(int challengeId) async {
+    final storageService = ref.read(storageServiceProvider);
+    final challengeInBox = storageService.getValue(
+        challengeId.toString(), StorageBox.challengesBox);
+    if (challengeInBox != null && !challengeInBox.completed) {
+      final points = ref.read(pointsProvider);
+      challengeInBox.progress++;
+      if (challengeInBox.progress == challengeInBox.quantity) {
+        challengeInBox.completed = true;
+        points.addPoints(challengeInBox.points);
+      }
+      await storageService.setValue(challengeInBox.id.toString(),
+          challengeInBox, StorageBox.challengesBox);
+    } else if (challengeInBox == null) {
+      final points = ref.read(pointsProvider);
+      final storageService = ref.read(storageServiceProvider);
+      final challengesInBox = storageService.getAll(StorageBox.challengesBox);
+      if (challengesInBox.isEmpty) {
+        final challengeToUpdate =
+            _challenges.firstWhere((element) => element.id == challengeId);
+        for (Challenge challenge in _challenges) {
+          if (challenge == challengeToUpdate) {
+            challenge.progress++;
+            if (challenge.progress == challenge.quantity) {
+              challenge.completed = true;
+              points.addPoints(challenge.points);
+            }
+          }
+          await storageService.setValue(
+              challenge.id.toString(), challenge, StorageBox.challengesBox);
+        }
+      }
     }
   }
 
-  void resetChallenges() {
-    final initialChallenges = ref.read(challengesDataProvider);
-    _challenges.clear();
-    _challenges.addAll(initialChallenges);
-    state = _challenges.toList();
+  void checkChallengesConditions(Recipe recipe) {
+    final components = recipe.sections[0].components;
+    for (Component component in components) {
+      final ingredient = component.ingredient.name;
+      if (ingredient.toLowerCase().contains('egg')) {
+        updateProgress(0);
+      }
+      if (ingredient.toLowerCase().contains('tomato') ||
+          ingredient.toLowerCase().contains('salad')) {
+        updateProgress(1);
+      }
+      if (ingredient.toLowerCase().contains('chicken')) {
+        updateProgress(2);
+      }
+      if (ingredient.toLowerCase().contains('vanilla') ||
+          ingredient.toLowerCase().contains('chocolate')) {
+        updateProgress(3);
+      }
+    }
+  }
+
+  int getNumberOfCompletedChallenges() {
+    final storageService = ref.read(storageServiceProvider);
+    int completedCount = 0;
+    final challengesInBox = storageService.getAll(StorageBox.challengesBox);
+    for (Challenge challenge in challengesInBox) {
+      if (challenge.completed) {
+        completedCount++;
+      }
+    }
+    return completedCount;
+  }
+
+  bool isChallengeCompleted(int challengeId) {
+    final storageService = ref.read(storageServiceProvider);
+    final challengeInBox = storageService.getValue(
+        challengeId.toString(), StorageBox.challengesBox);
+
+    if (challengeInBox != null) {
+      return challengeInBox.completed;
+    }
+    return false;
+  }
+
+  Challenge challengeToDisplay(int index) {
+    final storageService = ref.watch(storageServiceProvider);
+    final challengesInBox = storageService.getAll(StorageBox.challengesBox);
+    return challengesInBox.isNotEmpty
+        ? challengesInBox[index]
+        : _challenges[index];
   }
 
   DateTime currentWeekMonday(DateTime date) =>

@@ -86,7 +86,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
                         ]),
                   ]),
               GoRoute(
-                path: '/challanges',
+                path: '/challenges',
                 name: AppRoute.challenges.name,
                 pageBuilder: (context, state) {
                   return NoTransitionPage(

@@ -80,7 +80,9 @@ class HomePage extends ConsumerWidget {
                               style: TextStyles.subtitle,
                             ),
                             Text(
-                              '10 / 20',
+                              ref
+                                  .watch(recipeControllerProvider.notifier)
+                                  .displayPoints(),
                               style: TextStyles.points.copyWith(
                                 fontSize: 12,
                               ),

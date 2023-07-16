@@ -8,35 +8,31 @@ class ProfileTitleRow extends StatelessWidget {
     required this.icon,
     required this.label,
     required this.function,
-    required this.secondLabel,
   });
 
   final String icon;
   final String label;
   final void Function()? function;
-  final String secondLabel;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        SvgPicture.asset(icon),
-        const SizedBox(
-          width: 15,
-        ),
-        Expanded(
-          child: Text(
-            label,
-            style: TextStyles.titleProfile,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 15),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          SvgPicture.asset(icon),
+          const SizedBox(
+            width: 15,
           ),
-        ),
-        secondLabel == ''
-            ? const SizedBox.shrink()
-            : TextButton(
-                onPressed: function,
-                child: Text(secondLabel, style: TextStyles.seeMoreButtonText))
-      ],
+          Expanded(
+            child: Text(
+              label,
+              style: TextStyles.titleProfile,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

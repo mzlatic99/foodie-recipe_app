@@ -49,15 +49,12 @@ class _ChallengesPageState extends ConsumerState<ChallengesPage> {
                           challengeController.numberOfChallengesDisplayed,
                       itemBuilder: (context, index) {
                         final challenge =
-                            storageService.getLength(StorageBox.challengesBox) >
-                                    0
-                                ? storageService
-                                    .getAll(StorageBox.challengesBox)[index]
-                                : challengeController.challenges[index];
+                            challengeController.challengeToDisplay(index);
+
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 30),
                           child: SizedBox(
-                            height: 60,
+                            height: challengeController.rowHeight,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -77,16 +74,18 @@ class _ChallengesPageState extends ConsumerState<ChallengesPage> {
                                     children: [
                                       Text(challenge.name,
                                           style: TextStyles.subtitle),
-                                      Text(
-                                        challenge.description,
-                                        style: TextStyles.text.copyWith(
-                                            color: ThemeColors.inactiveStep),
+                                      Flexible(
+                                        child: Text(
+                                          challenge.description,
+                                          style: TextStyles.text.copyWith(
+                                              color: ThemeColors.inactiveStep),
+                                        ),
                                       ),
                                       Row(
                                         children: [
                                           Expanded(
                                             child: Text(
-                                              '0',
+                                              challenge.progress.toString(),
                                               style: TextStyles.text,
                                             ),
                                           ),
@@ -96,7 +95,9 @@ class _ChallengesPageState extends ConsumerState<ChallengesPage> {
                                               borderRadius:
                                                   BorderRadius.circular(16),
                                               child: LinearProgressIndicator(
-                                                  value: 0,
+                                                  value: (challenge.progress /
+                                                          challenge.quantity)
+                                                      .toDouble(),
                                                   minHeight: 15,
                                                   color: ThemeColors.main,
                                                   backgroundColor:
@@ -114,32 +115,39 @@ class _ChallengesPageState extends ConsumerState<ChallengesPage> {
                                   ),
                                 ),
                                 Expanded(
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      storageService.getLength(
-                                                  StorageBox.challengesBox) ==
-                                              3
-                                          ? const SizedBox.shrink()
-                                          : GestureDetector(
-                                              onTap: () async {
-                                                await challengeController
-                                                    .replaceChallenge(
-                                                        challenge, index);
-                                                setState(() {});
-                                              },
-                                              child: SvgPicture.asset(
-                                                Assets.icons.replace,
-                                              ),
+                                  child: challenge.completed
+                                      ? SvgPicture.asset(
+                                          Assets.icons.check,
+                                          alignment: Alignment.centerRight,
+                                        )
+                                      : Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.end,
+                                          children: [
+                                            storageService.getLength(StorageBox
+                                                            .challengesBox) ==
+                                                        3 ||
+                                                    challenge.progress > 0
+                                                ? const SizedBox.shrink()
+                                                : GestureDetector(
+                                                    onTap: () async {
+                                                      await challengeController
+                                                          .replaceChallenge(
+                                                              challenge);
+                                                      setState(() {});
+                                                    },
+                                                    child: SvgPicture.asset(
+                                                      Assets.icons.replace,
+                                                    ),
+                                                  ),
+                                            Text(
+                                              '${challenge.points} bodova',
+                                              style: TextStyles.points,
                                             ),
-                                      Text(
-                                        '${challenge.points} bodova',
-                                        style: TextStyles.points,
-                                      ),
-                                    ],
-                                  ),
+                                          ],
+                                        ),
                                 )
                               ],
                             ),

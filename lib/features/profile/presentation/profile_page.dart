@@ -26,9 +26,10 @@ class ProfilePage extends ConsumerWidget {
       onWillPop: () async => false,
       child: SafeArea(
         child: Scaffold(
+            extendBodyBehindAppBar: true,
             appBar: AppBar(
-              forceMaterialTransparency: true,
               automaticallyImplyLeading: false,
+              forceMaterialTransparency: true,
               actions: [
                 IconButton(
                   padding: const EdgeInsets.only(right: 10),
@@ -98,27 +99,40 @@ class ProfilePage extends ConsumerWidget {
                       icon: Assets.icons.medal,
                       label: 'Medalje',
                       function: () {},
-                      secondLabel: '',
                     ),
-                    challengeController.numberOfCompletedChallenges > 0
+                    challengeController.getNumberOfCompletedChallenges() > 0
                         ? SizedBox(
-                            height: 80,
+                            height: 70,
                             width: double.infinity,
                             child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
                                 shrinkWrap: true,
                                 itemCount: challengeController
-                                    .numberOfCompletedChallenges,
+                                    .getNumberOfCompletedChallenges(),
                                 itemBuilder: (context, index) {
                                   final challenge = profileController
-                                      .challengeToDisplay(index);
+                                      .completedChallengeBadgeToDisplay(index);
                                   return challenge.completed
                                       ? Padding(
                                           padding:
                                               const EdgeInsets.only(right: 15),
-                                          child: SvgPicture.asset(
-                                            challenge.icon,
-                                            width: 50,
+                                          child: GestureDetector(
+                                            onTap: () =>
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                              SnackBar(
+                                                content:
+                                                    Text(challenge.description),
+                                                backgroundColor:
+                                                    ThemeColors.main,
+                                                duration: const Duration(
+                                                    milliseconds: 800),
+                                              ),
+                                            ),
+                                            child: SvgPicture.asset(
+                                              challenge.icon,
+                                              width: 50,
+                                            ),
                                           ),
                                         )
                                       : const SizedBox.shrink();
@@ -129,9 +143,9 @@ class ProfilePage extends ConsumerWidget {
                       icon: Assets.icons.trophy,
                       label: 'Nagrade',
                       function: () {},
-                      secondLabel: 'Vidi sve',
                     ),
                     ListView.builder(
+                        padding: EdgeInsets.zero,
                         shrinkWrap: true,
                         itemCount: rewardsController.rewards.length,
                         physics: const NeverScrollableScrollPhysics(),
@@ -156,7 +170,6 @@ class ProfilePage extends ConsumerWidget {
                       icon: Assets.icons.time,
                       label: 'Povijest gurmanskih napada',
                       function: () {},
-                      secondLabel: 'Vidi sve',
                     ),
                   ],
                 ),

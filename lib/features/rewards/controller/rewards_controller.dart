@@ -63,7 +63,7 @@ class RewardsController extends StateNotifier<List<dynamic>> {
   int getCompletedChallengesCount() {
     final completedChallenges = ref
         .read(challengeControllerProvider.notifier)
-        .numberOfCompletedChallenges;
+        .getNumberOfCompletedChallenges();
     return completedChallenges;
   }
 
