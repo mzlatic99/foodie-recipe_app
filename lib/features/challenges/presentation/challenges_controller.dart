@@ -27,43 +27,44 @@ class ChallengesController extends StateNotifier<List<dynamic>> {
 
   List<dynamic> get challenges => _challenges;
 
-  Future<void> replaceChallenge(Challenge challengeToBeReplaced) async {
-    final storageService = ref.read(storageServiceProvider);
+  void replaceChallenge(Challenge challengeToBeReplaced) {
+    final storageService = ref.watch(storageServiceProvider);
     _challenges
         .removeWhere((element) => element.id == challengeToBeReplaced.id);
-    final challengesBox = storageService.getAll(StorageBox.challengesBox);
-    final isChallengeInBox = storageService.hasValue(
+    final isChallengeInBox = storageService.hasValue<Challenge>(
         challengeToBeReplaced.id.toString(), StorageBox.challengesBox);
     if (isChallengeInBox) {
-      storageService.deleteValue(
+      storageService.deleteValue<Challenge>(
           challengeToBeReplaced.id.toString(), StorageBox.challengesBox);
     }
     for (Challenge challenge in _challenges) {
-      if (!challengesBox.contains(challenge)) {
-        await ref.watch(storageServiceProvider).setValue(
+      if (!storageService.hasValue<Recipe>(
+          challenge.id.toString(), StorageBox.favoritesBox)) {
+        ref.watch(storageServiceProvider).setValue<Challenge>(
             challenge.id.toString(), challenge, StorageBox.challengesBox);
       }
     }
-    state = storageService.getAll(StorageBox.challengesBox);
+    state = storageService.getAll<Challenge>(StorageBox.challengesBox);
   }
 
-  void updateProgress(int challengeId) async {
-    final storageService = ref.read(storageServiceProvider);
-    final challengeInBox = storageService.getValue(
+  void updateProgress(int challengeId) {
+    final storageService = ref.watch(storageServiceProvider);
+    final challengeInBox = storageService.getValue<Challenge>(
         challengeId.toString(), StorageBox.challengesBox);
     if (challengeInBox != null && !challengeInBox.completed) {
-      final points = ref.read(pointsProvider);
+      final points = ref.watch(pointsProvider);
       challengeInBox.progress++;
       if (challengeInBox.progress == challengeInBox.quantity) {
         challengeInBox.completed = true;
         points.addPoints(challengeInBox.points);
       }
-      await storageService.setValue(challengeInBox.id.toString(),
+      storageService.setValue<Challenge>(challengeInBox.id.toString(),
           challengeInBox, StorageBox.challengesBox);
     } else if (challengeInBox == null) {
-      final points = ref.read(pointsProvider);
-      final storageService = ref.read(storageServiceProvider);
-      final challengesInBox = storageService.getAll(StorageBox.challengesBox);
+      final points = ref.watch(pointsProvider);
+      final storageService = ref.watch(storageServiceProvider);
+      final challengesInBox =
+          storageService.getAll<Challenge>(StorageBox.challengesBox);
       if (challengesInBox.isEmpty) {
         final challengeToUpdate =
             _challenges.firstWhere((element) => element.id == challengeId);
@@ -75,7 +76,7 @@ class ChallengesController extends StateNotifier<List<dynamic>> {
               points.addPoints(challenge.points);
             }
           }
-          await storageService.setValue(
+          storageService.setValue<Challenge>(
               challenge.id.toString(), challenge, StorageBox.challengesBox);
         }
       }
@@ -104,9 +105,10 @@ class ChallengesController extends StateNotifier<List<dynamic>> {
   }
 
   int getNumberOfCompletedChallenges() {
-    final storageService = ref.read(storageServiceProvider);
+    final storageService = ref.watch(storageServiceProvider);
     int completedCount = 0;
-    final challengesInBox = storageService.getAll(StorageBox.challengesBox);
+    final challengesInBox =
+        storageService.getAll<Challenge>(StorageBox.challengesBox);
     for (Challenge challenge in challengesInBox) {
       if (challenge.completed) {
         completedCount++;
@@ -115,20 +117,10 @@ class ChallengesController extends StateNotifier<List<dynamic>> {
     return completedCount;
   }
 
-  bool isChallengeCompleted(int challengeId) {
-    final storageService = ref.read(storageServiceProvider);
-    final challengeInBox = storageService.getValue(
-        challengeId.toString(), StorageBox.challengesBox);
-
-    if (challengeInBox != null) {
-      return challengeInBox.completed;
-    }
-    return false;
-  }
-
   Challenge challengeToDisplay(int index) {
     final storageService = ref.watch(storageServiceProvider);
-    final challengesInBox = storageService.getAll(StorageBox.challengesBox);
+    final challengesInBox =
+        storageService.getAll<Challenge>(StorageBox.challengesBox);
     return challengesInBox.isNotEmpty
         ? challengesInBox[index]
         : _challenges[index];

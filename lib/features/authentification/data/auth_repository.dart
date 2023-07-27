@@ -3,11 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../domain/auth.dart';
 
-final authRepositoryProvider =
-    Provider<AuthRepository>((ref) => AuthRepository(FirebaseAuth.instance));
-
-final authStateChangesProvider = StreamProvider<User?>(
-    (ref) => AuthRepository(FirebaseAuth.instance).authStateChanges);
+final authRepositoryProvider = Provider.autoDispose<AuthRepository>(
+    (ref) => AuthRepository(FirebaseAuth.instance));
 
 class AuthRepository extends Auth {
   AuthRepository(this._auth);
@@ -26,17 +23,8 @@ class AuthRepository extends Auth {
         password: password,
       );
       return authResult.user;
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        throw FirebaseAuthException(code: e.code, message: 'User not found');
-      } else if (e.code == 'wrong-password') {
-        throw FirebaseAuthException(code: e.code, message: 'Wrong password');
-      } else {
-        throw FirebaseAuthException(
-          code: e.code,
-          message: e.code,
-        );
-      }
+    } catch (e) {
+      rethrow;
     }
   }
 
@@ -76,8 +64,6 @@ class AuthRepository extends Auth {
   Future<void> signOut() async {
     await _auth.signOut();
   }
-
-  Stream<User?> get authStateChanges => _auth.authStateChanges();
 
   @override
   User? get currentUser => _auth.currentUser;

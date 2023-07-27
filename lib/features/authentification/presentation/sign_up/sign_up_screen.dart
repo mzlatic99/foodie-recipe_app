@@ -6,6 +6,7 @@ import 'package:foodie/features/authentification/presentation/auth_controller.da
 import 'package:foodie/localization/string_hardcoded_extension.dart';
 import 'package:foodie/router/app_router.dart';
 import 'package:foodie/router/router_context_extension.dart';
+import 'package:foodie/utils/async_value_ui_extension.dart';
 
 import '../../../../common/log_in_sign_up_button.dart';
 import '../../../../router/app_route.dart';
@@ -14,7 +15,7 @@ import '../widgets/secondary_auth_text_button.dart';
 import '../auth_validators.dart';
 
 class SignUpScreen extends ConsumerStatefulWidget {
-  const SignUpScreen({super.key});
+  const SignUpScreen({Key? key}) : super(key: key);
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _SignUpScreenState();
@@ -29,9 +30,9 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen>
 
   bool _submitted = false;
 
-  String get email => _emailController.text;
-  String get password => _passwordController.text;
-  String get name => _nameController.text;
+  String get email => _emailController.text.trim();
+  String get password => _passwordController.text.trim();
+  String get name => _nameController.text.trim();
 
   @override
   void dispose() {
@@ -45,9 +46,10 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen>
     setState(() => _submitted = true);
     FocusScope.of(context).unfocus();
     if (_formKey.currentState!.validate()) {
-      final controller = ref.read(authControllerProvider.notifier);
-      final isSigned = controller.createUser(name, email, password, avatarUrl);
-      return isSigned;
+      final controller = ref.watch(authControllerProvider.notifier);
+      final success =
+          await controller.createUser(name, email, password, avatarUrl);
+      return success;
     }
     return false;
   }
@@ -56,20 +58,10 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen>
   Widget build(BuildContext context) {
     ref.listen<AsyncValue>(
       authControllerProvider,
-      ((previous, state) {
-        if (state is AsyncError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                state.error.toString(),
-              ),
-              backgroundColor: ThemeColors.primary,
-            ),
-          );
-        }
-      }),
+      (_, state) => state.showSnackbarOnError(context),
     );
     final goRouter = ref.read(goRouterProvider);
+    final authController = ref.watch(authControllerProvider);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -121,6 +113,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen>
                               keyboardType: TextInputType.emailAddress,
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
+                              obscureText: true,
                               validator: (email) => !_submitted
                                   ? null
                                   : emailErrorText(email ?? ''),
@@ -220,27 +213,40 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen>
                                 },
                               ),
                             ),
-                            LogInSignUpButton(
-                              color: ThemeColors.primary,
-                              label: 'Pridruži me'.hardcoded,
-                              onPressed: () async {
-                                final selectedIndex = ref
-                                    .read(authControllerProvider.notifier)
-                                    .selectedAvatarIndex;
-                                final avatarUrl =
-                                    AvatarData.avatars[selectedIndex];
+                            authController.isLoading
+                                ? const Center(
+                                    child: CircularProgressIndicator(
+                                      color: ThemeColors.primary,
+                                    ),
+                                  )
+                                : LogInSignUpButton(
+                                    color: ThemeColors.primary,
+                                    label: 'Pridruži me'.hardcoded,
+                                    onPressed: authController.isLoading
+                                        ? null
+                                        : () async {
+                                            final selectedIndex = ref
+                                                .read(authControllerProvider
+                                                    .notifier)
+                                                .selectedAvatarIndex;
+                                            final avatarUrl = AvatarData
+                                                .avatars[selectedIndex];
 
-                                final canEnter =
-                                    await _submit(avatarUrl, context);
-                                if (canEnter) {
-                                  goRouter.pushNamed(AppRoute.home.name);
-                                }
-                              },
-                            ),
+                                            final isSubmitted = await _submit(
+                                                avatarUrl, context);
+                                            if (isSubmitted) {
+                                              goRouter
+                                                  .goNamed(AppRoute.home.name);
+                                              _emailController.clear();
+                                              _passwordController.clear();
+                                              _nameController.clear();
+                                            }
+                                          },
+                                  ),
                             SecondaryAuthTextButton(
                               label: 'Imaš profil? Ulogiraj se!'.hardcoded,
                               onPressed: () {
-                                context.pushLogIn();
+                                context.goLogIn();
                               },
                             ),
                           ]

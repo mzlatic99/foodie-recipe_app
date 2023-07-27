@@ -27,6 +27,7 @@ class _Challenges {
 
 class _Icons {
   String add = 'assets/icons/add.svg';
+  String addFriend = 'assets/icons/addFriend.svg';
   String back = 'assets/icons/back.svg';
   String challenges = 'assets/icons/challenges.svg';
   String check = 'assets/icons/check.svg';

@@ -8,9 +8,11 @@ import 'package:intl/intl.dart';
 import '../../../constants/app_constants.dart';
 import '../../../providers/providers.dart';
 import '../../../theme/theme.dart';
+import '../../authentification/data/auth_repository.dart';
+import '../domain/challenge.dart';
 
 class ChallengesPage extends ConsumerStatefulWidget {
-  const ChallengesPage({super.key});
+  const ChallengesPage({Key? key}) : super(key: key);
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ChallengesPageState();
@@ -19,6 +21,8 @@ class ChallengesPage extends ConsumerStatefulWidget {
 class _ChallengesPageState extends ConsumerState<ChallengesPage> {
   @override
   Widget build(BuildContext context) {
+    final auth = ref.watch(authRepositoryProvider);
+    ref.read(storageServiceProvider).user = auth.currentUser!.email!;
     final challengeController = ref.watch(challengeControllerProvider.notifier);
     final storageService = ref.watch(storageServiceProvider);
     return WillPopScope(
@@ -126,14 +130,15 @@ class _ChallengesPageState extends ConsumerState<ChallengesPage> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.end,
                                           children: [
-                                            storageService.getLength(StorageBox
-                                                            .challengesBox) ==
+                                            storageService.getLength<Challenge>(
+                                                            StorageBox
+                                                                .challengesBox) ==
                                                         3 ||
                                                     challenge.progress > 0
                                                 ? const SizedBox.shrink()
                                                 : GestureDetector(
-                                                    onTap: () async {
-                                                      await challengeController
+                                                    onTap: () {
+                                                      challengeController
                                                           .replaceChallenge(
                                                               challenge);
                                                       setState(() {});

@@ -1,4 +1,5 @@
 enum AppRoute {
+  root,
   onboarding,
   signup,
   login,

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:foodie/router/app_router.dart';
+import 'package:foodie/router/scaffold_with_bottom_nav_controller.dart';
+import 'package:go_router/go_router.dart';
 
 import '../providers/providers.dart';
 import '../theme/theme.dart';
@@ -21,35 +22,33 @@ class ScaffoldWithBottomNavBar extends ConsumerStatefulWidget {
 
 class _ScaffoldWithBottomNavBarState
     extends ConsumerState<ScaffoldWithBottomNavBar> {
-  int _selectedIndex = 0;
-
   void _tap(int index) {
+    ref.read(scaffoldBottomNavControllerProvider.notifier).setPosition(index);
     ref.invalidate(ingredientMultiplierProvider);
     ref.invalidate(instructionsCounterProvider);
-    final goRouter = ref.read(goRouterProvider);
     if (index == 0) {
-      goRouter.pushNamed(AppRoute.home.name);
+      context.goNamed(AppRoute.home.name);
     } else if (index == 1) {
-      goRouter.pushNamed(AppRoute.challenges.name);
+      context.goNamed(AppRoute.challenges.name);
     } else if (index == 2) {
-      goRouter.pushNamed(AppRoute.saved.name);
+      context.goNamed(AppRoute.saved.name);
     } else if (index == 3) {
-      goRouter.pushNamed(AppRoute.friends.name);
+      context.goNamed(AppRoute.friends.name);
     } else {
-      goRouter.pushNamed(AppRoute.profile.name);
+      context.goNamed(AppRoute.profile.name);
     }
-    setState(() => _selectedIndex = index);
   }
 
   @override
   Widget build(BuildContext context) {
+    int position = ref.watch(scaffoldBottomNavControllerProvider);
     return Scaffold(
       body: widget.child,
       bottomNavigationBar: BottomNavigationBar(
         elevation: 6,
         unselectedItemColor: ThemeColors.main,
         selectedItemColor: ThemeColors.primary,
-        currentIndex: _selectedIndex,
+        currentIndex: position,
         onTap: (index) => _tap(index),
         items: [
           BottomNavigationBarItem(

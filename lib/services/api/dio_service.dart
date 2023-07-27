@@ -43,7 +43,7 @@ class DioService {
       );
 
       return builder(response.data);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       try {
         final errorData = e.response?.data as Map<String, dynamic>;
 

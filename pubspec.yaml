@@ -32,6 +32,9 @@ dependencies:
   fraction: ^5.0.0
   hive_flutter: ^1.1.0
   intl: ^0.18.1
+  flutter_chat_ui: ^1.6.9
+  cloud_firestore: ^4.8.3
+  restart_app: ^1.2.1
 
 dev_dependencies:
   flutter_test:

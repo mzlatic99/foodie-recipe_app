@@ -3,38 +3,35 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:foodie/features/authentification/data/auth_repository.dart';
 import 'package:foodie/services/api/api_error.dart';
+import 'package:foodie/services/points/points.dart';
+import 'package:foodie/utils/async_value_ui_extension.dart';
+import '../../../../providers/providers.dart';
 import '../recipe_controller.dart';
 import '../../../../theme/theme.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'widgets/recipes_grid_widget.dart';
 
-class HomePage extends ConsumerWidget {
-  const HomePage({super.key});
+class HomePage extends ConsumerStatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() => _HomePageState();
+}
+
+class _HomePageState extends ConsumerState<HomePage> {
+  @override
+  Widget build(BuildContext context) {
+    final auth = ref.watch(authRepositoryProvider);
+    ref.read(storageServiceProvider).user = auth.currentUser!.email!;
     final recipeController = ref.watch(recipeControllerProvider);
-    final auth = ref.read(authRepositoryProvider);
+    final totalPoints = ref.watch(pointsProvider);
+
     ref.listen<AsyncValue>(
       recipeControllerProvider,
-      ((previous, state) {
-        if (state is AsyncError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                state.error.toString(),
-              ),
-              backgroundColor: ThemeColors.primary,
-            ),
-          );
-        }
-      }),
+      (_, state) => state.showSnackbarOnError(context),
     );
     return WillPopScope(
-      onWillPop: () async {
-        SystemNavigator.pop();
-        return false;
-      },
+      onWillPop: () async => false,
       child: Scaffold(
         body: SafeArea(
           minimum: const EdgeInsets.fromLTRB(20, 40, 20, 0),
@@ -80,12 +77,8 @@ class HomePage extends ConsumerWidget {
                               style: TextStyles.subtitle,
                             ),
                             Text(
-                              ref
-                                  .watch(recipeControllerProvider.notifier)
-                                  .displayPoints(),
-                              style: TextStyles.points.copyWith(
-                                fontSize: 12,
-                              ),
+                              '${totalPoints.getTotalPoints()}',
+                              style: TextStyles.mainText,
                             ),
                           ],
                         ),

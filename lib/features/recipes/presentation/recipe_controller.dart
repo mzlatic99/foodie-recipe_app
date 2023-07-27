@@ -1,6 +1,4 @@
-import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../services/points/points.dart';
 import '../domain/recipe_list.dart';
 import '../data/http_recipe_repository.dart';
 
@@ -20,23 +18,10 @@ class RecipeController extends StateNotifier<AsyncValue<RecipeList>> {
   final HttpRecipeRepository recipeListRepository;
   final Ref ref;
 
-  FutureOr<void> build() {
-    // nothing to do
-  }
-
-  String displayPoints() {
-    final points = ref.watch(pointsProvider);
-    final totalPoints = points.getTotalPoints();
-    final currentLevel = points.calculateLevel();
-    final nextLevelPoints = (currentLevel * Points.pointsPerLevel);
-    return '$totalPoints / $nextLevelPoints';
-  }
-
   Future<void> getRecipes() async {
     state = const AsyncLoading();
-    state = await AsyncValue.guard(() async {
-      final recipeData =
-          await recipeListRepository.getRecipes(from: 0, size: 8);
+    state = await AsyncValue.guard(() {
+      final recipeData = recipeListRepository.getRecipes(from: 0, size: 8);
       return recipeData;
     });
   }

@@ -7,9 +7,10 @@ import 'package:foodie/providers/providers.dart';
 import 'package:foodie/router/router_context_extension.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../../../theme/theme.dart';
+import '../../domain/recipe.dart';
 
 class SavedRecipesPage extends ConsumerWidget {
-  const SavedRecipesPage({super.key});
+  const SavedRecipesPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -31,11 +32,11 @@ class SavedRecipesPage extends ConsumerWidget {
               Expanded(
                 child: ListView.builder(
                     shrinkWrap: true,
-                    itemCount:
-                        storageService.getLength(StorageBox.favoritesBox),
+                    itemCount: storageService
+                        .getLength<Recipe>(StorageBox.favoritesBox),
                     itemBuilder: (context, index) {
-                      final recipe =
-                          storageService.getAll(StorageBox.favoritesBox)[index];
+                      final recipe = storageService
+                          .getAll<Recipe>(StorageBox.favoritesBox)[index];
                       return Padding(
                         padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
                         child: GestureDetector(

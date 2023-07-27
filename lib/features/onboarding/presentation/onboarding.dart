@@ -9,7 +9,7 @@ import 'widgets/onboarding_content.dart';
 import '../../../providers/providers.dart';
 
 class Onboarding extends ConsumerStatefulWidget {
-  const Onboarding({super.key});
+  const Onboarding({Key? key}) : super(key: key);
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _OnboardingState();
@@ -65,7 +65,7 @@ class _OnboardingState extends ConsumerState<Onboarding> {
                                   color: ThemeColors.main,
                                   label: 'Postojeći član',
                                   onPressed: () {
-                                    context.pushLogIn();
+                                    context.goLogIn();
                                   },
                                 ),
                               ),
@@ -76,7 +76,7 @@ class _OnboardingState extends ConsumerState<Onboarding> {
                                   color: ThemeColors.primary,
                                   label: 'Novi Član',
                                   onPressed: () {
-                                    context.pushSignUp();
+                                    context.goSignUp();
                                   },
                                 ),
                               ),
