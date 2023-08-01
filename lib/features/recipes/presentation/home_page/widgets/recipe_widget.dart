@@ -77,7 +77,7 @@ class RecipeWidget extends ConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '${Points.recipePoints} bodova',
+                        '${Points.recipePoints} points',
                         style: TextStyles.points,
                       ),
                       Text(

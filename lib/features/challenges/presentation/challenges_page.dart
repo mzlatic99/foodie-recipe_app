@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:foodie/features/challenges/presentation/challenges_controller.dart';
-import 'package:foodie/localization/string_hardcoded_extension.dart';
 import 'package:intl/intl.dart';
 
-import '../../../constants/app_constants.dart';
+import '../../../constants/storage_box_constants.dart';
+import '../../../constants/string_constants.dart';
 import '../../../providers/providers.dart';
 import '../../../theme/theme.dart';
 import '../../authentification/data/auth_repository.dart';
@@ -31,7 +31,7 @@ class _ChallengesPageState extends ConsumerState<ChallengesPage> {
         appBar: AppBar(
           automaticallyImplyLeading: false,
           title: Text(
-            'Kulinarske misije'.hardcoded,
+            StringConstants.culinaryMissions,
             style: TextStyles.title,
           ),
         ),
@@ -148,7 +148,7 @@ class _ChallengesPageState extends ConsumerState<ChallengesPage> {
                                                     ),
                                                   ),
                                             Text(
-                                              '${challenge.points} bodova',
+                                              '${challenge.points} points',
                                               style: TextStyles.points,
                                             ),
                                           ],

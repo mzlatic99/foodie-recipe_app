@@ -9,5 +9,7 @@ enum AppRoute {
   saved,
   challenges,
   friends,
+  chat,
   profile,
+  addfriend,
 }

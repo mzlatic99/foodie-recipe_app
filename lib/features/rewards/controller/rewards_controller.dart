@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../constants/app_constants.dart';
+import '../../../constants/storage_box_constants.dart';
 import '../../../providers/providers.dart';
 import '../../../services/points/points.dart';
 import '../../challenges/presentation/challenges_controller.dart';
@@ -53,7 +53,7 @@ class RewardsController extends StateNotifier<AsyncValue<void>> {
   int getTotalPoints() {
     final storageService = ref.watch(storageServiceProvider);
     final totalPointsBox =
-        storageService.getValue<int>('totalPoints', StorageBox.pointsBox);
+        storageService.getValue<int>(Points.pointsBoxKey, StorageBox.pointsBox);
     final totalPoints = ref.watch(pointsProvider);
     return totalPointsBox ?? totalPoints.getTotalPoints();
   }

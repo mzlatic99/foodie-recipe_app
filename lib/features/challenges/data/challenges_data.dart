@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../constants/challenges_data_constants.dart';
 import '../../../theme/theme.dart';
 import '../domain/challenge.dart';
 
@@ -10,30 +11,30 @@ class ChallengesData {
   final List<Challenge> data = [
     Challenge(
         id: 0,
-        name: 'Početnik',
+        name: ChallengesDataConstants.beginner,
         icon: Assets.challenges.challenge1,
-        description: 'Napravi jelo sa jajima',
+        description: ChallengesDataConstants.beginnerDesc,
         quantity: 1,
         points: 10),
     Challenge(
         id: 1,
-        name: 'Vege ljubitelj',
+        name: ChallengesDataConstants.veggieLover,
         icon: Assets.challenges.challenge2,
-        description: 'Iskoristi rajčicu ili salatu u 3 jela',
+        description: ChallengesDataConstants.veggieLoverDesc,
         quantity: 3,
         points: 15),
     Challenge(
         id: 2,
-        name: 'Majstor piletine',
+        name: ChallengesDataConstants.chickenMaster,
         icon: Assets.challenges.challenge3,
-        description: 'Iskoristi piletinu u 3 jela',
+        description: ChallengesDataConstants.chickenMasterDesc,
         quantity: 3,
         points: 15),
     Challenge(
         id: 3,
-        name: 'Sladokusac',
+        name: ChallengesDataConstants.sweetTooth,
         icon: Assets.challenges.challenge4,
-        description: 'Napravi desert sa čokoladom ili vanilijom',
+        description: ChallengesDataConstants.sweetToothDesc,
         quantity: 1,
         points: 10),
   ];

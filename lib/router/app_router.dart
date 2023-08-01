@@ -8,6 +8,8 @@ import '../features/authentification/data/auth_repository.dart';
 import '../features/authentification/presentation/log_in/log_in_screen.dart';
 import '../features/authentification/presentation/sign_up/sign_up_screen.dart';
 import '../features/challenges/presentation/challenges_page.dart';
+import '../features/friends/presentation/add_friend_page/add_friend_page.dart';
+import '../features/friends/presentation/chat_page/chat_page.dart';
 import '../features/friends/presentation/friends_page/friends_page.dart';
 import '../features/onboarding/presentation/onboarding.dart';
 import '../features/profile/presentation/profile_page.dart';
@@ -129,14 +131,41 @@ final goRouterProvider = Provider<GoRouter>((ref) {
                       },
                     ),
                     GoRoute(
-                      path: 'friends',
-                      name: AppRoute.friends.name,
-                      pageBuilder: (context, state) {
-                        return NoTransitionPage(
-                          child: FriendsPage(key: state.pageKey),
-                        );
-                      },
-                    ),
+                        path: 'friends',
+                        name: AppRoute.friends.name,
+                        pageBuilder: (context, state) {
+                          return NoTransitionPage(
+                            child: FriendsPage(key: state.pageKey),
+                          );
+                        },
+                        routes: [
+                          GoRoute(
+                            path: 'chat/:id',
+                            name: AppRoute.chat.name,
+                            pageBuilder: (context, state) {
+                              Map<String, String> args =
+                                  state.extra as Map<String, String>;
+                              return NoTransitionPage(
+                                child: ChatPage(
+                                  key: state.pageKey,
+                                  id: args['id']!,
+                                  name: args['name']!,
+                                ),
+                              );
+                            },
+                          ),
+                          GoRoute(
+                            path: 'addfriend',
+                            name: AppRoute.addfriend.name,
+                            pageBuilder: (context, state) {
+                              return NoTransitionPage(
+                                child: AddFriendPage(
+                                  key: state.pageKey,
+                                ),
+                              );
+                            },
+                          ),
+                        ]),
                     GoRoute(
                       path: 'profile',
                       name: AppRoute.profile.name,

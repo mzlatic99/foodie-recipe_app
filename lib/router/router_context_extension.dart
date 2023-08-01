@@ -107,6 +107,12 @@ extension RouterContextExtension on BuildContext {
     );
   }
 
+  void pushAddFriendPage() {
+    GoRouter.of(this).pushNamed(
+      AppRoute.addfriend.name,
+    );
+  }
+
   void pushStepsPage({
     required Recipe recipe,
   }) =>
@@ -124,4 +130,12 @@ extension RouterContextExtension on BuildContext {
         extra: recipe,
         pathParameters: {'id': '${recipe.id}'},
       );
+
+  void pushChatPage({required String id, required String name}) =>
+      GoRouter.of(this).goNamed(AppRoute.chat.name, extra: {
+        'id': id,
+        'name': name,
+      }, pathParameters: {
+        'id': name
+      });
 }

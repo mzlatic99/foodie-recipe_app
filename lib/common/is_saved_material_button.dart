@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:foodie/constants/app_constants.dart';
+import 'package:foodie/constants/storage_box_constants.dart';
 
 import '../features/recipes/domain/recipe.dart';
 import '../providers/providers.dart';

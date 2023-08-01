@@ -1,11 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:foodie/constants/app_constants.dart';
-import 'package:foodie/localization/string_hardcoded_extension.dart';
+import 'package:foodie/constants/storage_box_constants.dart';
 import 'package:foodie/providers/providers.dart';
 import 'package:foodie/router/router_context_extension.dart';
 import 'package:shimmer/shimmer.dart';
+import '../../../../constants/string_constants.dart';
+import '../../../../services/points/points.dart';
 import '../../../../theme/theme.dart';
 import '../../domain/recipe.dart';
 
@@ -15,14 +16,14 @@ class SavedRecipesPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final storageService = ref.watch(storageServiceProvider);
-    final imageSize = MediaQuery.of(context).size.width * 0.35;
+    final imageSize = MediaQuery.of(context).size.width * 0.3;
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
           title: Text(
-            'Spremljeni recepti'.hardcoded,
+            StringConstants.savedRecipes,
             style: TextStyles.title,
           ),
         ),
@@ -74,7 +75,7 @@ class SavedRecipesPage extends ConsumerWidget {
                                     const SizedBox(
                                       height: 20,
                                     ),
-                                    Text('15 bodova'.hardcoded,
+                                    Text('${Points.recipePoints} points',
                                         style: TextStyles.points)
                                   ],
                                 ),

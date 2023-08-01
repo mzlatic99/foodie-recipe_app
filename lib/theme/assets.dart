@@ -35,6 +35,7 @@ class _Icons {
   String home = 'assets/icons/home.svg';
   String image = 'assets/icons/image.svg';
   String profile = 'assets/icons/profile.svg';
+  String paperPlane = 'assets/icons/paperPlane.svg';
   String replace = 'assets/icons/replace.svg';
   String save = 'assets/icons/save.svg';
   String saved = 'assets/icons/saved.svg';

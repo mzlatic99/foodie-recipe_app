@@ -5,6 +5,9 @@ import 'package:foodie/features/authentification/data/auth_repository.dart';
 import 'package:foodie/services/api/api_error.dart';
 import 'package:foodie/services/points/points.dart';
 import 'package:foodie/utils/async_value_ui_extension.dart';
+import 'package:foodie/utils/widgets/loader_widget.dart';
+import '../../../../common/search_field_widget.dart';
+import '../../../../constants/string_constants.dart';
 import '../../../../providers/providers.dart';
 import '../recipe_controller.dart';
 import '../../../../theme/theme.dart';
@@ -46,7 +49,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Pozdrav, ${auth.currentUser?.displayName}',
+                          '${StringConstants.hello}, ${auth.currentUser?.displayName}',
                           style: TextStyles.text,
                           textAlign: TextAlign.left,
                         ),
@@ -54,7 +57,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                           height: 10,
                         ),
                         Text(
-                          'Pripremi ukusna jela i osvoji nagrade!',
+                          StringConstants.homeMessage,
                           style: TextStyles.homePageMessage,
                         )
                       ],
@@ -73,7 +76,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                               width: 50,
                             ),
                             Text(
-                              'Bodovi',
+                              StringConstants.points,
                               style: TextStyles.subtitle,
                             ),
                             Text(
@@ -90,33 +93,14 @@ class _HomePageState extends ConsumerState<HomePage> {
               const SizedBox(
                 height: 15,
               ),
-              GestureDetector(
-                child: Material(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                    side:
-                        const BorderSide(color: ThemeColors.primary, width: 1),
-                  ),
-                  child: MaterialButton(
-                    onPressed: () {},
-                    child: Row(
-                      children: [
-                        SvgPicture.asset(Assets.icons.search),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Text('Pretraži recepte', style: TextStyles.text),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+              SearchFieldWidget(
+                  onPressed: () {}, label: StringConstants.searchRecipes),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   child: Text(
-                    'Inspiracija',
+                    StringConstants.inspiration,
                     style: TextStyles.title,
                   ),
                 ),
@@ -129,9 +113,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                   style: TextStyles.title,
                 ),
                 loading: () => const Center(
-                  child: CircularProgressIndicator(
-                    color: ThemeColors.primary,
-                  ),
+                  child: Loader(),
                 ),
               ),
             ],

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:foodie/router/router_context_extension.dart';
+import 'package:foodie/utils/widgets/add_space.dart';
 import '../../../../common/main_button_widget.dart';
+import '../../../../constants/string_constants.dart';
 import '../../../../theme/theme.dart';
 import '../../domain/recipe.dart';
 import 'widgets/ingredients_list.dart';
@@ -18,7 +20,7 @@ class RecipeDetailsPage extends StatelessWidget {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: MainButtonWidget(
-        label: 'Kuhaj!',
+        label: StringConstants.cook,
         style: TextStyles.mainButton,
         onPressed: () => context.pushStepsPage(recipe: recipe),
         backgorundColor: ThemeColors.primary,
@@ -35,9 +37,10 @@ class RecipeDetailsPage extends StatelessWidget {
                   recipe.description.isNotEmpty
                       ? RecipeDescription(recipe: recipe)
                       : const SizedBox.shrink(),
-                  const SubtitleHorizontalLine(label: 'Sastojci'),
+                  const SubtitleHorizontalLine(
+                      label: StringConstants.ingredients),
                   IngredientsList(recipe: recipe),
-                  const SubtitleHorizontalLine(label: 'Komentari'),
+                  addVerticalSpace(50),
                 ]
                     .map((e) => Padding(
                           padding: const EdgeInsets.symmetric(vertical: 10),

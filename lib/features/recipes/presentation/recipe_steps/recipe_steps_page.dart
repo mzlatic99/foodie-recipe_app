@@ -7,6 +7,7 @@ import 'package:foodie/router/scaffold_with_bottom_nav_controller.dart';
 import 'package:foodie/services/points/points.dart';
 
 import '../../../../common/main_button_widget.dart';
+import '../../../../constants/string_constants.dart';
 import '../../../../router/app_route.dart';
 import '../../../../theme/theme.dart';
 import '../../../rewards/controller/rewards_controller.dart';
@@ -22,7 +23,7 @@ class RecipeStepsPage extends ConsumerWidget {
 
   showAlertDialog(WidgetRef ref) {
     Widget continueButton = MainButtonWidget(
-      label: 'Nastavi',
+      label: StringConstants.continueLabel,
       style: TextStyles.mainButton,
       onPressed: () {
         ref.watch(goRouterProvider)
@@ -33,7 +34,7 @@ class RecipeStepsPage extends ConsumerWidget {
     );
 
     Widget seeMoreButton = MainButtonWidget(
-      label: 'Vidi nagrade',
+      label: StringConstants.seeRewards,
       style: TextStyles.secondaryAlertButtonLabel,
       onPressed: () {
         ref.watch(goRouterProvider)
@@ -51,7 +52,7 @@ class RecipeStepsPage extends ConsumerWidget {
       backgroundColor: ThemeColors.main,
       title: Center(
         child: Text(
-          'Bravo!',
+          StringConstants.wellDone,
           style: TextStyles.mainButton,
         ),
       ),
@@ -59,7 +60,7 @@ class RecipeStepsPage extends ConsumerWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              '+${Points.recipePoints} bodova od recepta',
+              '+${Points.recipePoints} points from recipes',
               style: TextStyles.secondaryAlertButtonLabel,
             ),
           ]
@@ -98,7 +99,9 @@ class RecipeStepsPage extends ConsumerWidget {
       key: _scaffoldKey,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: MainButtonWidget(
-        label: counterWatch < recipe.instructions.length ? 'Sljedeći' : 'Kraj',
+        label: counterWatch < recipe.instructions.length
+            ? StringConstants.next
+            : StringConstants.end,
         style: TextStyles.mainButton,
         onPressed: () {
           if (counterWatch < recipe.instructions.length) {

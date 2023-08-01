@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 
 import '../domain/auth.dart';
 
@@ -9,7 +11,6 @@ final authRepositoryProvider = Provider.autoDispose<AuthRepository>(
 class AuthRepository extends Auth {
   AuthRepository(this._auth);
   final FirebaseAuth _auth;
-
   void Function(String)? onUserCreated;
 
   @override
@@ -52,6 +53,13 @@ class AuthRepository extends Auth {
 
         if (onUserCreated != null) {
           onUserCreated!(user.uid);
+          await FirebaseChatCore.instance.createUserInFirestore(
+            types.User(
+              firstName: user.displayName,
+              id: user.uid,
+              imageUrl: user.photoURL,
+            ),
+          );
         }
       }
 

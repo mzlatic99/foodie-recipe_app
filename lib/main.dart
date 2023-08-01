@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:foodie/services/storage/hive_storage_service.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'constants/app_constants.dart';
+import 'constants/storage_box_constants.dart';
 import 'features/authentification/data/auth_repository.dart';
 import 'features/challenges/domain/challenge.dart';
 import 'features/recipes/domain/recipe.dart';

@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../theme/theme.dart';
+import 'package:foodie/utils/widgets/helper_widget.dart';
 
 extension AsyncValueUI on AsyncValue {
   void showSnackbarOnError(BuildContext context) {
     if (!isRefreshing && hasError) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(error.toString()),
-          backgroundColor: ThemeColors.primary,
-        ),
-      );
+      showSnackBar(context, content: error.toString());
     }
   }
 }

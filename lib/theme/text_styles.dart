@@ -92,6 +92,7 @@ class TextStyles {
   static TextStyle unselectedBottomNavLabel = nunito.copyWith(
     fontSize: 10,
     color: ThemeColors.main,
+    fontWeight: FontWeight.bold,
   );
 
   static TextStyle ingredientName = nunito.copyWith(
@@ -109,5 +110,25 @@ class TextStyles {
     fontSize: 12,
     color: ThemeColors.main,
     fontWeight: FontWeight.bold,
+  );
+
+  static TextStyle message = nunito.copyWith(
+    fontSize: 12,
+    color: ThemeColors.white,
+  );
+
+  static TextStyle textFieldStyle = nunito.copyWith(
+    fontSize: 12,
+    color: ThemeColors.main,
+  );
+
+  static TextStyle chatMessageMain = nunito.copyWith(
+    fontSize: 12,
+    color: ThemeColors.main.withOpacity(0.8),
+  );
+
+  static TextStyle chatMessageSender = nunito.copyWith(
+    fontSize: 12,
+    color: ThemeColors.main.withOpacity(0.8),
   );
 }

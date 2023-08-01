@@ -34,7 +34,13 @@ dependencies:
   intl: ^0.18.1
   flutter_chat_ui: ^1.6.9
   cloud_firestore: ^4.8.3
-  restart_app: ^1.2.1
+  firebase_storage: ^11.2.5
+  image_picker: ^1.0.1
+  equatable: ^2.0.5
+  uuid: ^3.0.7
+  flutter_firebase_chat_core: ^1.6.7
+  flutter_chat_types: ^3.6.2
+  flutter_image_compress: ^2.0.4
 
 dev_dependencies:
   flutter_test:

@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:foodie/constants/app_constants.dart';
+import 'package:foodie/constants/storage_box_constants.dart';
 import 'package:foodie/features/authentification/presentation/auth_controller.dart';
 import 'package:foodie/features/challenges/data/challenges_data.dart';
 import 'package:foodie/features/challenges/presentation/challenges_controller.dart';

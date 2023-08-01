@@ -4,8 +4,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:foodie/features/authentification/data/auth_repository.dart';
 import 'package:foodie/features/challenges/presentation/challenges_controller.dart';
 import 'package:foodie/features/rewards/controller/rewards_controller.dart';
+import 'package:foodie/utils/widgets/helper_widget.dart';
 
 import '../../../../theme/theme.dart';
+import '../../../constants/string_constants.dart';
 import '../../../providers/providers.dart';
 import '../../../router/app_route.dart';
 import '../../../router/app_router.dart';
@@ -69,11 +71,11 @@ class ProfilePage extends ConsumerWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'Broj bodova: ',
+                            StringConstants.points,
                             style: TextStyles.text,
                           ),
                           Text(
-                            '${totalPoints.getTotalPoints()}',
+                            ': ${totalPoints.getTotalPoints()}',
                             style: TextStyles.mainText,
                           ),
                         ],
@@ -82,11 +84,11 @@ class ProfilePage extends ConsumerWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'Level: ',
+                            StringConstants.level,
                             style: TextStyles.text,
                           ),
                           Text(
-                            '${totalPoints.calculateLevel()}',
+                            ' ${totalPoints.calculateLevel()}',
                             style: TextStyles.mainText,
                           ),
                         ],
@@ -100,7 +102,7 @@ class ProfilePage extends ConsumerWidget {
                   ),
                   ProfileTitleRow(
                     icon: Assets.icons.medal,
-                    label: 'Medalje',
+                    label: StringConstants.medals,
                     function: () {},
                   ),
                   challengeController.getNumberOfCompletedChallenges() > 0
@@ -119,17 +121,8 @@ class ProfilePage extends ConsumerWidget {
                                   ? Padding(
                                       padding: const EdgeInsets.only(right: 15),
                                       child: GestureDetector(
-                                        onTap: () =>
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                          SnackBar(
-                                            content:
-                                                Text(challenge.description),
-                                            backgroundColor: ThemeColors.main,
-                                            duration: const Duration(
-                                                milliseconds: 800),
-                                          ),
-                                        ),
+                                        onTap: () => showSnackBar(context,
+                                            content: challenge.description),
                                         child: SvgPicture.asset(
                                           challenge.icon,
                                           width: 50,
@@ -143,7 +136,7 @@ class ProfilePage extends ConsumerWidget {
                       : const SizedBox.shrink(),
                   ProfileTitleRow(
                     icon: Assets.icons.trophy,
-                    label: 'Nagrade',
+                    label: StringConstants.rewards,
                     function: () {},
                   ),
                   ListView.builder(
@@ -173,7 +166,7 @@ class ProfilePage extends ConsumerWidget {
                       }),
                   ProfileTitleRow(
                     icon: Assets.icons.time,
-                    label: 'Povijest gurmanskih napada',
+                    label: StringConstants.historyOfDuels,
                     function: () {},
                   ),
                 ],

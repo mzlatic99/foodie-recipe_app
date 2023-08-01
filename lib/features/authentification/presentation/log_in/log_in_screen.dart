@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:foodie/localization/string_hardcoded_extension.dart';
 import 'package:foodie/router/app_router.dart';
 import 'package:foodie/router/router_context_extension.dart';
 import 'package:foodie/utils/async_value_ui_extension.dart';
+import 'package:foodie/utils/widgets/loader_widget.dart';
 
 import '../../../../common/log_in_sign_up_button.dart';
+import '../../../../constants/string_constants.dart';
 import '../../../../router/app_route.dart';
 import '../../../../theme/theme.dart';
 import '../auth_controller.dart';
@@ -81,7 +82,7 @@ class _LogInScreenState extends ConsumerState<LogInScreen> with AuthValidators {
                                   ? null
                                   : emailErrorText(email ?? ''),
                               decoration: InputDecoration(
-                                hintText: 'Email'.hardcoded,
+                                hintText: StringConstants.email,
                                 hintStyle: TextStyles.text,
                                 focusColor: ThemeColors.greyText,
                                 contentPadding: const EdgeInsets.all(15),
@@ -110,7 +111,7 @@ class _LogInScreenState extends ConsumerState<LogInScreen> with AuthValidators {
                                   ? null
                                   : passwordErrorText(password ?? ''),
                               decoration: InputDecoration(
-                                hintText: 'Lozinka'.hardcoded,
+                                hintText: StringConstants.password,
                                 hintStyle: TextStyles.text,
                                 focusColor: ThemeColors.greyText,
                                 contentPadding: const EdgeInsets.all(15),
@@ -132,13 +133,11 @@ class _LogInScreenState extends ConsumerState<LogInScreen> with AuthValidators {
                             ),
                             authController.isLoading
                                 ? const Center(
-                                    child: CircularProgressIndicator(
-                                      color: ThemeColors.primary,
-                                    ),
+                                    child: Loader(),
                                   )
                                 : LogInSignUpButton(
                                     color: ThemeColors.primary,
-                                    label: 'Ulogiraj me'.hardcoded,
+                                    label: StringConstants.login,
                                     onPressed: authController.isLoading
                                         ? null
                                         : () async {
@@ -152,7 +151,7 @@ class _LogInScreenState extends ConsumerState<LogInScreen> with AuthValidators {
                                           },
                                   ),
                             SecondaryAuthTextButton(
-                              label: 'Nemaš profil? Pridruži nam se!'.hardcoded,
+                              label: StringConstants.loginSecondaryButtonLabel,
                               onPressed: () {
                                 context.goSignUp();
                               },

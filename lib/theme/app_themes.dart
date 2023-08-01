@@ -7,6 +7,8 @@ class AppThemes {
         useMaterial3: true,
         primaryColor: ThemeColors.primary,
         scaffoldBackgroundColor: ThemeColors.white,
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
         colorScheme: ColorScheme.fromSwatch(
           backgroundColor: ThemeColors.white,
         ),
@@ -23,6 +25,7 @@ class AppThemes {
           ),
         ),
         bottomNavigationBarTheme: BottomNavigationBarThemeData(
+          type: BottomNavigationBarType.fixed,
           backgroundColor: ThemeColors.white,
           elevation: 6,
           selectedItemColor: ThemeColors.primary,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:foodie/providers/providers.dart';
+import '../../../../../constants/string_constants.dart';
 import '../../../../../theme/theme.dart';
 import '../../../domain/recipe.dart';
 import '../../../domain/recipe_ingredients/measurement.dart';
@@ -29,7 +30,7 @@ class IngredientsList extends ConsumerWidget {
               Expanded(
                 flex: 3,
                 child: Text(
-                  'Broj osoba:'.toUpperCase(),
+                  StringConstants.numberOfServings.toUpperCase(),
                   style: TextStyles.text,
                 ),
               ),
