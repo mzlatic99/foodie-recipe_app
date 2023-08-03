@@ -1,9 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:foodie/providers/providers.dart';
 
 import '../../constants/app_constants.dart';
-import '../../theme/theme_colors.dart';
 
 final pointsProvider = Provider<Points>((ref) {
   return Points(ref);
