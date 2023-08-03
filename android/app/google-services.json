@@ -29,6 +29,13 @@
             {
               "client_id": "708737726793-9jfmuoe8s1dubsskt02r83cbn1suss98.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "708737726793-g1kq4hkuo5434cd8q4uq0o6av8d78r5f.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.foodie"
+              }
             }
           ]
         }

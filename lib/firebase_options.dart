@@ -23,7 +23,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        return ios;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for ios - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -61,15 +64,5 @@ class DefaultFirebaseOptions {
     messagingSenderId: '708737726793',
     projectId: 'foodie-recipe-app',
     storageBucket: 'foodie-recipe-app.appspot.com',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyD2Tpp6NuagawMimMQSfeyFgJ1ZVT40fhI',
-    appId: '1:708737726793:ios:80a8abb27e486ce19fc298',
-    messagingSenderId: '708737726793',
-    projectId: 'foodie-recipe-app',
-    storageBucket: 'foodie-recipe-app.appspot.com',
-    iosClientId: '708737726793-g1kq4hkuo5434cd8q4uq0o6av8d78r5f.apps.googleusercontent.com',
-    iosBundleId: 'com.example.foodie',
   );
 }

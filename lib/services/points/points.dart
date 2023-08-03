@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:foodie/providers/providers.dart';
 
-import '../../constants/app_constants.dart';
+import '../../constants/storage_box_constants.dart';
 
 final pointsProvider = Provider<Points>((ref) {
   return Points(ref);
@@ -13,33 +13,37 @@ class Points {
   static const int recipePoints = 10;
   static const int challengePoints = 30;
   static const int pointsPerLevel = 20;
+  static const String pointsBoxKey = 'totalPoints';
 
   int getTotalPoints() {
-    final storageService = ref.read(storageServiceProvider);
+    final storageService = ref.watch(storageServiceProvider);
     final totalPoints =
-        storageService.getValue('totalPoints', StorageBox.pointsBox) ?? 0;
-    return totalPoints as int;
+        storageService.getValue<int>(pointsBoxKey, StorageBox.pointsBox);
+    if (totalPoints != null) {
+      return totalPoints;
+    }
+    return 0;
   }
 
-  Future<void> addPoints(int points) async {
-    final storageService = ref.read(storageServiceProvider);
+  void addPoints(int points) {
+    final storageService = ref.watch(storageServiceProvider);
     final pointsStorage =
-        storageService.getValue('totalPoints', StorageBox.pointsBox);
+        storageService.getValue<int>(pointsBoxKey, StorageBox.pointsBox);
     if (pointsStorage != null) {
       int totalPointsBox = pointsStorage;
       totalPointsBox += points;
-      await storageService.setValue(
-          'totalPoints', totalPointsBox, StorageBox.pointsBox);
+      storageService.setValue<int>(
+          pointsBoxKey, totalPointsBox, StorageBox.pointsBox);
     } else {
-      await storageService.setValue('totalPoints', 10, StorageBox.pointsBox);
+      storageService.setValue<int>(pointsBoxKey, 10, StorageBox.pointsBox);
     }
   }
 
   int calculateLevel() {
-    final storageService = ref.read(storageServiceProvider);
+    final storageService = ref.watch(storageServiceProvider);
     final int level;
     final pointsStorage =
-        storageService.getValue('totalPoints', StorageBox.pointsBox);
+        storageService.getValue<int>(pointsBoxKey, StorageBox.pointsBox);
     if (pointsStorage != null) {
       level = ((pointsStorage as int) ~/ pointsPerLevel) + 1;
     } else {

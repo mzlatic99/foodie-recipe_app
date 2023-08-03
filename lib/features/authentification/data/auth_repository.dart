@@ -1,18 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 
 import '../domain/auth.dart';
 
-final authRepositoryProvider =
-    Provider<AuthRepository>((ref) => AuthRepository(FirebaseAuth.instance));
-
-final authStateChangesProvider = StreamProvider<User?>(
-    (ref) => AuthRepository(FirebaseAuth.instance).authStateChanges);
+final authRepositoryProvider = Provider.autoDispose<AuthRepository>(
+    (ref) => AuthRepository(FirebaseAuth.instance));
 
 class AuthRepository extends Auth {
   AuthRepository(this._auth);
   final FirebaseAuth _auth;
-
   void Function(String)? onUserCreated;
 
   @override
@@ -26,17 +24,8 @@ class AuthRepository extends Auth {
         password: password,
       );
       return authResult.user;
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        throw FirebaseAuthException(code: e.code, message: 'User not found');
-      } else if (e.code == 'wrong-password') {
-        throw FirebaseAuthException(code: e.code, message: 'Wrong password');
-      } else {
-        throw FirebaseAuthException(
-          code: e.code,
-          message: e.code,
-        );
-      }
+    } catch (e) {
+      rethrow;
     }
   }
 
@@ -64,6 +53,13 @@ class AuthRepository extends Auth {
 
         if (onUserCreated != null) {
           onUserCreated!(user.uid);
+          await FirebaseChatCore.instance.createUserInFirestore(
+            types.User(
+              firstName: user.displayName,
+              id: user.uid,
+              imageUrl: user.photoURL,
+            ),
+          );
         }
       }
 
@@ -76,8 +72,6 @@ class AuthRepository extends Auth {
   Future<void> signOut() async {
     await _auth.signOut();
   }
-
-  Stream<User?> get authStateChanges => _auth.authStateChanges();
 
   @override
   User? get currentUser => _auth.currentUser;

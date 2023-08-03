@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../constants/string_constants.dart';
 import '../../../../../theme/theme.dart';
 import '../../../domain/recipe.dart';
 
@@ -20,7 +21,7 @@ class RecipeDescription extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Text(
-            'Opis recepta',
+            StringConstants.description,
             style: TextStyles.subtitle,
           ),
           Padding(

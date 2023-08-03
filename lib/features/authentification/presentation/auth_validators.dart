@@ -1,4 +1,3 @@
-import '../../../localization/string_hardcoded_extension.dart';
 import 'string_validators.dart';
 
 mixin AuthValidators {
@@ -37,9 +36,8 @@ mixin AuthValidators {
 
   String? passwordErrorText(String password) {
     final bool showErrorText = !canSubmitPassword(password);
-    final String errorText = password.isEmpty
-        ? 'Password can\'t be empty'
-        : 'Password is too short'.hardcoded;
+    final String errorText =
+        password.isEmpty ? 'Password can\'t be empty' : 'Password is too short';
     return showErrorText ? errorText : null;
   }
 }

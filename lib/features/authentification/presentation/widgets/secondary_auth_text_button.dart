@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../../localization/string_hardcoded_extension.dart';
 
 import '../../../../theme/theme.dart';
 
@@ -20,7 +19,7 @@ class SecondaryAuthTextButton extends StatelessWidget {
         splashFactory: InkRipple.splashFactory,
       ),
       child: Text(
-        label.hardcoded,
+        label,
         style: TextStyles.secondaryAuthText,
       ),
     );

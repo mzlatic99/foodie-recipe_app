@@ -3,9 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:foodie/features/challenges/presentation/challenges_controller.dart';
 import 'package:foodie/features/recipes/presentation/recipe_details/widgets/recipe_detail_app_bar.dart';
 import 'package:foodie/router/app_router.dart';
+import 'package:foodie/router/scaffold_with_bottom_nav_controller.dart';
 import 'package:foodie/services/points/points.dart';
 
 import '../../../../common/main_button_widget.dart';
+import '../../../../constants/string_constants.dart';
+import '../../../../router/app_route.dart';
 import '../../../../theme/theme.dart';
 import '../../../rewards/controller/rewards_controller.dart';
 import '../../domain/recipe.dart';
@@ -20,14 +23,28 @@ class RecipeStepsPage extends ConsumerWidget {
 
   showAlertDialog(WidgetRef ref) {
     Widget continueButton = MainButtonWidget(
-      label: 'Nastavi',
+      label: StringConstants.continueLabel,
       style: TextStyles.mainButton,
       onPressed: () {
-        ref.read(goRouterProvider)
+        ref.watch(goRouterProvider)
           ..pop()
           ..pop();
       },
       backgorundColor: ThemeColors.primary,
+    );
+
+    Widget seeMoreButton = MainButtonWidget(
+      label: StringConstants.seeRewards,
+      style: TextStyles.secondaryAlertButtonLabel,
+      onPressed: () {
+        ref.watch(goRouterProvider)
+          ..pop()
+          ..pop()
+          ..pop()
+          ..goNamed(AppRoute.profile.name);
+        ref.read(scaffoldBottomNavControllerProvider.notifier).setPosition(4);
+      },
+      backgorundColor: ThemeColors.white,
     );
 
     AlertDialog alert = AlertDialog(
@@ -35,38 +52,37 @@ class RecipeStepsPage extends ConsumerWidget {
       backgroundColor: ThemeColors.main,
       title: Center(
         child: Text(
-          'Bravo!',
+          StringConstants.wellDone,
           style: TextStyles.mainButton,
         ),
       ),
       content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          /* Text(
-            'Otključao si novu hrantastičnu činjenicu',
-            style: TextStyles.mainButton,
-          ), */
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 15),
-            child:
-                Text('+10 bodova', style: TextStyles.secondaryAlertButtonLabel),
-          ),
-          /* Text(
-            'Špinat sadrži manje željeza nego što se misli. Špinatov ugled kao bogat izvor željeza temelji se na pogrešci u znanstvenom istraživanju iz 19. stoljeća. Tijekom jednog istraživanja, decimalni zarez bio je pogrešno postavljen, što je rezultiralo deset puta većom vrijednošću željeza nego što špinat zapravo sadrži.',
-            style: TextStyles.alertText,
-          ), */
-        ],
-      ),
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              '+${Points.recipePoints} points from recipes',
+              style: TextStyles.secondaryAlertButtonLabel,
+            ),
+          ]
+              .map((e) => Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: e,
+                  ))
+              .toList()),
       actions: [
+        seeMoreButton,
         continueButton,
       ],
     );
 
-    // show the dialog
     showDialog(
+      barrierDismissible: false,
       context: _scaffoldKey.currentContext!,
       builder: (dialogContext) {
-        return alert;
+        return WillPopScope(
+          onWillPop: () async => false,
+          child: alert,
+        );
       },
     );
   }
@@ -75,23 +91,23 @@ class RecipeStepsPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final counterWatch = ref.watch(instructionsCounterProvider);
     final counterRead = ref.read(instructionsCounterProvider.notifier);
+    final pointsService = ref.read(pointsProvider);
+    final challengesController = ref.read(challengeControllerProvider.notifier);
+    final rewardsController = ref.read(rewardsControllerProvider.notifier);
 
     return Scaffold(
       key: _scaffoldKey,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: MainButtonWidget(
-        label: counterWatch < recipe.instructions.length ? 'Sljedeći' : 'Kraj',
+        label: counterWatch < recipe.instructions.length
+            ? StringConstants.next
+            : StringConstants.end,
         style: TextStyles.mainButton,
         onPressed: () {
           if (counterWatch < recipe.instructions.length) {
             counterRead.state++;
           } else {
-            final pointsService = ref.read(pointsProvider);
             pointsService.addPoints(Points.recipePoints);
-            final challengesController =
-                ref.read(challengeControllerProvider.notifier);
-            final rewardsController =
-                ref.read(rewardsControllerProvider.notifier);
             challengesController.checkChallengesConditions(recipe);
             rewardsController.checkRewardConditions();
             showAlertDialog(ref);

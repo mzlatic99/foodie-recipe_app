@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:foodie/features/challenges/presentation/challenges_controller.dart';
-import 'package:foodie/localization/string_hardcoded_extension.dart';
 import 'package:intl/intl.dart';
 
-import '../../../constants/app_constants.dart';
+import '../../../constants/storage_box_constants.dart';
+import '../../../constants/string_constants.dart';
 import '../../../providers/providers.dart';
 import '../../../theme/theme.dart';
+import '../../authentification/data/auth_repository.dart';
+import '../domain/challenge.dart';
 
 class ChallengesPage extends ConsumerStatefulWidget {
-  const ChallengesPage({super.key});
+  const ChallengesPage({Key? key}) : super(key: key);
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ChallengesPageState();
@@ -19,6 +21,8 @@ class ChallengesPage extends ConsumerStatefulWidget {
 class _ChallengesPageState extends ConsumerState<ChallengesPage> {
   @override
   Widget build(BuildContext context) {
+    final auth = ref.watch(authRepositoryProvider);
+    ref.read(storageServiceProvider).user = auth.currentUser!.email!;
     final challengeController = ref.watch(challengeControllerProvider.notifier);
     final storageService = ref.watch(storageServiceProvider);
     return WillPopScope(
@@ -27,7 +31,7 @@ class _ChallengesPageState extends ConsumerState<ChallengesPage> {
         appBar: AppBar(
           automaticallyImplyLeading: false,
           title: Text(
-            'Kulinarske misije'.hardcoded,
+            StringConstants.culinaryMissions,
             style: TextStyles.title,
           ),
         ),
@@ -126,14 +130,15 @@ class _ChallengesPageState extends ConsumerState<ChallengesPage> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.end,
                                           children: [
-                                            storageService.getLength(StorageBox
-                                                            .challengesBox) ==
+                                            storageService.getLength<Challenge>(
+                                                            StorageBox
+                                                                .challengesBox) ==
                                                         3 ||
                                                     challenge.progress > 0
                                                 ? const SizedBox.shrink()
                                                 : GestureDetector(
-                                                    onTap: () async {
-                                                      await challengeController
+                                                    onTap: () {
+                                                      challengeController
                                                           .replaceChallenge(
                                                               challenge);
                                                       setState(() {});
@@ -143,7 +148,7 @@ class _ChallengesPageState extends ConsumerState<ChallengesPage> {
                                                     ),
                                                   ),
                                             Text(
-                                              '${challenge.points} bodova',
+                                              '${challenge.points} points',
                                               style: TextStyles.points,
                                             ),
                                           ],

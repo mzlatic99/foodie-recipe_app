@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:foodie/router/router_context_extension.dart';
 import '../../../common/log_in_sign_up_button.dart';
+import '../../../constants/string_constants.dart';
 import '../../../theme/theme.dart';
 import '../data/onboarding_repository.dart';
 import 'widgets/dot_indicator.dart';
@@ -9,7 +10,7 @@ import 'widgets/onboarding_content.dart';
 import '../../../providers/providers.dart';
 
 class Onboarding extends ConsumerStatefulWidget {
-  const Onboarding({super.key});
+  const Onboarding({Key? key}) : super(key: key);
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _OnboardingState();
@@ -63,9 +64,9 @@ class _OnboardingState extends ConsumerState<Onboarding> {
                                 padding: const EdgeInsets.all(20),
                                 child: LogInSignUpButton(
                                   color: ThemeColors.main,
-                                  label: 'Postojeći član',
+                                  label: StringConstants.existingMember,
                                   onPressed: () {
-                                    context.pushLogIn();
+                                    context.goLogIn();
                                   },
                                 ),
                               ),
@@ -74,9 +75,9 @@ class _OnboardingState extends ConsumerState<Onboarding> {
                                     const EdgeInsets.fromLTRB(20, 0, 20, 40),
                                 child: LogInSignUpButton(
                                   color: ThemeColors.primary,
-                                  label: 'Novi Član',
+                                  label: StringConstants.newMember,
                                   onPressed: () {
-                                    context.pushSignUp();
+                                    context.goSignUp();
                                   },
                                 ),
                               ),

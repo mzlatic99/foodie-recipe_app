@@ -1,38 +1,36 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:foodie/constants/app_constants.dart';
+import 'package:foodie/constants/storage_box_constants.dart';
+import 'package:foodie/features/authentification/presentation/auth_controller.dart';
+import 'package:foodie/features/challenges/data/challenges_data.dart';
+import 'package:foodie/features/challenges/presentation/challenges_controller.dart';
+import 'package:foodie/features/recipes/data/http_recipe_repository.dart';
+import 'package:foodie/features/recipes/presentation/recipe_controller.dart';
 
-import '../../../../services/storage/hive_storage_service.dart';
 import '../../../providers/providers.dart';
+import '../../../router/scaffold_with_bottom_nav_controller.dart';
 import '../../../services/points/points.dart';
 import '../../authentification/data/auth_repository.dart';
 import '../../challenges/domain/challenge.dart';
+import '../../recipes/domain/recipe.dart';
 import '../../rewards/controller/rewards_controller.dart';
 import '../../rewards/domain/reward.dart';
 
-final profileControllerProvider = Provider<ProfileController>((ref) {
+final profileControllerProvider =
+    StateNotifierProvider.autoDispose<ProfileController, AsyncValue<void>>(
+        (ref) {
   return ProfileController(ref);
 });
 
-class ProfileController {
-  ProfileController(this.ref);
+class ProfileController extends StateNotifier<AsyncValue<void>> {
+  ProfileController(this.ref) : super(const AsyncLoading());
 
   final Ref ref;
-
-  String displayPoints() {
-    String totalPoints = ref.watch(pointsProvider).getTotalPoints().toString();
-    return totalPoints;
-  }
-
-  String displayLevel() {
-    final points = ref.watch(pointsProvider);
-    String level = points.calculateLevel().toString();
-    return level;
-  }
 
   Challenge completedChallengeBadgeToDisplay(int index) {
     final storageService = ref.watch(storageServiceProvider);
     List<Challenge> listOfChallengesToDisplay = [];
-    final challengesInBox = storageService.getAll(StorageBox.challengesBox);
+    final challengesInBox =
+        storageService.getAll<Challenge>(StorageBox.challengesBox);
     for (Challenge challenge in challengesInBox) {
       if (challenge.completed) {
         listOfChallengesToDisplay.add(challenge);
@@ -41,35 +39,48 @@ class ProfileController {
     return listOfChallengesToDisplay[index];
   }
 
-  Reward rewardToDisplay(int index) {
+  Reward? rewardToDisplay(int index) {
     final rewardsController = ref.read(rewardsControllerProvider.notifier);
     final storageService = ref.watch(storageServiceProvider);
     final rewardInBox =
-        storageService.getValue('$index', StorageBox.rewardsBox);
+        storageService.getValue<Reward>('$index', StorageBox.rewardsBox);
     if (rewardInBox == null) {
       final reward = rewardsController.rewards[index];
       return reward;
     } else {
-      final reward = rewardInBox;
+      final reward = rewardInBox as Reward;
       return reward;
     }
   }
 
   Future<void> signOut() async {
-    final storageService = HiveStorageService();
+    final storageService = ref.watch(storageServiceProvider);
+    final authRepository = ref.read(authRepositoryProvider);
     if (storageService.isBoxOpen(StorageBox.favoritesBox)) {
-      storageService.closeBox(StorageBox.favoritesBox);
-    }
-    if (storageService.isBoxOpen(StorageBox.pointsBox)) {
-      storageService.closeBox(StorageBox.pointsBox);
+      await storageService.closeBox<Recipe>(StorageBox.favoritesBox);
     }
     if (storageService.isBoxOpen(StorageBox.challengesBox)) {
-      storageService.closeBox(StorageBox.challengesBox);
+      await storageService.closeBox<Challenge>(StorageBox.challengesBox);
+    }
+    if (storageService.isBoxOpen(StorageBox.pointsBox)) {
+      await storageService.closeBox<int>(StorageBox.pointsBox);
     }
     if (storageService.isBoxOpen(StorageBox.rewardsBox)) {
-      storageService.closeBox(StorageBox.rewardsBox);
+      await storageService.closeBox<Reward>(StorageBox.rewardsBox);
     }
-    storageService.user = '';
-    await ref.read(authRepositoryProvider).signOut();
+
+    ref.watch(storageServiceProvider).user = '';
+    await authRepository.signOut();
+
+    ref.invalidate(scaffoldBottomNavControllerProvider);
+    ref.invalidate(storageServiceProvider);
+    ref.invalidate(pointsProvider);
+    ref.invalidate(authRepositoryProvider);
+    ref.invalidate(authControllerProvider);
+    ref.invalidate(rewardsControllerProvider);
+    ref.invalidate(challengeControllerProvider);
+    ref.invalidate(challengesDataProvider);
+    ref.invalidate(recipeControllerProvider);
+    ref.invalidate(recipeRepositoryProvider);
   }
 }

@@ -27,7 +27,7 @@ class RecipeNameAndPoints extends StatelessWidget {
             ),
           ),
           Text(
-            '15 bodova',
+            '10 points',
             style: TextStyles.points.copyWith(fontSize: 12),
           ),
         ],

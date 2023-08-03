@@ -1,4 +1,5 @@
 enum AppRoute {
+  root,
   onboarding,
   signup,
   login,
@@ -8,5 +9,8 @@ enum AppRoute {
   saved,
   challenges,
   friends,
+  chat,
   profile,
+  addfriend,
+  duel,
 }
