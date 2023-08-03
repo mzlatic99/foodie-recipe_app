@@ -12,7 +12,7 @@ class MainButtonWidget extends StatelessWidget {
 
   final String label;
   final TextStyle style;
-  final void Function() onPressed;
+  final void Function()? onPressed;
   final Color backgorundColor;
   final double? elevation;
 

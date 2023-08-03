@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:foodie/common/main_button_widget.dart';
-import 'package:foodie/features/friends/presentation/duel/duel_controller.dart';
+import 'package:foodie/features/friends/presentation/duel_page/duel_controller.dart';
 import 'package:foodie/router/router_context_extension.dart';
 import '../../../../../constants/message_type_constants.dart';
 import '../../../../../constants/string_constants.dart';

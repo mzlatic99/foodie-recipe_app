@@ -18,3 +18,5 @@ final ingredientMultiplierProvider = StateProvider.autoDispose<int>((ref) {
 final instructionsCounterProvider = StateProvider.autoDispose<int>((ref) {
   return 1;
 });
+
+final homeScrollProvider = StateProvider<bool>((ref) => false);

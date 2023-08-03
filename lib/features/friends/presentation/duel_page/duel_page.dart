@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:foodie/common/main_button_widget.dart';
 import 'package:foodie/constants/string_constants.dart';
-import 'package:foodie/features/friends/presentation/duel/duel_controller.dart';
+import 'package:foodie/features/friends/presentation/duel_page/duel_controller.dart';
 import 'package:foodie/router/router_context_extension.dart';
 import 'package:foodie/utils/widgets/add_space.dart';
-import 'package:foodie/utils/widgets/loader_widget.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../../theme/theme.dart';
@@ -32,9 +31,6 @@ class _DuelPageState extends ConsumerState<DuelPage> {
   Widget build(BuildContext context) {
     final duelController = ref.watch(duelControllerProvider.notifier);
     final state = ref.watch(duelControllerProvider);
-    print('STATE ERROR: ${state.error}');
-    print('STATE VALUE: ${state.value}');
-    print('STATE IS LOADING ${state.isLoading}');
     return Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: state.hasValue
@@ -91,7 +87,7 @@ class _DuelPageState extends ConsumerState<DuelPage> {
               ),
               addVerticalSpace(20),
               state.isLoading
-                  ? const Loader()
+                  ? const SizedBox.shrink()
                   : Column(children: [
                       state.value != null
                           ? Padding(

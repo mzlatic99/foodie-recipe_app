@@ -17,11 +17,17 @@ class RecipeController extends StateNotifier<AsyncValue<RecipeList>> {
   }
   final HttpRecipeRepository recipeListRepository;
   final Ref ref;
+  int currentPage = 0;
 
-  Future<void> getRecipes() async {
+  Future<void> getRecipes({String tags = ''}) async {
+    currentPage++;
     state = const AsyncLoading();
     state = await AsyncValue.guard(() {
-      final recipeData = recipeListRepository.getRecipes(from: 0, size: 8);
+      final recipeData = recipeListRepository.getRecipes(
+        from: currentPage * 10,
+        size: 10,
+        tags: tags,
+      );
       return recipeData;
     });
   }

@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:foodie/features/authentification/data/auth_repository.dart';
-import 'package:foodie/features/friends/presentation/chat/chat_controller.dart';
 import 'package:foodie/router/router_context_extension.dart';
 
 import '../../../../constants/firebase_constants.dart';
 import '../../../../constants/string_constants.dart';
 import '../../../../theme/theme.dart';
+
+final searchProvider = StateProvider<String>((ref) => '');
 
 class AddFriendPage extends ConsumerStatefulWidget {
   const AddFriendPage({super.key});
@@ -95,7 +96,7 @@ class _AddFriendPageState extends ConsumerState<AddFriendPage> {
                                       context.pushChatPage(
                                         id: id,
                                         name: name,
-                                        roomId: '',
+                                        roomId: data[i].id,
                                       );
                                     },
                                     contentPadding: const EdgeInsets.symmetric(

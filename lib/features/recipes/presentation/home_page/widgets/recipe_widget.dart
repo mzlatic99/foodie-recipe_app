@@ -69,6 +69,7 @@ class RecipeWidget extends ConsumerWidget {
                 ),
                 Text(
                   recipe.name,
+                  maxLines: 2,
                   style: TextStyles.recipeName,
                 ),
                 Padding(

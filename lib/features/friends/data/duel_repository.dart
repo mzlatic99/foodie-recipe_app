@@ -24,16 +24,4 @@ class DuelRepository {
         .collection(FirebaseConstants.messagesSubcollection)
         .add(data);
   }
-
-  Future<void> acceptCulinaryDuel(CulinaryDuel culinaryDuel) async {
-    // Implement the logic for accepting the culinary duel here
-    // For example, you can update the status of the culinary duel in the database or API
-    // Make sure to handle any errors that may occur during the process
-  }
-
-  Future<void> declineCulinaryDuel(CulinaryDuel culinaryDuel) async {
-    // Implement the logic for declining the culinary duel here
-    // For example, you can update the status of the culinary duel in the database or API
-    // Make sure to handle any errors that may occur during the process
-  }
 }

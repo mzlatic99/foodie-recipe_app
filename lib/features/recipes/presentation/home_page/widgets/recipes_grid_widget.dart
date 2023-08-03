@@ -6,15 +6,18 @@ import 'recipe_widget.dart';
 class RecipesGridWidget extends ConsumerWidget {
   const RecipesGridWidget({
     required this.data,
+    required this.scrollController,
     Key? key,
   }) : super(key: key);
 
   final RecipeList data;
+  final ScrollController scrollController;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Expanded(
       child: GridView.builder(
+          controller: scrollController,
           itemCount: data.results.length,
           shrinkWrap: true,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

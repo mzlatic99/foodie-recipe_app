@@ -9,8 +9,6 @@ final chatControllerProvider = StateNotifierProvider.autoDispose<ChatController,
   return ChatController();
 });
 
-final searchProvider = StateProvider<String>((ref) => '');
-
 class ChatController
     extends StateNotifier<AsyncValue<List<QueryDocumentSnapshot>>> {
   ChatController() : super(const AsyncLoading());

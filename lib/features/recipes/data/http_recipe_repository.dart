@@ -30,12 +30,13 @@ class HttpRecipeRepository implements RecipeRepository {
       parameters: {'id': id});
 
   @override
-  Future<RecipeList> getRecipes({required int from, required int size}) =>
+  Future<RecipeList> getRecipes(
+          {required int from, required int size, String tags = ''}) =>
       api.request(
         // method: 'get',
         url: 'recipes/list',
         builder: (data) => RecipeList.fromJson(data),
-        parameters: {'from': from, 'size': size},
+        parameters: {'from': from, 'size': size, 'tags': tags},
       );
 
   @override

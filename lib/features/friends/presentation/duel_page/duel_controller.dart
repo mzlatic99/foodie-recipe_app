@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:foodie/features/friends/presentation/chat/chat_controller.dart';
+import 'package:foodie/features/friends/presentation/chat_page/chat_controller.dart';
 import 'package:foodie/features/recipes/data/http_recipe_repository.dart';
 
 import '../../../../constants/message_type_constants.dart';
@@ -26,44 +26,6 @@ class DuelController extends StateNotifier<AsyncValue<Recipe?>> {
     await friendsController.sendMessage(
         state.value!.id.toString(), MessageType.duel, roomId, userId);
   }
-
-  /*  Future<void> acceptCulinaryDuel() async {
-    final culinaryDuel = state;
-    if (culinaryDuel != null) {
-      culinaryDuel.status = DuelStatus.accepted;
-      await duelRepository.acceptCulinaryDuel(culinaryDuel);
-
-      state = culinaryDuel;
-    }
-  } */
-
-/*   Future<void> declineCulinaryDuel() async {
-    final culinaryDuel = state;
-    if (culinaryDuel != null) {
-      culinaryDuel.status = DuelStatus.declined;
-      await duelRepository.declineCulinaryDuel(culinaryDuel);
-
-      state = culinaryDuel;
-    }
-  } */
-
-/*   Future<void> chooseRecipe() async {
-    final culinaryDuelController = ref.read(duelControllerProvider);
-    if (culinaryDuelController != null) {
-      // Implement the logic for choosing a recipe here
-      try {
-        // For example, you can navigate to a recipe selection page and get the selected recipe
-        final selectedRecipe = await navigateToRecipeSelectionPage();
-        if (selectedRecipe != null) {
-          // Update the culinaryDuel with the chosen recipe
-          state = culinaryDuelController.recipe?.copyWith(id: selectedRecipe.id) as CulinaryDuel?;
-        }
-      } catch (error) {
-        // Handle any errors that might occur during recipe selection
-        print('Error choosing recipe: $error');
-      }
-    }
-  } */
 
   Future<void> chooseRandomRecipe() async {
     state = const AsyncLoading();

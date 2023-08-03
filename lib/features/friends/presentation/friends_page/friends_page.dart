@@ -3,9 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:foodie/features/friends/presentation/chat/chat_controller.dart';
+import 'package:foodie/features/friends/presentation/chat_page/chat_controller.dart';
 
-import 'package:foodie/features/friends/presentation/friends/widgets/friend_card.dart';
+import 'package:foodie/features/friends/presentation/friends_page/widgets/friend_card.dart';
 import 'package:foodie/router/router_context_extension.dart';
 import 'package:intl/intl.dart';
 

@@ -27,6 +27,7 @@ class StringConstants {
   static const String homeMessage = 'Prepare delicious meals and win prizes!';
   static const String inspiration = 'Inspiration';
   static const String searchRecipes = 'Search recipes';
+  static const String loadMore = 'Load more';
 
   // points
   static const String points = 'Points';
@@ -83,4 +84,5 @@ class StringConstants {
   static const String randomRecipe = 'Random recipe';
   static const String culinaryDuel = 'Culinary duel';
   static const String accept = 'Accept';
+  static const String duelIsSent = 'Duel is sent';
 }
