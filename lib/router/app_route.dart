@@ -12,4 +12,5 @@ enum AppRoute {
   chat,
   profile,
   addfriend,
+  duel,
 }

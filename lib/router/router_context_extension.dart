@@ -131,11 +131,23 @@ extension RouterContextExtension on BuildContext {
         pathParameters: {'id': '${recipe.id}'},
       );
 
-  void pushChatPage({required String id, required String name}) =>
-      GoRouter.of(this).goNamed(AppRoute.chat.name, extra: {
+  void pushChatPage(
+          {required String id, required String name, required String roomId}) =>
+      GoRouter.of(this).pushNamed(AppRoute.chat.name, extra: {
         'id': id,
         'name': name,
+        'roomId': roomId,
       }, pathParameters: {
         'id': name
+      });
+
+  void pushDuelPage(
+          {required String id, required String name, required String roomId}) =>
+      GoRouter.of(this).pushNamed(AppRoute.duel.name, extra: {
+        'id': id,
+        'name': name,
+        'roomId': roomId,
+      }, pathParameters: {
+        'id': 'duel:$name',
       });
 }

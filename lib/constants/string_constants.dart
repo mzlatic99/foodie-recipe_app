@@ -76,4 +76,11 @@ class StringConstants {
   static const String userId = 'userId';
   static const String displayName = 'displayName';
   static const String avatar = 'avatar';
+
+  // duel
+  static const String culinaryDuelDetails = 'Details of culinary duel';
+  static const String chooseRecipe = 'Choose recipe';
+  static const String randomRecipe = 'Random recipe';
+  static const String culinaryDuel = 'Culinary duel';
+  static const String accept = 'Accept';
 }

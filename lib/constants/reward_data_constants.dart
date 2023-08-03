@@ -8,7 +8,7 @@ class RewardDataConstants {
 
   // reward descriptions
   static const String futureChefDesc = 'Make one meal';
-  static const String ironChefDesc = 'Ispuni 3 misije';
+  static const String ironChefDesc = 'Complete 3 challenges';
   static const String prepMasterDesc = 'Save 2 recipes';
   static const String silverPotDesc = 'Reach level 2';
   static const String goldenPastaDesc = 'Reach level 3';

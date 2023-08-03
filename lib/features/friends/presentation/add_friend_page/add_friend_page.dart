@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:foodie/features/authentification/data/auth_repository.dart';
-import 'package:foodie/features/friends/presentation/friends_controller.dart';
+import 'package:foodie/features/friends/presentation/chat/chat_controller.dart';
 import 'package:foodie/router/router_context_extension.dart';
 
+import '../../../../constants/firebase_constants.dart';
 import '../../../../constants/string_constants.dart';
 import '../../../../theme/theme.dart';
 
@@ -49,21 +50,27 @@ class _AddFriendPageState extends ConsumerState<AddFriendPage> {
                   },
                   onTapOutside: (event) =>
                       FocusManager.instance.primaryFocus?.unfocus(),
-                  decoration: addInputFieldDecoration(
+                  decoration: _addInputFieldDecoration(
                       StringConstants.searchComunity, TextStyles.text),
                 ),
               ),
               StreamBuilder(
-                  stream: firestore.collection('Users').snapshots(),
+                  stream: firestore
+                      .collection(FirebaseConstants.usersCollection)
+                      .snapshots(),
                   builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                     List data = !snapshot.hasData
                         ? []
                         : snapshot.data!.docs
                             .where((element) =>
-                                element['name'].toString().contains(ref.watch(
+                                element[FirebaseConstants.nameField]
+                                    .toString()
+                                    .contains(ref.watch(
                                       searchProvider,
                                     )) ||
-                                element['name'].toString().contains(ref.watch(
+                                element[FirebaseConstants.nameField]
+                                    .toString()
+                                    .contains(ref.watch(
                                       searchProvider,
                                     )))
                             .toList();
@@ -71,8 +78,9 @@ class _AddFriendPageState extends ConsumerState<AddFriendPage> {
                         shrinkWrap: true,
                         itemCount: data.length,
                         itemBuilder: (context, i) {
-                          final bool skip = data[i]['name'] as String ==
-                              currentUser!.displayName;
+                          final bool skip =
+                              data[i][FirebaseConstants.nameField] as String ==
+                                  currentUser!.displayName;
                           return skip
                               ? const SizedBox.shrink()
                               : Card(
@@ -81,17 +89,24 @@ class _AddFriendPageState extends ConsumerState<AddFriendPage> {
                                     dense: true,
                                     onTap: () {
                                       final id = data[i].id.toString();
-                                      final name = data[i]['name'] as String;
-                                      context.pushChatPage(id: id, name: name);
+                                      final name = data[i]
+                                              [FirebaseConstants.nameField]
+                                          as String;
+                                      context.pushChatPage(
+                                        id: id,
+                                        name: name,
+                                        roomId: '',
+                                      );
                                     },
                                     contentPadding: const EdgeInsets.symmetric(
                                         horizontal: 15, vertical: 5),
                                     horizontalTitleGap: 0,
                                     leading: SvgPicture.asset(
-                                      data[i]['avatar'],
+                                      data[i][FirebaseConstants.avatarField],
                                       alignment: Alignment.centerLeft,
                                     ),
-                                    title: Text(data[i]['name']),
+                                    title: Text(
+                                        data[i][FirebaseConstants.nameField]),
                                   ),
                                 );
                         });
@@ -101,7 +116,7 @@ class _AddFriendPageState extends ConsumerState<AddFriendPage> {
         ));
   }
 
-  InputDecoration addInputFieldDecoration(String hint, TextStyle style) {
+  InputDecoration _addInputFieldDecoration(String hint, TextStyle style) {
     return InputDecoration(
       hintText: hint,
       hintStyle: style,

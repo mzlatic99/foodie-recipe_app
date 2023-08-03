@@ -20,10 +20,13 @@ class HttpRecipeRepository implements RecipeRepository {
   final DioService api;
 
   @override
-  Future<Recipe> getRecipe({required String id}) => api.request(
+  Future<Recipe?> getRecipe({required String id}) => api.request(
       // method: 'get',
       url: '/recipes/get-more-info',
-      builder: (data) => Recipe.fromJson(data),
+      builder: (data) {
+        if (data != null) return Recipe.fromJson(data);
+        return null;
+      },
       parameters: {'id': id});
 
   @override

@@ -48,6 +48,8 @@ class _Icons {
   String unreceivedBadge = 'assets/icons/unreceivedBadge.svg';
   String receivedBadge = 'assets/icons/receivedBadge.svg';
   String signOut = 'assets/icons/signOut.svg';
+  String randomDices = 'assets/icons/randomDices.svg';
+  String fingerPointing = 'assets/icons/fingerPointing.svg';
 }
 
 class _Images {

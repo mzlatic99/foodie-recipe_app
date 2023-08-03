@@ -9,8 +9,9 @@ import '../features/authentification/presentation/log_in/log_in_screen.dart';
 import '../features/authentification/presentation/sign_up/sign_up_screen.dart';
 import '../features/challenges/presentation/challenges_page.dart';
 import '../features/friends/presentation/add_friend_page/add_friend_page.dart';
-import '../features/friends/presentation/chat_page/chat_page.dart';
-import '../features/friends/presentation/friends_page/friends_page.dart';
+import '../features/friends/presentation/chat/chat_page.dart';
+import '../features/friends/presentation/duel/duel_page.dart';
+import '../features/friends/presentation/friends/friends_page.dart';
 import '../features/onboarding/presentation/onboarding.dart';
 import '../features/profile/presentation/profile_page.dart';
 import '../features/recipes/domain/recipe.dart';
@@ -140,20 +141,38 @@ final goRouterProvider = Provider<GoRouter>((ref) {
                         },
                         routes: [
                           GoRoute(
-                            path: 'chat/:id',
-                            name: AppRoute.chat.name,
-                            pageBuilder: (context, state) {
-                              Map<String, String> args =
-                                  state.extra as Map<String, String>;
-                              return NoTransitionPage(
-                                child: ChatPage(
-                                  key: state.pageKey,
-                                  id: args['id']!,
-                                  name: args['name']!,
+                              path: 'chat/:id',
+                              name: AppRoute.chat.name,
+                              pageBuilder: (context, state) {
+                                Map<String, String> args =
+                                    state.extra as Map<String, String>;
+                                return NoTransitionPage(
+                                  child: ChatPage(
+                                    key: state.pageKey,
+                                    id: args['id']!,
+                                    name: args['name']!,
+                                    roomId: args['roomId']!,
+                                  ),
+                                );
+                              },
+                              routes: [
+                                GoRoute(
+                                  path: 'duel',
+                                  name: AppRoute.duel.name,
+                                  pageBuilder: (context, state) {
+                                    Map<String, String> args =
+                                        state.extra as Map<String, String>;
+                                    return NoTransitionPage(
+                                      child: DuelPage(
+                                        key: state.pageKey,
+                                        id: args['id']!,
+                                        name: args['name']!,
+                                        roomId: args['roomId']!,
+                                      ),
+                                    );
+                                  },
                                 ),
-                              );
-                            },
-                          ),
+                              ]),
                           GoRoute(
                             path: 'addfriend',
                             name: AppRoute.addfriend.name,

@@ -3,11 +3,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:foodie/features/friends/presentation/chat/chat_controller.dart';
 
-import 'package:foodie/features/friends/presentation/friends_page/widgets/friend_card.dart';
+import 'package:foodie/features/friends/presentation/friends/widgets/friend_card.dart';
 import 'package:foodie/router/router_context_extension.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../constants/firebase_constants.dart';
 import '../../../../constants/string_constants.dart';
 import '../../../../theme/theme.dart';
 
@@ -23,6 +25,7 @@ class _FriendsPageState extends ConsumerState<FriendsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final chatController = ref.watch(chatControllerProvider.notifier);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -45,19 +48,19 @@ class _FriendsPageState extends ConsumerState<FriendsPage> {
           ],
         ),
         body: StreamBuilder(
-            stream: firestore.collection('Rooms').snapshots(),
+            stream: chatController.getRoomsStream(),
             builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
               List data = !snapshot.hasData
                   ? []
                   : snapshot.data!.docs
-                      .where((element) => element['users']
+                      .where((element) => element[FirebaseConstants.usersField]
                           .toString()
                           .contains(FirebaseAuth.instance.currentUser!.uid))
                       .toList();
               return ListView.builder(
                 itemCount: data.length,
                 itemBuilder: (context, i) {
-                  List users = data[i]['users'];
+                  List users = data[i][FirebaseConstants.usersField];
                   var friend = users.where((element) =>
                       element != FirebaseAuth.instance.currentUser!.uid);
                   var user = friend.isNotEmpty
@@ -67,20 +70,28 @@ class _FriendsPageState extends ConsumerState<FriendsPage> {
                               element == FirebaseAuth.instance.currentUser!.uid)
                           .first;
                   return FutureBuilder(
-                      future: firestore.collection('Users').doc(user).get(),
+                      future: firestore
+                          .collection(FirebaseConstants.usersCollection)
+                          .doc(user)
+                          .get(),
                       builder: (context, AsyncSnapshot snap) {
+                        String roomId = data[i].id;
                         return !snap.hasData
                             ? Container()
                             : FriendCard(
-                                title: snap.data['name'],
-                                subtitle: data[i]['last_message'],
-                                time: DateFormat.Hm().format(
-                                    data[i]['last_message_time'].toDate()),
+                                title: snap.data[FirebaseConstants.nameField],
+                                subtitle: data[i]
+                                    [FirebaseConstants.lastMessageField],
+                                time: DateFormat.Hm().format(data[i]
+                                        [FirebaseConstants.lastMessageTimeField]
+                                    .toDate()),
                                 onTap: () => context.pushChatPage(
-                                      id: user,
-                                      name: snap.data['name'],
-                                    ),
-                                avatar: snap.data['avatar']);
+                                    id: user,
+                                    name:
+                                        snap.data[FirebaseConstants.nameField],
+                                    roomId: roomId),
+                                avatar:
+                                    snap.data[FirebaseConstants.avatarField]);
                       });
                 },
               );
