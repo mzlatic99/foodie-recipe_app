@@ -58,7 +58,7 @@ class ChatController
     };
 
     final firestore = FirebaseFirestore.instance;
-    if (roomId != null) {
+    if (roomId != null && roomId != FirebaseConstants.emptyRoomId) {
       await firestore
           .collection(FirebaseConstants.roomsColection)
           .doc(roomId)

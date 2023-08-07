@@ -16,4 +16,5 @@ class FirebaseConstants {
   static const String dateTimeUsersField = 'date_time';
   static const String emailField = 'email';
   static const String chatType = 'chat_type';
+  static const String emptyRoomId = '';
 }

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:foodie/common/main_button_widget.dart';
@@ -48,17 +49,10 @@ class MessagesCard extends StatelessWidget {
     if (type == MessageType.image) {
       return ClipRRect(
         borderRadius: BorderRadius.circular(8),
-        child: Image(
-          image: NetworkImage(message.substring(4)),
-          width: 200, // Set the width as per your requirement
+        child: CachedNetworkImage(
+          imageUrl: message.substring(4),
+          width: 200,
           fit: BoxFit.cover,
-          loadingBuilder: (BuildContext context, Widget child,
-              ImageChunkEvent? loadingProgress) {
-            if (loadingProgress == null) {
-              return child;
-            }
-            return const Loader();
-          },
         ),
       );
     } else if (type == MessageType.text) {
@@ -88,18 +82,10 @@ class MessagesCard extends StatelessWidget {
                       check ? context.pushDetailPage(recipe: recipe) : null,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8),
-                    child: Image.network(
-                      recipe
-                          .imageUrl, // Use the imageURL property from the Recipe object
-                      width: 200, // Set the width as per your requirement
+                    child: CachedNetworkImage(
+                      imageUrl: recipe.imageUrl,
+                      width: 200,
                       fit: BoxFit.cover,
-                      loadingBuilder: (BuildContext context, Widget child,
-                          ImageChunkEvent? loadingProgress) {
-                        if (loadingProgress == null) {
-                          return child;
-                        }
-                        return const Loader();
-                      },
                     ),
                   ),
                 ),

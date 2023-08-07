@@ -38,10 +38,9 @@ class RecipeDetailAppBar extends ConsumerWidget {
           padding: const EdgeInsets.fromLTRB(0, 8, 10, 0),
           child: IsSavedMaterialButton(recipe: recipe),
         ),
-        AppBarButton(asset: Assets.icons.share, onPressed: () {})
       ],
       flexibleSpace: FlexibleSpaceBar(
-        collapseMode: CollapseMode.parallax,
+        collapseMode: CollapseMode.none,
         background: CachedNetworkImage(
           imageUrl: recipe.imageUrl,
           width: double.infinity,

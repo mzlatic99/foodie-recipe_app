@@ -68,11 +68,6 @@ class _AddFriendPageState extends ConsumerState<AddFriendPage> {
                                     .toString()
                                     .contains(ref.watch(
                                       searchProvider,
-                                    )) ||
-                                element[FirebaseConstants.nameField]
-                                    .toString()
-                                    .contains(ref.watch(
-                                      searchProvider,
                                     )))
                             .toList();
                     return ListView.builder(
@@ -96,7 +91,7 @@ class _AddFriendPageState extends ConsumerState<AddFriendPage> {
                                       context.pushChatPage(
                                         id: id,
                                         name: name,
-                                        roomId: data[i].id,
+                                        roomId: FirebaseConstants.emptyRoomId,
                                       );
                                     },
                                     contentPadding: const EdgeInsets.symmetric(

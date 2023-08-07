@@ -164,11 +164,6 @@ class ProfilePage extends ConsumerWidget {
                           return const SizedBox.shrink();
                         }
                       }),
-                  ProfileTitleRow(
-                    icon: Assets.icons.time,
-                    label: StringConstants.historyOfDuels,
-                    function: () {},
-                  ),
                 ],
               ),
             ),

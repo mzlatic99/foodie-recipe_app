@@ -143,7 +143,6 @@ class _HomePageState extends ConsumerState<HomePage> {
                 controller: _searchController,
                 onSubmitted: (value) async {
                   ref.read(searchProvider.notifier).state = value;
-                  print(ref.watch(searchProvider));
                   final recipeController =
                       ref.read(recipeControllerProvider.notifier);
                   await recipeController.getRecipes(

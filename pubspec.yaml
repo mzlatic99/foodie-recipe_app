@@ -41,6 +41,7 @@ dependencies:
   flutter_firebase_chat_core: ^1.6.7
   flutter_chat_types: ^3.6.2
   flutter_image_compress: ^2.0.4
+  scrollable_positioned_list: ^0.3.8
 
 dev_dependencies:
   flutter_test:
