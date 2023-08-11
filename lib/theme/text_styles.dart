@@ -118,7 +118,7 @@ class TextStyles {
   );
 
   static TextStyle textFieldStyle = nunito.copyWith(
-    fontSize: 12,
+    fontSize: 14,
     color: ThemeColors.main,
   );
 

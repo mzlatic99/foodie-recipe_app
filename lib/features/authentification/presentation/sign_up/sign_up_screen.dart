@@ -107,6 +107,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen>
                               ),
                             ),
                             TextFormField(
+                              style: TextStyles.textFieldStyle,
                               controller: _passwordController,
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
@@ -123,7 +124,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen>
                               style: TextStyles.secondaryAuthText,
                             ),
                             SizedBox(
-                              height: 180,
+                              height: 160,
                               child: GridView.builder(
                                 physics: const NeverScrollableScrollPhysics(),
                                 itemCount: AvatarData.avatars.length,

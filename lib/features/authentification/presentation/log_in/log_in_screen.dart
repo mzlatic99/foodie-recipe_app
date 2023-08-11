@@ -87,6 +87,7 @@ class _LogInScreenState extends ConsumerState<LogInScreen> with AuthValidators {
                               ),
                             ),
                             TextFormField(
+                              style: TextStyles.textFieldStyle,
                               controller: _passwordController,
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,

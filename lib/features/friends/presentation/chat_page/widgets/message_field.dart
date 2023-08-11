@@ -19,7 +19,7 @@ class MessageField extends StatefulWidget {
 }
 
 class _MessageFieldState extends State<MessageField> {
-  final controller = TextEditingController();
+  final _controller = TextEditingController();
 
   final _picker = ImagePicker();
 
@@ -54,7 +54,7 @@ class _MessageFieldState extends State<MessageField> {
 
   @override
   void dispose() {
-    controller.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
@@ -63,13 +63,13 @@ class _MessageFieldState extends State<MessageField> {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
       child: TextField(
-        controller: controller,
+        controller: _controller,
         style: TextStyles.textFieldStyle,
         onTapOutside: (event) => FocusManager.instance.primaryFocus?.unfocus(),
         decoration: _messageTextFieldStyle(
           onSubmit: () {
-            widget.onSubmit(controller.text, 'text');
-            controller.clear();
+            widget.onSubmit(_controller.text, 'text');
+            _controller.clear();
           },
         ),
       ),
