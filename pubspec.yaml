@@ -36,12 +36,9 @@ dependencies:
   cloud_firestore: ^4.8.3
   firebase_storage: ^11.2.5
   image_picker: ^1.0.1
-  equatable: ^2.0.5
-  uuid: ^3.0.7
   flutter_firebase_chat_core: ^1.6.7
   flutter_chat_types: ^3.6.2
   flutter_image_compress: ^2.0.4
-  scrollable_positioned_list: ^0.3.8
 
 dev_dependencies:
   flutter_test:

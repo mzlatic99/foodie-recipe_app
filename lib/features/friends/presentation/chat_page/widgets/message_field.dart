@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
@@ -43,10 +44,11 @@ class _MessageFieldState extends State<MessageField> {
           .putData(imageFile);
       final snapshot = await uploadTask;
       final downloadUrl = await snapshot.ref.getDownloadURL();
-      widget.onSubmit('URL:$downloadUrl',
-          'image'); // Sending the image URL as a message with type 'image'
+      widget.onSubmit('URL:$downloadUrl', 'image');
     } catch (e) {
-      print('Error uploading image: $e');
+      if (kDebugMode) {
+        print('Error uploading image: $e');
+      }
     }
   }
 
@@ -64,7 +66,7 @@ class _MessageFieldState extends State<MessageField> {
         controller: controller,
         style: TextStyles.textFieldStyle,
         onTapOutside: (event) => FocusManager.instance.primaryFocus?.unfocus(),
-        decoration: messageTextFieldStyle(
+        decoration: _messageTextFieldStyle(
           onSubmit: () {
             widget.onSubmit(controller.text, 'text');
             controller.clear();
@@ -74,26 +76,9 @@ class _MessageFieldState extends State<MessageField> {
     );
   }
 
-  InputDecoration messageTextFieldStyle({required Function() onSubmit}) {
+  InputDecoration _messageTextFieldStyle({required Function() onSubmit}) {
     return InputDecoration(
       hintText: StringConstants.enterMessage,
-      hintStyle: TextStyles.text,
-      focusColor: ThemeColors.greyText,
-      contentPadding: const EdgeInsets.all(18),
-      focusedBorder: OutlineInputBorder(
-        borderSide: const BorderSide(
-          color: ThemeColors.primary,
-          width: 2,
-        ),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      enabledBorder: OutlineInputBorder(
-        borderSide: const BorderSide(
-          color: ThemeColors.main,
-          width: 2,
-        ),
-        borderRadius: BorderRadius.circular(16),
-      ),
       prefixIcon: GestureDetector(
         onTap: _openImagePicker,
         child: SvgPicture.asset(

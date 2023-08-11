@@ -6,6 +6,7 @@ import 'package:foodie/router/scaffold_with_bottom_nav_controller.dart';
 import 'package:go_router/go_router.dart';
 
 import '../constants/string_constants.dart';
+import '../features/recipes/presentation/recipe_controller.dart';
 import '../providers/providers.dart';
 import '../theme/theme.dart';
 import 'app_route.dart';
@@ -30,6 +31,7 @@ class _ScaffoldWithBottomNavBarState
     ref.invalidate(instructionsCounterProvider);
     if (index == 0) {
       context.goNamed(AppRoute.home.name);
+      ref.read(recipeControllerProvider.notifier).ref.invalidateSelf();
     } else if (index == 1) {
       context.goNamed(AppRoute.challenges.name);
     } else if (index == 2) {

@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:foodie/common/main_button_widget.dart';
 import 'package:foodie/features/authentification/data/auth_repository.dart';
-import 'package:foodie/services/api/api_error.dart';
 import 'package:foodie/services/points/points.dart';
 import 'package:foodie/utils/async_value_ui_extension.dart';
 import 'package:foodie/utils/widgets/loader_widget.dart';
@@ -12,8 +11,6 @@ import '../recipe_controller.dart';
 import '../../../../theme/theme.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'widgets/recipes_grid_widget.dart';
-
-final searchProvider = StateProvider<String>((ref) => '');
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -58,6 +55,7 @@ class _HomePageState extends ConsumerState<HomePage> {
     ref.read(storageServiceProvider).user = auth.currentUser!.email!;
     final recipeController = ref.watch(recipeControllerProvider);
     final totalPoints = ref.watch(pointsProvider);
+    final recipeControllerRead = ref.read(recipeControllerProvider.notifier);
 
     ref.listen<AsyncValue>(
       recipeControllerProvider,
@@ -73,10 +71,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                 style: TextStyles.mainButton,
                 onPressed: () async {
                   isScrolled = false;
-                  final recipeController =
-                      ref.read(recipeControllerProvider.notifier);
-                  await recipeController.getRecipes(
-                      tags: ref.watch(searchProvider));
+                  await recipeControllerRead.getRecipes(
+                      q: _searchController.text);
                 },
                 backgorundColor: ThemeColors.primary,
               )
@@ -139,37 +135,40 @@ class _HomePageState extends ConsumerState<HomePage> {
                 height: 15,
               ),
               TextField(
-                style: TextStyles.mainText,
+                style: TextStyles.textFieldStyle,
                 controller: _searchController,
                 onSubmitted: (value) async {
-                  ref.read(searchProvider.notifier).state = value;
-                  final recipeController =
-                      ref.read(recipeControllerProvider.notifier);
-                  await recipeController.getRecipes(
-                      tags: ref.watch(searchProvider));
+                  await recipeControllerRead.getRecipes(q: value);
                 },
-                onTapOutside: (event) =>
-                    FocusManager.instance.primaryFocus?.unfocus(),
-                decoration: _addInputFieldDecoration(
-                    StringConstants.searchRecipes, TextStyles.text),
+                onTapOutside: (event) {
+                  FocusManager.instance.primaryFocus?.unfocus();
+                },
+                decoration: const InputDecoration(
+                  hintText: StringConstants.searchRecipes,
+                ),
               ),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   child: Text(
-                    StringConstants.inspiration,
+                    _searchController.value.text != ''
+                        ? 'Search for: ${_searchController.value.text}'
+                        : StringConstants.inspiration,
                     style: TextStyles.title,
                   ),
                 ),
               ),
               recipeController.when(
-                data: (recipes) => RecipesGridWidget(
-                  data: recipes,
-                  scrollController: _scrollController,
-                ),
+                data: (recipes) {
+                  _searchController.clear();
+                  return RecipesGridWidget(
+                    data: recipes,
+                    scrollController: _scrollController,
+                  );
+                },
                 error: (e, __) => Text(
-                  (e as ApiError).toString(),
+                  e.toString(),
                   textAlign: TextAlign.center,
                   style: TextStyles.title,
                 ),
@@ -180,29 +179,6 @@ class _HomePageState extends ConsumerState<HomePage> {
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  InputDecoration _addInputFieldDecoration(String hint, TextStyle style) {
-    return InputDecoration(
-      hintText: hint,
-      hintStyle: style,
-      focusColor: ThemeColors.greyText,
-      contentPadding: const EdgeInsets.all(15),
-      focusedBorder: OutlineInputBorder(
-        borderSide: const BorderSide(
-          color: ThemeColors.primary,
-          width: 2,
-        ),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      enabledBorder: OutlineInputBorder(
-        borderSide: const BorderSide(
-          color: ThemeColors.main,
-          width: 2,
-        ),
-        borderRadius: BorderRadius.circular(16),
       ),
     );
   }

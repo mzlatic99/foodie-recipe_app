@@ -74,6 +74,7 @@ class _LogInScreenState extends ConsumerState<LogInScreen> with AuthValidators {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             TextFormField(
+                              style: TextStyles.textFieldStyle,
                               controller: _emailController,
                               keyboardType: TextInputType.emailAddress,
                               autovalidateMode:
@@ -81,25 +82,8 @@ class _LogInScreenState extends ConsumerState<LogInScreen> with AuthValidators {
                               validator: (email) => !_submitted
                                   ? null
                                   : emailErrorText(email ?? ''),
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 hintText: StringConstants.email,
-                                hintStyle: TextStyles.text,
-                                focusColor: ThemeColors.greyText,
-                                contentPadding: const EdgeInsets.all(15),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: ThemeColors.primary,
-                                    width: 2,
-                                  ),
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: ThemeColors.main,
-                                    width: 2,
-                                  ),
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
                               ),
                             ),
                             TextFormField(
@@ -110,25 +94,8 @@ class _LogInScreenState extends ConsumerState<LogInScreen> with AuthValidators {
                               validator: (password) => !_submitted
                                   ? null
                                   : passwordErrorText(password ?? ''),
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 hintText: StringConstants.password,
-                                hintStyle: TextStyles.text,
-                                focusColor: ThemeColors.greyText,
-                                contentPadding: const EdgeInsets.all(15),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: ThemeColors.primary,
-                                    width: 2,
-                                  ),
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: ThemeColors.main,
-                                    width: 2,
-                                  ),
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
                               ),
                             ),
                             authController.isLoading

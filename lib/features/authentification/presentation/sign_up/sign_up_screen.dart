@@ -83,33 +83,18 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             TextFormField(
+                              style: TextStyles.textFieldStyle,
                               controller: _nameController,
                               keyboardType: TextInputType.name,
                               validator: (name) => !_submitted
                                   ? null
                                   : nameErrorText(name ?? ''),
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 hintText: StringConstants.name,
-                                hintStyle: TextStyles.text,
-                                focusColor: ThemeColors.greyText,
-                                contentPadding: const EdgeInsets.all(15),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: ThemeColors.primary,
-                                    width: 2,
-                                  ),
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: ThemeColors.main,
-                                    width: 2,
-                                  ),
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
                               ),
                             ),
                             TextFormField(
+                              style: TextStyles.textFieldStyle,
                               controller: _emailController,
                               keyboardType: TextInputType.emailAddress,
                               autovalidateMode:
@@ -117,25 +102,8 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen>
                               validator: (email) => !_submitted
                                   ? null
                                   : emailErrorText(email ?? ''),
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 hintText: StringConstants.email,
-                                hintStyle: TextStyles.text,
-                                focusColor: ThemeColors.greyText,
-                                contentPadding: const EdgeInsets.all(15),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: ThemeColors.primary,
-                                    width: 2,
-                                  ),
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: ThemeColors.main,
-                                    width: 2,
-                                  ),
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
                               ),
                             ),
                             TextFormField(
@@ -146,25 +114,8 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen>
                               validator: (password) => !_submitted
                                   ? null
                                   : passwordErrorText(password ?? ''),
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 hintText: StringConstants.password,
-                                hintStyle: TextStyles.text,
-                                focusColor: ThemeColors.greyText,
-                                contentPadding: const EdgeInsets.all(15),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: ThemeColors.primary,
-                                    width: 2,
-                                  ),
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: ThemeColors.main,
-                                    width: 2,
-                                  ),
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
                               ),
                             ),
                             Text(

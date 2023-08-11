@@ -39,5 +39,24 @@ class AppThemes {
             color: ThemeColors.main,
           ),
         ),
+        inputDecorationTheme: InputDecorationTheme(
+          hintStyle: TextStyles.text,
+          focusColor: ThemeColors.greyText,
+          contentPadding: const EdgeInsets.all(15),
+          focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(
+              color: ThemeColors.primary,
+              width: 2,
+            ),
+            borderRadius: BorderRadius.circular(16),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: const BorderSide(
+              color: ThemeColors.main,
+              width: 2,
+            ),
+            borderRadius: BorderRadius.circular(16),
+          ),
+        ),
       );
 }

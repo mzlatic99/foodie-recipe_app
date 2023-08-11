@@ -7,7 +7,8 @@ import '../../../theme/theme.dart';
 import '../data/onboarding_repository.dart';
 import 'widgets/dot_indicator.dart';
 import 'widgets/onboarding_content.dart';
-import '../../../providers/providers.dart';
+
+final onBoardingPageProvider = StateProvider<int>((ref) => 0);
 
 class Onboarding extends ConsumerStatefulWidget {
   const Onboarding({Key? key}) : super(key: key);

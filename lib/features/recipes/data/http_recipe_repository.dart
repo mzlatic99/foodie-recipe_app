@@ -31,12 +31,12 @@ class HttpRecipeRepository implements RecipeRepository {
 
   @override
   Future<RecipeList> getRecipes(
-          {required int from, required int size, String tags = ''}) =>
+          {required int from, required int size, String q = ''}) =>
       api.request(
         // method: 'get',
         url: 'recipes/list',
         builder: (data) => RecipeList.fromJson(data),
-        parameters: {'from': from, 'size': size, 'tags': tags},
+        parameters: {'from': from, 'size': size, 'q': q},
       );
 
   @override

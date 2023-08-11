@@ -3,7 +3,7 @@ import '../domain/recipe_list.dart';
 
 abstract class RecipeRepository {
   Future<RecipeList> getRecipes(
-      {required int from, required int size, String tags});
+      {required int from, required int size, String q});
   Future<Recipe?> getRecipe({required String id});
   Future<RecipeList> getFeed(
       {required int size,

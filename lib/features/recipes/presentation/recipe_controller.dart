@@ -19,14 +19,14 @@ class RecipeController extends StateNotifier<AsyncValue<RecipeList>> {
   final Ref ref;
   int currentPage = 0;
 
-  Future<void> getRecipes({String tags = ''}) async {
+  Future<void> getRecipes({String q = ''}) async {
     currentPage++;
     state = const AsyncLoading();
     state = await AsyncValue.guard(() {
       final recipeData = recipeListRepository.getRecipes(
         from: currentPage * 10,
         size: 10,
-        tags: tags,
+        q: q,
       );
       return recipeData;
     });
