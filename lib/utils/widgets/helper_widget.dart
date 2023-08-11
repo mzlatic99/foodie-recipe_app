@@ -10,5 +10,5 @@ void showSnackBar(
       SnackBar(
           content: Text(content),
           backgroundColor: ThemeColors.main,
-          duration: const Duration(milliseconds: 800)),
+          duration: const Duration(milliseconds: 1200)),
     );

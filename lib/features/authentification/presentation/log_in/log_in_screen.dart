@@ -94,7 +94,7 @@ class _LogInScreenState extends ConsumerState<LogInScreen> with AuthValidators {
                               obscureText: true,
                               validator: (password) => !_submitted
                                   ? null
-                                  : passwordErrorText(password ?? ''),
+                                  : passwordLogInErrorText(password ?? ''),
                               decoration: const InputDecoration(
                                 hintText: StringConstants.password,
                               ),

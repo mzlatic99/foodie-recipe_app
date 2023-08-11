@@ -3,9 +3,8 @@ import 'string_validators.dart';
 mixin AuthValidators {
   final StringValidator nameSubmitValidator = NonEmptyStringValidator();
   final StringValidator emailSubmitValidator = EmailSubmitRegexValidator();
-  final StringValidator passwordRegisterSubmitValidator =
-      MinLengthStringValidator(6);
-  final StringValidator passwordSignInSubmitValidator =
+  final StringValidator passwordSubmitValidator = MinLengthStringValidator(6);
+  final StringValidator passwordLogInSubmitValidator =
       NonEmptyStringValidator();
 
   bool canSubmitName(String name) {
@@ -17,7 +16,11 @@ mixin AuthValidators {
   }
 
   bool canSubmitPassword(String password) {
-    return passwordSignInSubmitValidator.isValid(password);
+    return passwordSubmitValidator.isValid(password);
+  }
+
+  bool canSubmitLogInPassword(String password) {
+    return passwordLogInSubmitValidator.isValid(password);
   }
 
   String? nameErrorText(String name) {
@@ -38,6 +41,12 @@ mixin AuthValidators {
     final bool showErrorText = !canSubmitPassword(password);
     final String errorText =
         password.isEmpty ? 'Password can\'t be empty' : 'Password is too short';
+    return showErrorText ? errorText : null;
+  }
+
+  String? passwordLogInErrorText(String password) {
+    final bool showErrorText = !canSubmitLogInPassword(password);
+    const String errorText = 'Password can\'t be empty';
     return showErrorText ? errorText : null;
   }
 }
