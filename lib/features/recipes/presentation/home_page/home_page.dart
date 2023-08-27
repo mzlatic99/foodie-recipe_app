@@ -162,10 +162,15 @@ class _HomePageState extends ConsumerState<HomePage> {
               recipeController.when(
                 data: (recipes) {
                   _searchController.clear();
-                  return RecipesGridWidget(
-                    data: recipes,
-                    scrollController: _scrollController,
-                  );
+                  return recipes.results.isEmpty
+                      ? Center(
+                          child: Text(StringConstants.noRecipes,
+                              style: TextStyles.subtitle),
+                        )
+                      : RecipesGridWidget(
+                          data: recipes,
+                          scrollController: _scrollController,
+                        );
                 },
                 error: (e, __) => Text(
                   e.toString(),

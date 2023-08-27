@@ -32,7 +32,6 @@ dependencies:
   fraction: ^5.0.0
   hive_flutter: ^1.1.0
   intl: ^0.18.1
-  flutter_chat_ui: ^1.6.9
   cloud_firestore: ^4.8.3
   firebase_storage: ^11.2.5
   image_picker: ^1.0.1

@@ -28,6 +28,7 @@ class StringConstants {
   static const String inspiration = 'Inspiration';
   static const String searchRecipes = 'Search recipes';
   static const String loadMore = 'Load more';
+  static const String noRecipes = 'No recipes found';
 
   // points
   static const String points = 'Points';
@@ -48,6 +49,7 @@ class StringConstants {
 
   // saved
   static const String savedRecipes = 'Saved recipes';
+  static const String noSavedRecipes = 'No saved recipes found';
 
   // friends
   static const String sendCulinaryDuel = 'Send a culinary duel';
@@ -81,7 +83,7 @@ class StringConstants {
   // duel
   static const String culinaryDuelDetails = 'Details of culinary duel';
   static const String chooseRecipe = 'Choose recipe';
-  static const String randomRecipe = 'Random recipe';
+  static const String randomRecipe = 'Generate random recipe';
   static const String culinaryDuel = 'Culinary duel';
   static const String accept = 'Accept';
   static const String duelIsSent = 'Duel is sent';

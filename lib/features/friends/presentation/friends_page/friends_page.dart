@@ -57,44 +57,54 @@ class _FriendsPageState extends ConsumerState<FriendsPage> {
                           .toString()
                           .contains(FirebaseAuth.instance.currentUser!.uid))
                       .toList();
-              return ListView.builder(
-                itemCount: data.length,
-                itemBuilder: (context, i) {
-                  List users = data[i][FirebaseConstants.usersField];
-                  var friend = users.where((element) =>
-                      element != FirebaseAuth.instance.currentUser!.uid);
-                  var user = friend.isNotEmpty
-                      ? friend.first
-                      : users
-                          .where((element) =>
-                              element == FirebaseAuth.instance.currentUser!.uid)
-                          .first;
-                  return FutureBuilder(
-                      future: firestore
-                          .collection(FirebaseConstants.usersCollection)
-                          .doc(user)
-                          .get(),
-                      builder: (context, AsyncSnapshot snap) {
-                        String roomId = data[i].id;
-                        return !snap.hasData
-                            ? Container()
-                            : FriendCard(
-                                title: snap.data[FirebaseConstants.nameField],
-                                subtitle: data[i]
-                                    [FirebaseConstants.lastMessageField],
-                                time: DateFormat.Hm().format(data[i]
-                                        [FirebaseConstants.lastMessageTimeField]
-                                    .toDate()),
-                                onTap: () => context.pushChatPage(
-                                    id: user,
-                                    name:
-                                        snap.data[FirebaseConstants.nameField],
-                                    roomId: roomId),
-                                avatar:
-                                    snap.data[FirebaseConstants.avatarField]);
-                      });
-                },
-              );
+              return data.isEmpty
+                  ? Center(
+                      child: Text(
+                        'No conversations found',
+                        style: TextStyles.subtitle,
+                      ),
+                    )
+                  : ListView.builder(
+                      itemCount: data.length,
+                      itemBuilder: (context, i) {
+                        List users = data[i][FirebaseConstants.usersField];
+                        var friend = users.where((element) =>
+                            element != FirebaseAuth.instance.currentUser!.uid);
+                        var user = friend.isNotEmpty
+                            ? friend.first
+                            : users
+                                .where((element) =>
+                                    element ==
+                                    FirebaseAuth.instance.currentUser!.uid)
+                                .first;
+                        return FutureBuilder(
+                            future: firestore
+                                .collection(FirebaseConstants.usersCollection)
+                                .doc(user)
+                                .get(),
+                            builder: (context, AsyncSnapshot snap) {
+                              String roomId = data[i].id;
+                              return !snap.hasData
+                                  ? Container()
+                                  : FriendCard(
+                                      title: snap
+                                          .data[FirebaseConstants.nameField],
+                                      subtitle: data[i]
+                                          [FirebaseConstants.lastMessageField],
+                                      time: DateFormat.Hm().format(data[i][
+                                              FirebaseConstants
+                                                  .lastMessageTimeField]
+                                          .toDate()),
+                                      onTap: () => context.pushChatPage(
+                                          id: user,
+                                          name: snap.data[
+                                              FirebaseConstants.nameField],
+                                          roomId: roomId),
+                                      avatar: snap
+                                          .data[FirebaseConstants.avatarField]);
+                            });
+                      },
+                    );
             }),
       ),
     );

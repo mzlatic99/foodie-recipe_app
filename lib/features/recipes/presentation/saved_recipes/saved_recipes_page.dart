@@ -17,6 +17,8 @@ class SavedRecipesPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final storageService = ref.watch(storageServiceProvider);
     final imageSize = MediaQuery.of(context).size.width * 0.3;
+    final favoriteBoxSize =
+        storageService.getLength<Recipe>(StorageBox.favoritesBox);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -28,66 +30,75 @@ class SavedRecipesPage extends ConsumerWidget {
           ),
         ),
         body: SafeArea(
-          child: Column(
-            children: [
-              Expanded(
-                child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: storageService
-                        .getLength<Recipe>(StorageBox.favoritesBox),
-                    itemBuilder: (context, index) {
-                      final recipe = storageService
-                          .getAll<Recipe>(StorageBox.favoritesBox)[index];
-                      return Padding(
-                        padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-                        child: GestureDetector(
-                          onTap: () => context.pushDetailPage(recipe: recipe),
-                          child: Row(
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(16),
-                                child: CachedNetworkImage(
-                                  width: imageSize,
-                                  height: imageSize,
-                                  fit: BoxFit.cover,
-                                  imageUrl: recipe.imageUrl,
-                                  placeholder: (context, url) =>
-                                      Shimmer.fromColors(
-                                    baseColor: Colors.black26,
-                                    highlightColor: Colors.black12,
-                                    child: Container(
-                                      color: ThemeColors.white,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 20,
-                              ),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+          child: favoriteBoxSize == 0
+              ? Center(
+                  heightFactor: MediaQuery.sizeOf(context).height * 0.5,
+                  child: Text(
+                    StringConstants.noSavedRecipes,
+                    style: TextStyles.subtitle,
+                  ),
+                )
+              : Column(
+                  children: [
+                    Expanded(
+                      child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: favoriteBoxSize,
+                          itemBuilder: (context, index) {
+                            final recipe = storageService
+                                .getAll<Recipe>(StorageBox.favoritesBox)[index];
+                            return Padding(
+                              padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+                              child: GestureDetector(
+                                onTap: () =>
+                                    context.pushDetailPage(recipe: recipe),
+                                child: Row(
                                   children: [
-                                    Text(
-                                      recipe.name,
-                                      style: TextStyles.title,
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(16),
+                                      child: CachedNetworkImage(
+                                        width: imageSize,
+                                        height: imageSize,
+                                        fit: BoxFit.cover,
+                                        imageUrl: recipe.imageUrl,
+                                        placeholder: (context, url) =>
+                                            Shimmer.fromColors(
+                                          baseColor: Colors.black26,
+                                          highlightColor: Colors.black12,
+                                          child: Container(
+                                            color: ThemeColors.white,
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                     const SizedBox(
-                                      height: 20,
+                                      width: 20,
                                     ),
-                                    Text('${Points.recipePoints} points',
-                                        style: TextStyles.points)
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            recipe.name,
+                                            style: TextStyles.title,
+                                          ),
+                                          const SizedBox(
+                                            height: 20,
+                                          ),
+                                          Text('${Points.recipePoints} points',
+                                              style: TextStyles.points)
+                                        ],
+                                      ),
+                                    )
                                   ],
                                 ),
-                              )
-                            ],
-                          ),
-                        ),
-                      );
-                    }),
-              )
-            ],
-          ),
+                              ),
+                            );
+                          }),
+                    )
+                  ],
+                ),
         ),
       ),
     );
