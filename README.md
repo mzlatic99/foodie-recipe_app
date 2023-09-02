@@ -37,7 +37,7 @@ Foodie is a Flutter-based gamified recipe app designed to help you find culinary
 
 # Installing
 
-## 1. Try on an Android device
+## 1. Try on an Android Device
 
 If you want to try this application on a real Android smartphone:
 
@@ -46,7 +46,7 @@ If you want to try this application on a real Android smartphone:
  3.  Download and install the apk
  4.  Open and enjoy!
 
-## 2. Try in a code editor
+## 2. Try in a Code Editor
 
 If you want to explore and run the code:
 
