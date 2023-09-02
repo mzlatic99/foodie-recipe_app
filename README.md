@@ -1,36 +1,33 @@
 # Foodie gamified recipe app
 
-Flutter gamified recipe app named <span>Foodie</span>. 
-Find your inspiration.
-Cook and compete in culinary duels.
-Complete challenges, collect points and get rewards.
+Foodie is a Flutter-based gamified recipe app designed to help you find culinary inspiration, cook, and compete in culinary duels. Complete challenges, earn points, and unlock rewards along the way.
 
 # Stack
 
-* Flutter framework
-* Dart language
-* Riverpod state management
-* Firebase database, authentification and storage
-* Andrea Bizzotto based Architecture
-* Routing with goRouter package
-* Focused on Android mobile devices
+- Flutter framework
+- Dart language
+- Riverpod state management
+- Firebase for database, authentication, and storage
+- Architecture inspired by Andrea Bizzotto
+- Routing with goRouter package
+- Optimized for Android mobile devices
 
 # Features
 
-* Authentification using Firebase Auth
-* Fetching recipe data from Tasty API
-* Search recipes
-* Recipe details and ingredient scaling based on number of servings
-* Recipe step by step proces
-* Saving favourite recipes with Hive package
-* Chat with camera integration
+- User authentication using Firebase Auth
+- Fetching recipe data from Tasty API
+- Search for recipes
+- View recipe details and scale ingredients based on the number of servings
+- Step-by-step recipe process
+- Save favorite recipes using the Hive package
+- In-app chat with camera integration
 
 # Gamified features
 
-* Points system with levels
-* Cooking challenges
-* Rewards
-* Duels
+- Points system with levels: Earn points by completing challenges, cooking meals, and achieving rewards.
+- Cooking challenges: Complete challenges by cooking meals with specific ingredients.
+- Rewards: Earn achievement icons in your profile for completing challenges.
+- Duels between 2 users: Engage in a culinary duel with randomly generated recipes, and share pictures of your dishes with each other.
 
 # Packages
 
