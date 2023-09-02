@@ -37,12 +37,15 @@ Flutter gamified recipe app with challenges, points, chat, recipe duels, rewards
 
 # Installing
 
+## 1. Try on Android device
 If you wish to try this application on a real Android smartphone:
- 1.  In code find folder called "flutter-apk" and choose "app-release.apk"
- 2.  Tap on View raw
- 3.  Download and install
- 4.  Open and enjoy
+ 1.  Go to:
+<a href="https://github.com/mzlatic99/foodie-recipe_app/tree/master/flutter-apk">Flutter apk</a>
+ 3.  Tap on View raw
+ 4.  Download and install
+ 5.  Open and enjoy
 
+## 2. Try in code editor
 If you wish to use try and see the code:
  1.  Clone the project
  2.  Setup Firebase
