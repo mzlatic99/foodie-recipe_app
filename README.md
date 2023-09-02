@@ -31,9 +31,7 @@ Flutter gamified recipe app with challenges, points, chat, recipe duels, rewards
 
 # Packages
 
-<p float="left">
-  <img src="/screenshots/pubspec.png" width="40%" />
-</p>
+![Chat screen](/screenshots/pubspec.png)
 
 # Installing
 
