@@ -7,12 +7,10 @@ class ProfileTitleRow extends StatelessWidget {
     super.key,
     required this.icon,
     required this.label,
-    required this.function,
   });
 
   final String icon;
   final String label;
-  final void Function()? function;
 
   @override
   Widget build(BuildContext context) {

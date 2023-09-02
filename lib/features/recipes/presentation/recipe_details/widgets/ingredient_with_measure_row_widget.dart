@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foodie/utils/string_capitalize_extension.dart';
 
+import '../../../../../theme/text_styles.dart';
 import '../../../domain/recipe_ingredients/measurement.dart';
 
 class IngredientWithMeasureRowWidget extends StatelessWidget {
@@ -30,6 +31,7 @@ class IngredientWithMeasureRowWidget extends StatelessWidget {
           width: MediaQuery.of(context).size.width / 1.5,
           child: Text(
             ingredientName.capitalize(),
+            style: TextStyles.subtitle,
           ),
         ),
         measure.isNotEmpty
@@ -37,6 +39,7 @@ class IngredientWithMeasureRowWidget extends StatelessWidget {
                 width: MediaQuery.of(context).size.width / 4,
                 child: Text(
                   "${measureQuantity == '0' ? '' : measureQuantityResult} ${measureUnit == '' ? '' : measureUnit}",
+                  style: TextStyles.text,
                 ),
               )
             : const SizedBox.shrink()

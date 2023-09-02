@@ -23,7 +23,7 @@ class ChallengesController extends StateNotifier<List<dynamic>> {
   final Ref ref;
 
   int get numberOfChallengesDisplayed => 3;
-  double get rowHeight => 70;
+  double get rowHeight => 80;
 
   List<dynamic> get challenges => _challenges;
 

@@ -65,18 +65,18 @@ class ProfilePage extends ConsumerWidget {
                       ),
                       Text(
                         '${auth.currentUser?.displayName}',
-                        style: TextStyles.mainText,
+                        style: TextStyles.title,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            StringConstants.points,
+                            '${StringConstants.points} ',
                             style: TextStyles.text,
                           ),
                           Text(
-                            ': ${totalPoints.getTotalPoints()}',
-                            style: TextStyles.mainText,
+                            '${totalPoints.getTotalPoints()}',
+                            style: TextStyles.subtitle,
                           ),
                         ],
                       ),
@@ -84,12 +84,12 @@ class ProfilePage extends ConsumerWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            StringConstants.level,
+                            '${StringConstants.level} ',
                             style: TextStyles.text,
                           ),
                           Text(
-                            ' ${totalPoints.calculateLevel()}',
-                            style: TextStyles.mainText,
+                            '${totalPoints.calculateLevel()}',
+                            style: TextStyles.subtitle,
                           ),
                         ],
                       ),
@@ -103,7 +103,6 @@ class ProfilePage extends ConsumerWidget {
                   ProfileTitleRow(
                     icon: Assets.icons.medal,
                     label: StringConstants.medals,
-                    function: () {},
                   ),
                   challengeController.getNumberOfCompletedChallenges() > 0
                       ? SizedBox(
@@ -137,7 +136,6 @@ class ProfilePage extends ConsumerWidget {
                   ProfileTitleRow(
                     icon: Assets.icons.trophy,
                     label: StringConstants.rewards,
-                    function: () {},
                   ),
                   ListView.builder(
                       padding: EdgeInsets.zero,
@@ -155,10 +153,15 @@ class ProfilePage extends ConsumerWidget {
                                   : Assets.icons.unreceivedBadge,
                               alignment: Alignment.centerLeft,
                             ),
-                            title:
-                                Text(reward.name, style: TextStyles.mainText),
-                            subtitle: Text(reward.description,
-                                style: TextStyles.text),
+                            title: Text(
+                              reward.name,
+                              style: TextStyles.mainText
+                                  .copyWith(fontWeight: FontWeight.bold),
+                            ),
+                            subtitle: Text(
+                              reward.description,
+                              style: TextStyles.text,
+                            ),
                           );
                         } else {
                           return const SizedBox.shrink();

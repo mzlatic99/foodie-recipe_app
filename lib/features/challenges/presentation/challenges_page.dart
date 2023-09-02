@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -76,14 +78,16 @@ class _ChallengesPageState extends ConsumerState<ChallengesPage> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(challenge.name,
-                                          style: TextStyles.subtitle),
-                                      Flexible(
-                                        child: Text(
-                                          challenge.description,
-                                          style: TextStyles.text.copyWith(
-                                              color: ThemeColors.inactiveStep),
+                                      Text(
+                                        challenge.name,
+                                        style: TextStyles.subtitle.copyWith(
+                                          fontWeight: FontWeight.bold,
                                         ),
+                                      ),
+                                      Text(
+                                        challenge.description,
+                                        style: TextStyles.text
+                                            .copyWith(color: ThemeColors.main),
                                       ),
                                       Row(
                                         children: [
