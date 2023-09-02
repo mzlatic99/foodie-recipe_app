@@ -1,4 +1,4 @@
-# Foodie gamified recipe app
+# Foodie Gamified Recipe App
 
 Foodie is a Flutter-based gamified recipe app designed to help you find culinary inspiration, cook, and compete in culinary duels. Complete challenges, earn points, and unlock rewards along the way.
 
