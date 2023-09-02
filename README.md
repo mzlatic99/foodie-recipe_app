@@ -51,7 +51,7 @@ If you wish to use try and see the code:
 ```
 flutter pub get
 ```
- 6.  Run the app 
+ 5.  Run the app 
 ```
 flutter run
 ```
