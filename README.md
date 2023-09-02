@@ -37,24 +37,27 @@ Foodie is a Flutter-based gamified recipe app designed to help you find culinary
 
 # Installing
 
-## 1. Try on Android device
-If you wish to try this application on a real Android smartphone:
- 1.  Go to: 
-<a href="https://github.com/mzlatic99/foodie-recipe_app/blob/master/flutter-apk/app-release.apk">Flutter apk</a>
- 3.  Tap on "View raw"
- 4.  Download and install
- 5.  Open and enjoy
+## 1. Try on an Android device
 
-## 2. Try in code editor
-If you wish to use try and see the code:
- 1.  Clone the project
- 2.  Setup Firebase
- 3.  Register for Tasty API and add key to .env
- 4.  Get all dependencies
+If you want to try this application on a real Android smartphone:
+
+ 1. Go to the [Flutter apk download page](https://github.com/mzlatic99/foodie-recipe_app/blob/master/flutter-apk/app-release.apk)
+ 2.  Tap on "View raw"
+ 3.  Download and install the apk
+ 4.  Open and enjoy!
+
+## 2. Try in a code editor
+
+If you want to explore and run the code:
+
+ 1. Clone the project to your local machine
+ 2. Set up Firebase in your Firebase project
+ 3. Register for a Tasty API key and add it to your project's environment variables
+ 4.  Install all project dependencies by running:
 ```
 flutter pub get
 ```
- 5.  Run the app 
+ 5.  Run the app using the following command:
 ```
 flutter run
 ```
