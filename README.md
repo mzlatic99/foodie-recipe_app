@@ -1,6 +1,9 @@
 # Foodie gamified recipe app
 
-Flutter gamified recipe app with challenges, points, chat, recipe duels, rewards and more.
+Flutter gamified recipe app named <span>Foodie</span>. 
+Find your inspiration.
+Cook and compete in culinary duels.
+Complete challenges collect points and get rewards.
 
 # Stack
 
@@ -10,7 +13,7 @@ Flutter gamified recipe app with challenges, points, chat, recipe duels, rewards
 * Firebase database, authentification and storage
 * Andrea Bizzotto based Architecture
 * Routing with goRouter package
-* Focused on Android mobile systems
+* Focused on Android mobile devices
 
 # Features
 
