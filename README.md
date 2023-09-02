@@ -46,7 +46,7 @@ If you want to try this application on a real Android smartphone:
  3.  Download and install the apk
  4.  Open and enjoy!
 
-## 2. Try in a Code Editor
+## 2. Try in your IDE
 
 If you want to explore and run the code:
 
