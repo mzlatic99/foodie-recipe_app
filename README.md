@@ -47,8 +47,14 @@ If you wish to use try and see the code:
  1.  Clone the project
  2.  Setup Firebase
  3.  Register for Tasty API and add key to .env
- 4.  Run "flutter pub get" to get all dependencies
- 5.  Run the app with "flutter run"
+ 4.  Get all dependencies
+```
+flutter pub get
+```
+ 6.  Run the app 
+```
+flutter run
+```
 
 # Screenshots
 
