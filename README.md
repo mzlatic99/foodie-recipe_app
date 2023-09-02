@@ -3,7 +3,7 @@
 Flutter gamified recipe app named <span>Foodie</span>. 
 Find your inspiration.
 Cook and compete in culinary duels.
-Complete challenges collect points and get rewards.
+Complete challenges, collect points and get rewards.
 
 # Stack
 
